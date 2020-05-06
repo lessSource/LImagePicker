@@ -37,6 +37,5 @@ class ViewController: UIViewController {
 
 extension ViewController: LImagePickerDelegate {
     func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [PHAsset]) {
-        print("ddd")
     }
 }
