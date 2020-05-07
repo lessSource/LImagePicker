@@ -18,6 +18,8 @@ public class ShowImageViewController: UICollectionViewController {
     
     fileprivate lazy var configuration = ShowImageConfiguration()
     
+    /** 是否显示导航栏 */
+    fileprivate lazy var isNacBar: Bool = true
     /** 当前序号  */
     fileprivate(set) var currentIndex: Int = 0 {
         didSet {
@@ -32,10 +34,10 @@ public class ShowImageViewController: UICollectionViewController {
     }()
     
     fileprivate lazy var tabBarView: ShowImageTabBarView = {
-        let barView: ShowImageTabBarView = ShowImageTabBarView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
+        let barView: ShowImageTabBarView = ShowImageTabBarView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
+        barView.imageDelegate = self
         return barView
     }()
-    
     
     fileprivate override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
@@ -68,7 +70,6 @@ public class ShowImageViewController: UICollectionViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         layoutView()
-//        view.addSubview(tabBarView)
     }
 
     fileprivate func layoutView() {
@@ -80,20 +81,22 @@ public class ShowImageViewController: UICollectionViewController {
         collectionView?.register(ShowImageCollectionViewCell.self, forCellWithReuseIdentifier: ShowImageCollectionViewCell.l_identifire)
         collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex), at: .left, animated: false)
         view.addSubview(navView)
+        view.addSubview(tabBarView)
         navView.titleLabel.text = "\(currentIndex + 1)/\(configuration.dataArray.count)"
+        tabBarView.originalButton.isSelected = configuration.isOriginalImage
+        tabBarView.maxCount = configuration.maxCount
+        tabBarView.selectCount = configuration.selectCount
     }
     
     fileprivate func imageClick(_ cell: ShowImageCollectionViewCell, cellForItemAt indexPath: IndexPath, type: ShowImageCollectionViewCell.ActionEnum) {
         switch type {
         case .tap:
-            if configuration.isSelect {
-                UIView.animate(withDuration: 0.15, animations: {
-//                    self.tabBarView.y = self.isNavHidden ? LConstant.screenHeight : LConstant.screenHeight - self.tabBarView.height
-//                    self.navView.y = self.isNavHidden ? -LConstant.navbarAndStatusBar : 0
-                }) { finish in
-                }
-            }else {
-                dismiss(animated: true, completion: nil)
+            UIView.animate(withDuration: 0.15, animations: {
+                self.tabBarView.l_y = !self.isNacBar ? LConstant.screenHeight - self.tabBarView.l_height : LConstant.screenHeight
+                
+                self.navView.l_y = !self.isNacBar ? 0 : -LConstant.navbarAndStatusBar
+            }) { (successful) in
+                self.isNacBar = !self.isNacBar
             }
         case .long:
             if configuration.isSave {
@@ -157,28 +160,47 @@ extension ShowImageViewController {
 
 // MARK: ShowImageNavTabDelegate
 extension ShowImageViewController: ShowImageNavTabDelegate {
-    
-    func showImageNavDidDelete(_ view: ShowImageNavView) {
-        showAlertController(message: "是否删这张照片", actionTitles: ["确认","取消"]) { [weak self] (actionIndex) in
-            guard let `self` = self else { return }
-            if actionIndex == 0 {
-                self.imageDelegate?.showImageDidDelete(self, index: self.currentIndex, imageData: self.configuration.dataArray[self.currentIndex])
-                self.configuration.dataArray.remove(at: self.currentIndex)
-                self.currentIndex = min(self.currentIndex, self.configuration.dataArray.count)
-                self.collectionView.reloadData()
-                if self.configuration.dataArray.count == 0 {
-                    self.dismiss(animated: true, completion: nil)
+
+    func showImageNavDidSelect(_ view: ShowImageNavView, buttonType: ShowImageButtonType) {
+        switch buttonType {
+        case .select:
+            if self.imageDelegate?.showImageDidSelect(self, index: currentIndex, imageData: configuration.dataArray[currentIndex]) == true {
+                configuration.dataArray[currentIndex].isSelect = !configuration.dataArray[currentIndex].isSelect
+                navView.selectImageViewAnimation(configuration.dataArray[currentIndex].isSelect)
+                if configuration.dataArray[currentIndex].isSelect {
+                    configuration.selectCount += 1
+                }else {
+                    configuration.selectCount -= 1
+                }
+                tabBarView.selectCount = configuration.selectCount
+            }else {
+                showAlertController("提示", message: "最多只能选择\(configuration.maxCount)张照片", preferredStyle: .alert, actionTitles: ["OK"], complete: nil)
+            }
+        case .delete:
+            showAlertController(message: "是否删这张照片", actionTitles: ["确认","取消"]) { [weak self] (actionIndex) in
+                guard let `self` = self else { return }
+                if actionIndex == 0 {
+                    self.imageDelegate?.showImageDidDelete(self, index: self.currentIndex, imageData: self.configuration.dataArray[self.currentIndex])
+                    self.configuration.dataArray.remove(at: self.currentIndex)
+                    self.currentIndex = min(self.currentIndex, self.configuration.dataArray.count)
+                    self.collectionView.reloadData()
+                    if self.configuration.dataArray.count == 0 {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
+        default:break
         }
     }
     
-    func showImageNavDidSelect(_ view: ShowImageNavView) {
-        if self.imageDelegate?.showImageDidSelect(self, index: currentIndex, imageData: configuration.dataArray[currentIndex]) == true {
-            configuration.dataArray[currentIndex].isSelect = !configuration.dataArray[currentIndex].isSelect
-            navView.selectImageViewAnimation(configuration.dataArray[currentIndex].isSelect)
-        }else {
-            showAlertController("提示", message: "最多只能选择\(configuration.maxCount)张照片", preferredStyle: .alert, actionTitles: ["OK"], complete: nil)
+    func showImageBarDidSelect(_ view: ShowImageTabBarView, buttonType: ShowImageButtonType) {
+        switch buttonType {
+        case .complete:
+            self.dismiss(animated: false, completion: nil)
+            imageDelegate?.showImageDidComplete(self)
+        case .original:
+            imageDelegate?.showImageGetOriginalImage(self, isOriginal: self.configuration.isOriginalImage)
+        default: break
         }
     }
 }

@@ -41,7 +41,7 @@ class LAlbumPickerController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let navVC = navigationController as? LImagePickerController else { return }
-        LImagePickerManager.shared.getAlbumResources(navVC.allowPickingVideo ? .unknown : .image) { array in
+        LImagePickerManager.shared.getAlbumResources(navVC.allowPickingVideo ? .unknown : .image, duration: navVC.videoSelectMaxDuration) { (array) in
             self.dataArray = array
             self.initData()
         }

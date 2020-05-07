@@ -16,16 +16,15 @@ class ShowImageNavView: UIView {
         
     public var isImageSelect: Bool = false {
         didSet {
-            //            selectImageView.image = !isImageSelect ? R.image.icon_album_nor() : R.image.icon_album_sel()
-            
             selectImageView.image = !isImageSelect ? UIImage.imageNameFromBundle("icon_album_nor") : UIImage.imageNameFromBundle("icon_album_sel")
         }
     }
     
     fileprivate lazy var backButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 10, y: LConstant.statusHeight, width: 44, height: 44))
-        button.setImage(UIImage.imageNameFromBundle("icon_nav_back"), for: .normal)
-        button.backgroundColor = UIColor.red
+        button.setTitle("取消", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(UIColor.white, for: .normal)
         return button
     }()
     
@@ -69,13 +68,16 @@ class ShowImageNavView: UIView {
         addSubview(titleLabel)
         addSubview(selectImageView)
         addSubview(selectButton)
+        addSubview(backButton)
+        
         if configuration.isDelete {
             selectImageView.image = UIImage.imageNameFromBundle("icon_del")
         }
         if configuration.isSelect {
-            addSubview(backButton)
-            backButton.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
+//            addSubview(backButton)
+//            backButton.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
         }
+        backButton.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
         selectButton.addTarget(self, action: #selector(selectButtonClick(_ :)), for: .touchUpInside)
     }
     
@@ -91,11 +93,13 @@ class ShowImageNavView: UIView {
     }
     
     @objc fileprivate func selectButtonClick(_ sender: UIButton) {
-        if configuration.isDelete {
-            imageDelegate?.showImageNavDidDelete(self)
-        }else if configuration.isSelect {
-            imageDelegate?.showImageNavDidSelect(self)
-        }
+        imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
+
+//        if configuration.isDelete {
+//            imageDelegate?.showImageNavDidSelect(self, buttonType: .delete)
+//        }else if configuration.isSelect {
+//            imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
+//        }
     }
     
 }

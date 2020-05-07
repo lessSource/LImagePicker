@@ -8,13 +8,29 @@
 
 import UIKit
 
+enum ShowImageButtonType {
+    /** 原图 */
+    case original
+    /** 完成 */
+    case complete
+    /** 选择 */
+    case select
+    /** 删除 */
+    case delete
+}
+
+
 public protocol ShowImageVCDelegate: NSObjectProtocol {
     /** 删除 */
     func showImageDidDelete(_ viewController: ShowImageViewController, index: Int, imageData: LMediaResourcesModel)
     /** 选择 */
     func showImageDidSelect(_ viewController: ShowImageViewController, index: Int, imageData: LMediaResourcesModel) -> Bool
+    /** 完成 */
+    func showImageDidComplete(_ viewController: ShowImageViewController)
     /** 页面已经消失 */
     func showImageDidDisappear(_ viewController: ShowImageViewController)
+    /** 是否获取原图 */
+    func showImageGetOriginalImage(_ viewController: ShowImageViewController, isOriginal: Bool)
 }
 
 extension ShowImageVCDelegate {
@@ -25,20 +41,26 @@ extension ShowImageVCDelegate {
         return false
     }
     
+    func showImageDidComplete(_ viewController: ShowImageViewController) { }
+    
     public func showImageDidDisappear(_ viewController: ShowImageViewController) { }
+    
+    func showImageGetOriginalImage(_ viewController: ShowImageViewController, isOriginal: Bool) { }
 
 }
 
-protocol ShowImageNavTabDelegate: NSObjectProtocol {
-    /** 删除 */
-    func showImageNavDidDelete(_ view: ShowImageNavView)
-    /** 选择 */
-    func showImageNavDidSelect(_ view: ShowImageNavView)
+protocol ShowImageNavTabDelegate: class {
+    
+    // 导航栏操作
+    func showImageNavDidSelect(_ view: ShowImageNavView, buttonType: ShowImageButtonType)
+    // 操作
+    func showImageBarDidSelect(_ view: ShowImageTabBarView, buttonType: ShowImageButtonType)
 }
 
 extension ShowImageNavTabDelegate {
-    func showImageNavDidDelete(_ view: ShowImageNavView) { }
-
-    func showImageNavDidSelect(_ view: ShowImageNavView) { }
+    
+    func showImageNavDidSelect(_ view: ShowImageNavView, buttonType: ShowImageButtonType) { }
+    
+    func showImageBarDidSelect(_ view: ShowImageTabBarView, buttonType: ShowImageButtonType) { }
 }
 

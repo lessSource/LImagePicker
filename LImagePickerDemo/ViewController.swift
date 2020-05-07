@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         let imagePicker = LImagePickerController(delegate: self)
         imagePicker.modalPresentationStyle = .custom
         imagePicker.allowPickingVideo = true
+        imagePicker.videoSelectMaxDuration = 15
         self.present(imagePicker, animated: true, completion: nil)
         
     }
@@ -37,5 +38,7 @@ class ViewController: UIViewController {
 
 extension ViewController: LImagePickerDelegate {
     func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [PHAsset]) {
+        print("ddd")
+//        picker.selectArray
     }
 }

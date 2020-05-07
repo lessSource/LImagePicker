@@ -44,43 +44,49 @@ extension LImagePickerManager {
 
 extension LImagePickerManager {
     // 获取相册
-    func getAlbumResources(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown, complete: @escaping (_ dataArray: [LAlbumPickerModel]) -> ()) {
+    func getAlbumResources(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown,duration: Int = Int.max, complete: @escaping (_ dataArray: [LAlbumPickerModel]) -> ()) {
         DispatchQueue.global().async {
             var array: Array = [LAlbumPickerModel]()
             let options = PHFetchOptions()
             
             let smartAlbums: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: options)
-            for i in 0..<smartAlbums.count {
+            smartAlbums.enumerateObjects { (collection, index, stop) in
                 let allPhotosOptions = PHFetchOptions()
-                if mediaType != .unknown {
-                    allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
+                if mediaType == .unknown {
+                    allPhotosOptions.predicate = NSPredicate(format: "duration <= %d", duration)
+                }else {
+                    allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d AND duration <= %d", mediaType.rawValue, duration)
                 }
-                let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: smartAlbums[i], options: allPhotosOptions)
-                if smartAlbums[i].assetCollectionSubtype == .smartAlbumAllHidden { continue }
-                if smartAlbums[i].assetCollectionSubtype.rawValue == 1000000201 { continue } // [最近删除] 相册
+                let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
+                if collection.assetCollectionSubtype == .smartAlbumAllHidden { return }
+                if collection.assetCollectionSubtype.rawValue == 1000000201 { return } // [最近删除] 相册
+
                 if fetchResult.count > 0 {
-                    let model = LAlbumPickerModel(title: smartAlbums[i].localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, count: fetchResult.count, selectCount: 0)
-                    if smartAlbums[i].assetCollectionSubtype == .smartAlbumUserLibrary {
+                    let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, count: fetchResult.count, selectCount: 0)
+                    if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
                         array.insert(model, at: 0)
                     }else {
                         array.append(model)
                     }
                 }
             }
+            
             let userAlbums = PHCollectionList.fetchTopLevelUserCollections(with: options)
-            for i in 0..<userAlbums.count {
-                if let collection = userAlbums[i] as? PHAssetCollection {
-                    let allPhotosOptions = PHFetchOptions()
-                    if mediaType != .unknown {
-                        allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
-                    }
-                    let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
-                    if fetchResult.count > 0 {
-                        let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject,fetchResult: fetchResult, count: fetchResult.count, selectCount: 0)
-                        array.append(model)
-                    }
+            userAlbums.enumerateObjects { (collection, index, stop) in
+                guard let assetCollection = collection as? PHAssetCollection else { return }
+                let allPhotosOptions = PHFetchOptions()
+                if mediaType == .unknown {
+                      allPhotosOptions.predicate = NSPredicate(format: "duration <= %d", duration)
+                  }else {
+                      allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d AND duration <= %d", mediaType.rawValue, duration)
+                  }
+                let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: assetCollection, options: allPhotosOptions)
+                if fetchResult.count > 0 {
+                    let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject,fetchResult: fetchResult, count: fetchResult.count, selectCount: 0)
+                    array.append(model)
                 }
             }
+            
             DispatchQueue.main.async {
                 complete(array)
             }
@@ -88,13 +94,15 @@ extension LImagePickerManager {
     }
     
     // 获取相册中资源
-    func getPhotoAlbumMedia(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown, fetchResult: PHFetchResult<PHAsset>?, successPHAsset: @escaping ([LMediaResourcesModel]) -> () ) {
+    func getPhotoAlbumMedia(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown,duration: Int = Int.max, fetchResult: PHFetchResult<PHAsset>?, successPHAsset: @escaping ([LMediaResourcesModel]) -> () ) {
         var asset = [LMediaResourcesModel]()
         if let result = fetchResult {
             result.enumerateObjects({ (mediaAsset, index, stop) in
                 let time = mediaAsset.mediaType == .video ? self.getNewTimeFromDurationSecond(duration: Int(mediaAsset.duration)) : ""
                 let model = LMediaResourcesModel(dataProtocol: mediaAsset, dateEnum: self.getAssetType(asset: mediaAsset), videoTime: time)
-                asset.append(model)
+                if mediaAsset.mediaType == .image || (mediaAsset.mediaType == .video && Int(mediaAsset.duration) <= duration) {
+                    asset.append(model)
+                }
             })
             successPHAsset(asset)
         }else {
@@ -102,7 +110,9 @@ extension LImagePickerManager {
                 assetsFetchResult.enumerateObjects({ (mediaAsset, index, stop) in
                     let time = mediaAsset.mediaType == .video ? self.getNewTimeFromDurationSecond(duration: Int(mediaAsset.duration)) : ""
                     let model = LMediaResourcesModel(dataProtocol: mediaAsset, dateEnum: self.getAssetType(asset: mediaAsset), videoTime: time)
-                    asset.append(model)
+                    if mediaAsset.mediaType == .image || (mediaAsset.mediaType == .video && Int(mediaAsset.duration) <= duration) {
+                        asset.append(model)
+                    }
                 })
                 successPHAsset(asset)
             }
@@ -148,6 +158,7 @@ extension LImagePickerManager {
         imageSize = CGSize(width: pixelWith, height: piexlHeight)
         let option = PHImageRequestOptions()
         option.resizeMode = .fast
+//        option.isSynchronous =  true
         let imageRequestId = PHImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: option) { (result, info) in
             if let image = result {
                 completion(image, info)
@@ -260,5 +271,4 @@ extension LImagePickerManager {
         }
         return newTime
     }
-    
 }

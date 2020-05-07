@@ -51,15 +51,18 @@ public struct ShowImageConfiguration {
     var isSave: Bool
     /** 最多可以选择 */
     var maxCount: Int
+    /** 选中数量 */
+    var selectCount: Int
     /** 是否加载原图 */
     var isOriginalImage: Bool
     
-    public init(dataArray: [LMediaResourcesModel] = [], currentIndex: Int = 0, isDelete: Bool = false, isSelect: Bool = false, isSave: Bool = false, maxCount: Int = 0, isOriginalImage: Bool = true) {
+    public init(dataArray: [LMediaResourcesModel] = [], currentIndex: Int = 0, isDelete: Bool = false, isSelect: Bool = false, isSave: Bool = false,selectCount: Int = 0, maxCount: Int = 0, isOriginalImage: Bool = false) {
         self.dataArray = dataArray
         self.currentIndex = currentIndex
         self.isDelete = isDelete
         self.isSelect = isSelect
         self.isSave = isSave
+        self.selectCount = selectCount
         self.maxCount = maxCount
         self.isOriginalImage = isOriginalImage
     }

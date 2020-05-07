@@ -153,7 +153,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         if let image = imageData.dataProtocol as? UIImage {
             currentImage.image = image
         }else if let asset = imageData.dataProtocol as? PHAsset {
-            loadImage(asset)
+            loadImage(asset, dateEnum: imageData.dateEnum)
         }else if let string = imageData.dataProtocol as? String {
             if string.hasPrefix("http") {
                 if imageData.dateEnum == .image, let url = URL(string: string) {
@@ -183,7 +183,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     }
 
     // MARK:- fileprivate
-    fileprivate func loadImage(_ asset: PHAsset) {
+    fileprivate func loadImage(_ asset: PHAsset, dateEnum: ImageDataEnum) {
         if livePhotoPlay { livePhoto.stopPlayback() }
         self.asset = asset
         assetIdentifier = asset.localIdentifier
@@ -191,9 +191,24 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         option.isNetworkAccessAllowed = true
         option.resizeMode = .fast
         option.isSynchronous = true
+        let start = CACurrentMediaTime()
+
         let imageRequestID = PHImageManager.default().requestImageData(for: asset, options: option) { (data, str, orientation, info) in
+            let end = CACurrentMediaTime()
+            print("方法耗时为11111：\(end-start)")
+            let start1 = CACurrentMediaTime()
+            print(Thread.current)
             if self.assetIdentifier == asset.localIdentifier, let imageData = data {
-                self.currentImage.image = UIImage(data: imageData)
+                if dateEnum == .gif, let gifImageClass = ImagePickerGifImage(from: imageData)  {
+                    self.currentImage.animationImages = gifImageClass.images
+                    self.currentImage.animationDuration = gifImageClass.duration
+                    self.currentImage.animationRepeatCount = 0 // 循环
+                    self.currentImage.startAnimating()
+                }else {
+                    self.currentImage.image = UIImage(data: imageData)
+                }
+                let end1 = CACurrentMediaTime()
+                print("方法耗时为2222：\(end1-start1)")
             }else {
                 if let requestId = self.imageRequestID {
                     PHImageManager.default().cancelImageRequest(requestId)

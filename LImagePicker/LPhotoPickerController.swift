@@ -16,6 +16,8 @@ class LPhotoPickerController: UIViewController {
     
     fileprivate var dataArray = [LMediaResourcesModel]()
     
+    fileprivate var isOriginalImage: Bool = false
+    
     fileprivate lazy var navView: LImageNavView = {
         let navView = LImageNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
         navView.titleLabel.text = "相机胶卷"
@@ -62,7 +64,7 @@ class LPhotoPickerController: UIViewController {
     // MARK:- initData
     func initData() {
         guard let navVC = navigationController as? LImagePickerController else { return }
-        LImagePickerManager.shared.getPhotoAlbumMedia(navVC.allowPickingVideo ? .unknown : .image, fetchResult: pickerModel?.fetchResult) { (dataArray) in
+        LImagePickerManager.shared.getPhotoAlbumMedia(navVC.allowPickingVideo ? .unknown : .image,duration: navVC.videoSelectMaxDuration ,fetchResult: pickerModel?.fetchResult) { (dataArray) in
             self.dataArray = dataArray
             if let model = self.pickerModel {
                 self.navView.titleLabel.text = "\(model.title)(\(dataArray.count))"
@@ -127,7 +129,8 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         navView.allNumber = 1
         guard let cell = collectionView.cellForItem(at: indexPath) as? LImagePickerCell, let navVC = navigationController as? LImagePickerController else { return }
         animationDelegate = ModelAnimationDelegate(contentImage: cell.imageView, superView: collectionView)
-        showImage(ShowImageConfiguration(dataArray: dataArray, currentIndex: indexPath.item, maxCount: navVC.maxSelectCount), delegate: animationDelegate, formVC: self)
+        let configuration = ShowImageConfiguration(dataArray: dataArray, currentIndex: indexPath.item,selectCount: navVC.selectArray.count, maxCount: navVC.maxSelectCount, isOriginalImage: isOriginalImage)
+        showImage(configuration, delegate: animationDelegate, formVC: self)
     }
     
     // ImageTabBarViewDelegate
@@ -137,11 +140,51 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
             animationDelegate = ModelAnimationDelegate()
             showImage(ShowImageConfiguration(dataArray: navVC.selectArray, currentIndex: 0, maxCount: navVC.maxSelectCount), delegate: animationDelegate)
         }else if buttonType == .complete {
-            LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray) { (imageArr, assetArr) in
+            LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: isOriginalImage) { (imageArr, assetArr) in
                 navVC.imageDelegete?.imagePickerController(navVC, photos: imageArr, asset: assetArr)
                 self.dismiss(animated: true, completion: nil)
             }
         }
     }
     
+}
+
+extension LPhotoPickerController: ShowImageVCDelegate {
+    
+    func showImageDidSelect(_ viewController: ShowImageViewController, index: Int, imageData: LMediaResourcesModel) -> Bool {
+        guard let navVC = navigationController as? LImagePickerController else { return false }
+        if !imageData.isSelect {
+            if navVC.selectArray.count < navVC.maxSelectCount {
+                navVC.selectArray.append(dataArray[index])
+                dataArray[index].isSelect = !imageData.isSelect
+                tabBarView.currentCount = navVC.selectArray.count
+                collectionView.reloadData()
+                return true
+            }else {
+                return false
+            }
+        }else {
+            navVC.selectArray.removeAll(where: { $0 == dataArray[index] })
+            dataArray[index].isSelect = !imageData.isSelect
+            tabBarView.currentCount = navVC.selectArray.count
+            collectionView.reloadData()
+            return true
+        }
+    }
+    
+    func showImageGetOriginalImage(_ viewController: ShowImageViewController, isOriginal: Bool) {
+        isOriginalImage = isOriginal
+    }
+    
+    func showImageDidDisappear(_ viewController: ShowImageViewController) {
+        print("老子走了")
+    }
+    
+    func showImageDidComplete(_ viewController: ShowImageViewController) {
+        guard let navVC = navigationController as? LImagePickerController else { return }
+        LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: isOriginalImage) { (imageArr, assetArr) in
+            navVC.imageDelegete?.imagePickerController(navVC, photos: imageArr, asset: assetArr)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }

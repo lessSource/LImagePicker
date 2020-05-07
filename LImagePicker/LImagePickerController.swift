@@ -37,6 +37,8 @@ public class LImagePickerController: UINavigationController {
     public var allowTakeVideo: Bool = false
     /** 视频最大拍摄时间 默认30s */
     public var videoMaximumDuration: Int = 30
+    /** 选择视频最大时间 */
+    public var videoSelectMaxDuration: Int = Int.max
     /** 选中的数据 */
     public var selectArray = [LMediaResourcesModel]()
     
