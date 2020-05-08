@@ -15,8 +15,12 @@ class LPhotoPickerController: UIViewController {
     fileprivate var animationDelegate: ModelAnimationDelegate?
     
     fileprivate var dataArray = [LMediaResourcesModel]()
-    
+    // 是否显示原图
     fileprivate var isOriginalImage: Bool = false
+    /** 选择类型 */
+    fileprivate var selectType: LImagePickerSelectEnum = .default
+    /** 是否允许多选视频/图片 默认false */
+    fileprivate var allowPickingMultipleVideo: Bool = false
     
     fileprivate lazy var navView: LImageNavView = {
         let navView = LImageNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
@@ -64,6 +68,17 @@ class LPhotoPickerController: UIViewController {
     // MARK:- initData
     func initData() {
         guard let navVC = navigationController as? LImagePickerController else { return }
+        allowPickingMultipleVideo = navVC.allowPickingMultipleVideo
+        if allowPickingMultipleVideo || navVC.selectArray.count == 0 || navVC.allowPickingVideo {
+            selectType = .default
+        }else {
+            if navVC.selectArray[0].dateEnum == .video {
+                selectType = .video
+            }else {
+                selectType = .image
+            }
+        }
+        
         LImagePickerManager.shared.getPhotoAlbumMedia(navVC.allowPickingVideo ? .unknown : .image,duration: navVC.videoSelectMaxDuration ,fetchResult: pickerModel?.fetchResult) { (dataArray) in
             self.dataArray = dataArray
             if let model = self.pickerModel {
@@ -82,7 +97,6 @@ class LPhotoPickerController: UIViewController {
         guard let navVC = navigationController as? LImagePickerController else { return }
         tabBarView.maxCount = navVC.maxSelectCount
         tabBarView.currentCount = navVC.selectArray.count
-        if navVC.selectArray.count == 0 { return }
         dataArray = dataArray.map {
             var model = $0
             model.isSelect = navVC.selectArray.contains(where: {$0 == model})
@@ -90,25 +104,39 @@ class LPhotoPickerController: UIViewController {
         }
     }
     
-    fileprivate func didSelectCellButton(_ isSelect: Bool, indexPath: IndexPath) -> Bool {
+    // MARK:- 选择
+    fileprivate func resourcesSelect(viewController: UIViewController,isSelect: Bool, selectIndex: Int) -> Bool {
         guard let navVC = navigationController as? LImagePickerController else { return false }
         if !isSelect {
             if navVC.selectArray.count < navVC.maxSelectCount {
-                navVC.selectArray.append(dataArray[indexPath.item])
-                dataArray[indexPath.item].isSelect = !isSelect
+                navVC.selectArray.append(dataArray[selectIndex])
+                dataArray[selectIndex].isSelect = !isSelect
                 tabBarView.currentCount = navVC.selectArray.count
+                if navVC.selectArray.count == 1 && !allowPickingMultipleVideo && navVC.allowPickingVideo {
+                    if navVC.selectArray[0].dateEnum == .video {
+                        selectType = .video
+                    }else {
+                        selectType = .image
+                    }
+                    collectionView.reloadData()
+                }
                 return true
             }else {
-                self.showAlertWithTitle("最多只能选择\(navVC.maxSelectCount)张照片")
+                viewController.showAlertWithTitle("最多只能选择\(navVC.maxSelectCount)张照片")
                 return false
             }
         }else {
-            navVC.selectArray.removeAll(where: { $0 == dataArray[indexPath.item] })
-            dataArray[indexPath.item].isSelect = !isSelect
+            navVC.selectArray.removeAll(where: { $0 == dataArray[selectIndex] })
+            dataArray[selectIndex].isSelect = !isSelect
             tabBarView.currentCount = navVC.selectArray.count
+            if navVC.selectArray.count == 0 && !allowPickingMultipleVideo && navVC.allowPickingVideo {
+                selectType = .default
+                collectionView.reloadData()
+            }
             return true
         }
     }
+    
 }
 
 extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewDataSource, ShowImageProtocol,UIViewControllerTransitioningDelegate, ImageTabBarViewDelegate {
@@ -118,9 +146,33 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LImagePickerCell = collectionView.dequeueReusableCell(withReuseIdentifier: LImagePickerCell.l_identifire, for: indexPath) as! LImagePickerCell
+        
+        switch selectType {
+        case .default:
+            cell.selectImageView.isHidden = false
+            cell.selectButton.isUserInteractionEnabled = true
+        case .image:
+            if dataArray[indexPath.item].dateEnum == .video {
+                cell.selectImageView.isHidden = true
+                cell.selectButton.isUserInteractionEnabled = false
+            }else {
+                cell.selectImageView.isHidden = false
+                cell.selectButton.isUserInteractionEnabled = true
+            }
+        case .video:
+            if dataArray[indexPath.item].dateEnum != .video {
+                cell.selectImageView.isHidden = true
+                cell.selectButton.isUserInteractionEnabled = false
+            }else {
+                cell.selectImageView.isHidden = false
+                cell.selectButton.isUserInteractionEnabled = true
+            }
+        }
+        
         cell.assetModel = dataArray[indexPath.item]
         cell.didSelectButtonClosure = { [weak self] select in
-            return self?.didSelectCellButton(select, indexPath: indexPath) == true
+            guard let `self` = self else { return false }
+            return self.resourcesSelect(viewController: self, isSelect: select, selectIndex: indexPath.item)
         }
         return cell
     }
@@ -129,7 +181,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         navView.allNumber = 1
         guard let cell = collectionView.cellForItem(at: indexPath) as? LImagePickerCell, let navVC = navigationController as? LImagePickerController else { return }
         animationDelegate = ModelAnimationDelegate(contentImage: cell.imageView, superView: collectionView)
-        let configuration = ShowImageConfiguration(dataArray: dataArray, currentIndex: indexPath.item,selectCount: navVC.selectArray.count, maxCount: navVC.maxSelectCount, isOriginalImage: isOriginalImage)
+        let configuration = ShowImageConfiguration(dataArray: dataArray, currentIndex: indexPath.item,selectCount: navVC.selectArray.count, maxCount: navVC.maxSelectCount, isOriginalImage: isOriginalImage, selectType: selectType)
         showImage(configuration, delegate: animationDelegate, formVC: self)
     }
     
@@ -152,24 +204,9 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
 extension LPhotoPickerController: ShowImageVCDelegate {
     
     func showImageDidSelect(_ viewController: ShowImageViewController, index: Int, imageData: LMediaResourcesModel) -> Bool {
-        guard let navVC = navigationController as? LImagePickerController else { return false }
-        if !imageData.isSelect {
-            if navVC.selectArray.count < navVC.maxSelectCount {
-                navVC.selectArray.append(dataArray[index])
-                dataArray[index].isSelect = !imageData.isSelect
-                tabBarView.currentCount = navVC.selectArray.count
-                collectionView.reloadData()
-                return true
-            }else {
-                return false
-            }
-        }else {
-            navVC.selectArray.removeAll(where: { $0 == dataArray[index] })
-            dataArray[index].isSelect = !imageData.isSelect
-            tabBarView.currentCount = navVC.selectArray.count
-            collectionView.reloadData()
-            return true
-        }
+        let select = resourcesSelect(viewController: viewController, isSelect: imageData.isSelect, selectIndex: index)
+        collectionView.reloadData()
+        return select
     }
     
     func showImageGetOriginalImage(_ viewController: ShowImageViewController, isOriginal: Bool) {

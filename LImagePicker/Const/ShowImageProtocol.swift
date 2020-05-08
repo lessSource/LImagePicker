@@ -20,7 +20,7 @@ enum ShowImageButtonType {
 }
 
 
-public protocol ShowImageVCDelegate: NSObjectProtocol {
+protocol ShowImageVCDelegate: NSObjectProtocol {
     /** 删除 */
     func showImageDidDelete(_ viewController: ShowImageViewController, index: Int, imageData: LMediaResourcesModel)
     /** 选择 */

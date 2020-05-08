@@ -28,7 +28,7 @@ class ShowImageNavView: UIView {
         return button
     }()
     
-    fileprivate lazy var selectImageView: UIImageView = {
+    public lazy var selectImageView: UIImageView = {
         let image = UIImageView(frame: CGRect(x: LConstant.screenWidth - 34, y: LConstant.statusHeight + 10, width: 24, height: 24))
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true

@@ -29,7 +29,8 @@ class ViewController: UIViewController {
         let imagePicker = LImagePickerController(delegate: self)
         imagePicker.modalPresentationStyle = .custom
         imagePicker.allowPickingVideo = true
-        imagePicker.videoSelectMaxDuration = 15
+        
+//        imagePicker.allowPickingMultipleVideo = true
         self.present(imagePicker, animated: true, completion: nil)
         
     }

@@ -53,9 +53,11 @@ extension LImagePickerManager {
             smartAlbums.enumerateObjects { (collection, index, stop) in
                 let allPhotosOptions = PHFetchOptions()
                 if mediaType == .unknown {
-                    allPhotosOptions.predicate = NSPredicate(format: "duration <= %d", duration)
+                    if duration != Int.max {
+                        allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d OR duration <= %d",PHAssetMediaType.image.rawValue, duration)
+                    }
                 }else {
-                    allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d AND duration <= %d", mediaType.rawValue, duration)
+                    allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
                 }
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
                 if collection.assetCollectionSubtype == .smartAlbumAllHidden { return }
@@ -76,10 +78,12 @@ extension LImagePickerManager {
                 guard let assetCollection = collection as? PHAssetCollection else { return }
                 let allPhotosOptions = PHFetchOptions()
                 if mediaType == .unknown {
-                      allPhotosOptions.predicate = NSPredicate(format: "duration <= %d", duration)
-                  }else {
-                      allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d AND duration <= %d", mediaType.rawValue, duration)
-                  }
+                    if duration != Int.max {
+                        allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d OR duration <= %d",PHAssetMediaType.image.rawValue, duration)
+                    }
+                }else {
+                    allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
+                }
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: assetCollection, options: allPhotosOptions)
                 if fetchResult.count > 0 {
                     let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject,fetchResult: fetchResult, count: fetchResult.count, selectCount: 0)
@@ -158,7 +162,7 @@ extension LImagePickerManager {
         imageSize = CGSize(width: pixelWith, height: piexlHeight)
         let option = PHImageRequestOptions()
         option.resizeMode = .fast
-//        option.isSynchronous =  true
+        option.isSynchronous =  true
         let imageRequestId = PHImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: option) { (result, info) in
             if let image = result {
                 completion(image, info)

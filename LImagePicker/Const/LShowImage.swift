@@ -12,7 +12,7 @@ public protocol ShowImageProtocol { }
 
 
 extension ShowImageProtocol where Self: UIViewController {
-    public func showImage(_ configuration: ShowImageConfiguration, formVC: UIViewController? = nil) {
+    func showImage(_ configuration: ShowImageConfiguration, formVC: UIViewController? = nil) {
         assert(configuration.dataArray.count != 0, "数组不能为空！！！！")
         assert(configuration.dataArray.count > configuration.currentIndex, "序号能不能大于数组数量！！！！")
         let showImageVC = ShowImageViewController(configuration: configuration)
@@ -24,7 +24,7 @@ extension ShowImageProtocol where Self: UIViewController {
 
 extension ShowImageProtocol where Self: UIViewController, Self: UIViewControllerTransitioningDelegate {
     // 带动画的显示大图 ---- 必须遵循UIViewControllerTransitioningDelegate
-    public func showImage(_ configuration: ShowImageConfiguration, delegate: ModelAnimationDelegate? = nil, formVC: UIViewController? = nil) {
+    func showImage(_ configuration: ShowImageConfiguration, delegate: ModelAnimationDelegate? = nil, formVC: UIViewController? = nil) {
         assert(configuration.dataArray.count != 0, "数组不能为空！！！！")
         assert(configuration.dataArray.count > configuration.currentIndex, "序号能不能大于数组数量！！！！")
         let showImageVC = ShowImageViewController(configuration: configuration)
@@ -38,7 +38,7 @@ extension ShowImageProtocol where Self: UIViewController, Self: UIViewController
         present(showImageVC, animated: true, completion: nil)
     }
     
-
+    
 }
 
 public class ModelAnimationDelegate: NSObject, UIViewControllerTransitioningDelegate {
@@ -109,7 +109,7 @@ extension ModelAnimationDelegate {
         let originalFrame = contentImage.convert(contentImage.bounds, to: window)
         animateView.frame = originalFrame
         containerView.addSubview(animateView)
-
+        
         // endFrame
         var endFrame: CGRect = .zero
         let imageHeight = image.size.height / image.size.width * LConstant.screenWidth
@@ -175,8 +175,8 @@ extension ModelAnimationDelegate {
         fromeView.addSubview(formeBackView)
         // 容器view
         let containerView = transitionContext.containerView
-
-
+        
+        
         let imageSize: CGSize = cell.currentImage.image?.size ?? .zero
         var startFrame: CGRect = .zero
         let imageHeight = imageSize.height / imageSize.width * LConstant.screenWidth
@@ -191,7 +191,7 @@ extension ModelAnimationDelegate {
             startFrame.origin.x = 0
             startFrame.origin.y = LConstant.screenHeight/2 - startFrame.height/2
         }
-
+        
         // 新建过渡动画imageView
         let animateImageView = UIImageView()
         animateImageView.frame = startFrame

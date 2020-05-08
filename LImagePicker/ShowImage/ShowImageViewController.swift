@@ -14,7 +14,7 @@ private let cellMargin: CGFloat = 20
 
 public class ShowImageViewController: UICollectionViewController {
         
-    public weak var imageDelegate: ShowImageVCDelegate?
+    weak var imageDelegate: ShowImageVCDelegate?
     
     fileprivate lazy var configuration = ShowImageConfiguration()
     
@@ -141,10 +141,10 @@ extension ShowImageViewController {
     }
     
     public override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let showImageCell =  cell as? ShowImageCollectionViewCell  {
-            showImageCell.updateImage(imageData: configuration.dataArray[indexPath.section])
-        }
-        print("将要进入 %ld",indexPath.section);
+//        if let showImageCell =  cell as? ShowImageCollectionViewCell  {
+//            showImageCell.updateImage(imageData: configuration.dataArray[indexPath.section])
+//        }
+//        print("将要进入 %ld",indexPath.section);
     }
     
     override public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -155,6 +155,25 @@ extension ShowImageViewController {
     override public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         currentIndex = Int(scrollView.contentOffset.x / scrollView.l_width)
         navView.isImageSelect = configuration.dataArray[currentIndex].isSelect
+        switch configuration.selectType {
+        case .default: break
+        case .video:
+            if configuration.dataArray[currentIndex].dateEnum != .video {
+                navView.selectButton.isUserInteractionEnabled = false
+                navView.selectImageView.isHidden = true
+            }else {
+                navView.selectButton.isUserInteractionEnabled = true
+                navView.selectImageView.isHidden = false
+            }
+        case .image:
+            if configuration.dataArray[currentIndex].dateEnum == .video {
+                navView.selectButton.isUserInteractionEnabled = false
+                navView.selectImageView.isHidden = true
+            }else {
+                navView.selectButton.isUserInteractionEnabled = true
+                navView.selectImageView.isHidden = false
+            }
+        }
     }
 }
 
@@ -173,8 +192,6 @@ extension ShowImageViewController: ShowImageNavTabDelegate {
                     configuration.selectCount -= 1
                 }
                 tabBarView.selectCount = configuration.selectCount
-            }else {
-                showAlertController("提示", message: "最多只能选择\(configuration.maxCount)张照片", preferredStyle: .alert, actionTitles: ["OK"], complete: nil)
             }
         case .delete:
             showAlertController(message: "是否删这张照片", actionTitles: ["确认","取消"]) { [weak self] (actionIndex) in
@@ -199,6 +216,7 @@ extension ShowImageViewController: ShowImageNavTabDelegate {
             self.dismiss(animated: false, completion: nil)
             imageDelegate?.showImageDidComplete(self)
         case .original:
+            self.configuration.isOriginalImage = !self.configuration.isOriginalImage
             imageDelegate?.showImageGetOriginalImage(self, isOriginal: self.configuration.isOriginalImage)
         default: break
         }
