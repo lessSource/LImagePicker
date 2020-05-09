@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreServices
+import Photos
 
 class LPhotoPickerController: UIViewController {
 
@@ -88,7 +90,7 @@ class LPhotoPickerController: UIViewController {
             }
             self.checkSelectedMediaResources()
             self.collectionView.reloadData()
-            self.collectionView.scrollToItem(at: IndexPath(item: dataArray.count - 1, section: 0), at: .bottom, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(item: (navVC.allowTakePicture || navVC.allowPickingVideo) ? dataArray.count : dataArray.count - 1, section: 0), at: .bottom, animated: false)
         }
     }
     
@@ -141,11 +143,20 @@ class LPhotoPickerController: UIViewController {
 
 extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewDataSource, ShowImageProtocol,UIViewControllerTransitioningDelegate, ImageTabBarViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataArray.count
+        guard let navVC = navigationController as? LImagePickerController else { return 0 }
+        
+        return dataArray.count + ((navVC.allowPickingVideo || navVC.allowTakePicture) ? 1 : 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LImagePickerCell = collectionView.dequeueReusableCell(withReuseIdentifier: LImagePickerCell.l_identifire, for: indexPath) as! LImagePickerCell
+        
+        if indexPath.item == dataArray.count {
+            cell.backgroundColor = UIColor.red
+            cell.selectImageView.isHidden = true
+            cell.selectButton.isUserInteractionEnabled = false
+            return cell
+        }
         
         switch selectType {
         case .default:
@@ -178,8 +189,33 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         navView.allNumber = 1
         guard let cell = collectionView.cellForItem(at: indexPath) as? LImagePickerCell, let navVC = navigationController as? LImagePickerController else { return }
+        if indexPath.item == dataArray.count {
+            var mediaTypes = [String]()
+            if navVC.allowTakeVideo {
+                mediaTypes.append(kUTTypeMovie as String)
+            }
+            if navVC.allowTakePicture {
+                mediaTypes.append(kUTTypeImage as String)
+            }
+
+            showAlertController(preferredStyle: .actionSheet, actionTitles: ["相机","取消"]) { (row) in
+                let picker = UIImagePickerController()
+                picker.sourceType = .camera
+                picker.mediaTypes = mediaTypes
+                if navVC.allowPickingVideo {
+                    picker.videoMaximumDuration = navVC.videoMaximumDuration
+                }
+                picker.delegate = self
+                picker.cameraDevice = .rear
+                self.present(picker, animated: true, completion: nil)
+            }
+            
+            return
+        }
+        
         animationDelegate = ModelAnimationDelegate(contentImage: cell.imageView, superView: collectionView)
         let configuration = ShowImageConfiguration(dataArray: dataArray, currentIndex: indexPath.item,selectCount: navVC.selectArray.count, maxCount: navVC.maxSelectCount, isOriginalImage: isOriginalImage, selectType: selectType)
         showImage(configuration, delegate: animationDelegate, formVC: self)
@@ -222,6 +258,70 @@ extension LPhotoPickerController: ShowImageVCDelegate {
         LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: isOriginalImage) { (imageArr, assetArr) in
             navVC.imageDelegete?.imagePickerController(navVC, photos: imageArr, asset: assetArr)
             self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+
+extension LPhotoPickerController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! CFString
+        
+        
+        
+        
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveImage(image:didFinishSavingWithError:contextInfo:)), nil)
+            
+        }else if let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+            print("sds")
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+            }) { (boo, error) in
+                if boo {
+                    let option = PHFetchOptions()
+                    option.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+                    let result = PHAsset.fetchAssets(with: .video, options: option)
+                    let phasset = result.firstObject
+                    if let imageAsset = phasset {
+                        let model = LMediaResourcesModel(dataProtocol: imageAsset, dateEnum: .video, videoTime: LImagePickerManager.shared.getNewTimeFromDurationSecond(duration: Int(imageAsset.duration)))
+                        self.dataArray.append(model)
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                        }
+                        
+                    }
+                    
+                }
+            }
+            
+            
+
+        }
+        
+        
+        switch mediaType {
+        case kUTTypeMovie:
+            print("kUTTypeMovie")
+        case kUTTypeImage:
+            print("kUTTypeImage")
+            
+        default: break
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func saveImage(image: UIImage, didFinishSavingWithError error: Error?, contextInfo: AnyObject) {
+        let option = PHFetchOptions()
+        option.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        let result = PHAsset.fetchAssets(with: .image, options: option)
+        let phasset = result.firstObject
+        if let imageAsset = phasset {
+            let model = LMediaResourcesModel(dataProtocol: imageAsset, dateEnum: .image)
+            dataArray.append(model)
+            collectionView.reloadData()
         }
     }
 }

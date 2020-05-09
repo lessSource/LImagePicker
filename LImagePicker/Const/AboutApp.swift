@@ -201,7 +201,7 @@ extension UIViewController {
         present(alertVC, animated: true, completion: nil)
     }
     
-    public func showAlertController(_ title: String = "", message: String = "", preferredStyle: UIAlertController.Style = .alert, actionTitles: [String], complete: ((Int) -> ())? ) {
+    public func showAlertController(_ title: String? = nil, message: String? = nil, preferredStyle: UIAlertController.Style = .alert, actionTitles: [String], complete: ((Int) -> ())? ) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         for (i, item) in actionTitles.enumerated() {
             let alertAction = UIAlertAction(title: item, style: item == "取消" ? .cancel : .default) { (action) in

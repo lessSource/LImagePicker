@@ -28,8 +28,9 @@ class ViewController: UIViewController {
         print("buttonClick")
         let imagePicker = LImagePickerController(delegate: self)
         imagePicker.modalPresentationStyle = .custom
+        imagePicker.allowTakePicture = true
+        imagePicker.allowTakeVideo = true
         imagePicker.allowPickingVideo = true
-        
 //        imagePicker.allowPickingMultipleVideo = true
         self.present(imagePicker, animated: true, completion: nil)
         
@@ -38,8 +39,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: LImagePickerDelegate {
-    func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [PHAsset]) {
+    func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [LMediaResourcesModel]) {
         print("ddd")
-//        picker.selectArray
+        if asset[0].dateEnum == .audio {
+            print("dsd")
+        }
     }
 }

@@ -214,11 +214,11 @@ extension LImagePickerManager {
     }
     
     // 获取选中的图片
-    func getSelectPhotoWithAsset(_ dataArray: [LMediaResourcesModel],isOriginal: Bool = true, completion: @escaping ([UIImage], [PHAsset]) -> ()) {
+    func getSelectPhotoWithAsset(_ dataArray: [LMediaResourcesModel],isOriginal: Bool = true, completion: @escaping ([UIImage], [LMediaResourcesModel]) -> ()) {
         let group = DispatchGroup()
         let queue = DispatchQueue(label: "com.getPhoto.queue")
         var imageArr = [UIImage]()
-        var assetArr = [PHAsset]()
+        var assetArr = [LMediaResourcesModel]()
         for mediaModel in dataArray {
             queue.async(group: group, execute: DispatchWorkItem(block: {
                 guard let asset = mediaModel.dataProtocol as? PHAsset else { return }
@@ -226,12 +226,12 @@ extension LImagePickerManager {
                     print(Thread.current)
                     self.getOriginalPhotoWithAsset(asset, progressHandler: nil) { (image, info) in
                         imageArr.append(image)
-                        assetArr.append(asset)
+                        assetArr.append(mediaModel)
                     }
                 }else {
                     self.getPhotoWithAsset(asset, photoWidth: LConstant.screenWidth) { (image, info) in
                         imageArr.append(image)
-                        assetArr.append(asset)
+                        assetArr.append(mediaModel)
                     }
                 }
             }))
@@ -257,7 +257,7 @@ extension LImagePickerManager {
     }
 
     // 格式化视频时间
-    fileprivate func getNewTimeFromDurationSecond(duration: Int) -> String {
+    func getNewTimeFromDurationSecond(duration: Int) -> String {
         var newTime = ""
         switch duration {
         case 0..<10:

@@ -17,7 +17,7 @@ extension String: ImageDataProtocol { }
 
 extension PHAsset: ImageDataProtocol { }
 
-enum ImageDataEnum {
+public enum ImageDataEnum {
     case image
     case video
     case audio
@@ -80,11 +80,11 @@ struct ShowImageConfiguration {
     }
 }
 
-struct LMediaResourcesModel: Equatable {
+public struct LMediaResourcesModel: Equatable {
     /** 资源 */
     public var dataProtocol: ImageDataProtocol
     /** 类型 */
-    var dateEnum: ImageDataEnum
+    public var dateEnum: ImageDataEnum
     /** 是否选中 */
     var isSelect: Bool
     /** 视频时间 */
@@ -107,7 +107,7 @@ struct LMediaResourcesModel: Equatable {
     }
 }
 
-func ==(lhs: LMediaResourcesModel, rhs: LMediaResourcesModel) -> Bool {
+public func ==(lhs: LMediaResourcesModel, rhs: LMediaResourcesModel) -> Bool {
     if let lhsStr = lhs.dataProtocol as? String, let rhsStr = rhs.dataProtocol as? String {
         return lhsStr == rhsStr
     }else if let lhsAss = lhs.dataProtocol as? PHAsset, let rhsAss = rhs.dataProtocol as? PHAsset {

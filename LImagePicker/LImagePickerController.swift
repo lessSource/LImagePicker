@@ -10,11 +10,11 @@ import UIKit
 import Photos
 
 public protocol LImagePickerDelegate: class {
-    func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [PHAsset])
+    func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [LMediaResourcesModel])
 }
 
 extension LImagePickerDelegate {
-    func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [PHAsset]) { }
+    func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [LMediaResourcesModel]) { }
 }
 
 
@@ -31,15 +31,15 @@ public class LImagePickerController: UINavigationController {
     public var videoSelectMaxDuration: Int = Int.max
     /** 是否允许多选视频/图片 默认false */
     public var allowPickingMultipleVideo: Bool = false
-
-    
-
     /** 是否允许拍照 默认false */
     public var allowTakePicture: Bool = false
     /** 是否允许拍摄视频 默认false */
     public var allowTakeVideo: Bool = false
+    
+
+
     /** 视频最大拍摄时间 默认30s */
-    public var videoMaximumDuration: Int = 30
+    public var videoMaximumDuration: Double = 30.0
     /** 超时时间 默认15秒，当选取图片时间超过15还没取成功时，会自动dismiss */
     public var timeout: Int = 15
     
