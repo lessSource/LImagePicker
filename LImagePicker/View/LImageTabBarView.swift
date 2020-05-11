@@ -13,6 +13,8 @@ enum ImageTabBarButtonType {
     case complete
     /** 预览 */
     case preview
+    /** 编辑 */
+    case edit
 }
 
 protocol ImageTabBarViewDelegate: NSObjectProtocol {
@@ -49,6 +51,14 @@ class LImageTabBarView: UIView {
                 completeButton.setTitleColor(UIColor(white: 0, alpha: 1.0), for: .normal)
                 previewButton.setTitleColor(UIColor(white: 0, alpha: 1.0), for: .normal)
             }
+            if currentCount == 1 {
+                editButton.isUserInteractionEnabled = true
+                editButton.setTitleColor(UIColor(white: 0, alpha: 1.0), for: .normal)
+            }else {
+                editButton.isUserInteractionEnabled = false
+                editButton.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .normal)
+            }
+            
             completeButton.l_width = completeButton.titleLabel?.intrinsicContentSize.width ?? 0
             completeButton.l_x = LConstant.screenWidth - 15 - completeButton.l_width
         }
@@ -70,6 +80,14 @@ class LImageTabBarView: UIView {
         return button
     }()
     
+    fileprivate lazy var editButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 60, y: 4.5, width: 40, height: 40))
+        button.setTitle("编辑", for: .normal)
+        button.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutView()
@@ -83,8 +101,10 @@ class LImageTabBarView: UIView {
     fileprivate func layoutView() {
         addSubview(completeButton)
         addSubview(previewButton)
+        addSubview(editButton)
         completeButton.addTarget(self, action: #selector(completeButtonClick(_ :)), for: .touchUpInside)
         previewButton.addTarget(self, action: #selector(previewButtonClick(_ :)), for: .touchUpInside)
+        editButton.addTarget(self, action: #selector(editButtonClick(_ :)), for: .touchUpInside)
         let lineView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: 1))
         lineView.backgroundColor = UIColor.groupTableViewBackground
         addSubview(lineView)
@@ -99,4 +119,7 @@ class LImageTabBarView: UIView {
         delegate?.imageTabBarViewButton(.preview)
     }
 
+    @objc fileprivate func editButtonClick(_ sender: UIButton) {
+        delegate?.imageTabBarViewButton(.edit)
+    }
 }

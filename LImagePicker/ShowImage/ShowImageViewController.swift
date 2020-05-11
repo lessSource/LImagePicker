@@ -192,6 +192,9 @@ extension ShowImageViewController: ShowImageNavTabDelegate {
                     configuration.selectCount -= 1
                 }
                 tabBarView.selectCount = configuration.selectCount
+//                collectionView.reloadData()
+// 
+                
             }
         case .delete:
             showAlertController(message: "是否删这张照片", actionTitles: ["确认","取消"]) { [weak self] (actionIndex) in

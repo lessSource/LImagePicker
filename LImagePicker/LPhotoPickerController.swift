@@ -152,9 +152,11 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         let cell: LImagePickerCell = collectionView.dequeueReusableCell(withReuseIdentifier: LImagePickerCell.l_identifire, for: indexPath) as! LImagePickerCell
         
         if indexPath.item == dataArray.count {
-            cell.backgroundColor = UIColor.red
             cell.selectImageView.isHidden = true
             cell.selectButton.isUserInteractionEnabled = false
+            cell.imageView.image = UIImage.imageNameFromBundle("icon_addPhoto")
+            cell.imageView.contentMode = .center
+            cell.backView.isHidden = true
             return cell
         }
         
@@ -163,6 +165,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
             cell.selectImageView.isHidden = false
             cell.selectButton.isUserInteractionEnabled = true
         case .image:
+            cell.backView.isHidden = true
             if dataArray[indexPath.item].dateEnum == .video {
                 cell.selectImageView.isHidden = true
                 cell.selectButton.isUserInteractionEnabled = false
@@ -171,6 +174,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
                 cell.selectButton.isUserInteractionEnabled = true
             }
         case .video:
+            cell.backView.isHidden = false
             if dataArray[indexPath.item].dateEnum != .video {
                 cell.selectImageView.isHidden = true
                 cell.selectButton.isUserInteractionEnabled = false
@@ -200,17 +204,18 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
             if navVC.allowTakePicture {
                 mediaTypes.append(kUTTypeImage as String)
             }
-
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.mediaTypes = mediaTypes
+            picker.delegate = self
+            picker.cameraDevice = .rear
             showAlertController(preferredStyle: .actionSheet, actionTitles: ["相机","取消"]) { (row) in
-                let picker = UIImagePickerController()
-                picker.sourceType = .camera
-                picker.mediaTypes = mediaTypes
-                if navVC.allowPickingVideo {
-                    picker.videoMaximumDuration = navVC.videoMaximumDuration
+                if row == 0 {
+                    if navVC.allowPickingVideo {
+                        picker.videoMaximumDuration = navVC.videoMaximumDuration
+                    }
+                    self.present(picker, animated: true, completion: nil)
                 }
-                picker.delegate = self
-                picker.cameraDevice = .rear
-                self.present(picker, animated: true, completion: nil)
             }
             
             return
@@ -224,14 +229,26 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
     // ImageTabBarViewDelegate
     func imageTabBarViewButton(_ buttonType: ImageTabBarButtonType) {
         guard let navVC = navigationController as? LImagePickerController else { return }
-        if buttonType == .preview {
+        
+        switch buttonType {
+        case .preview:
             animationDelegate = ModelAnimationDelegate()
             showImage(ShowImageConfiguration(dataArray: navVC.selectArray, currentIndex: 0, maxCount: navVC.maxSelectCount), delegate: animationDelegate)
-        }else if buttonType == .complete {
+        case .complete:
             LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: isOriginalImage) { (imageArr, assetArr) in
                 navVC.imageDelegete?.imagePickerController(navVC, photos: imageArr, asset: assetArr)
                 self.dismiss(animated: true, completion: nil)
             }
+        case .edit:
+            let editPhotosVC = LEditPhotosViewController()
+            pushAndHideTabbar(editPhotosVC)
+            let image = UIImagePickerController()
+            image.isEditing = true
+            image.allowsEditing = true
+//            image.imageExportPreset
+//            pushAndHideTabbar(image)
+        image.delegate = self
+        self.present(image, animated: true, completion: nil)
         }
     }
     
@@ -264,52 +281,38 @@ extension LPhotoPickerController: ShowImageVCDelegate {
 
 
 extension LPhotoPickerController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as! CFString
-        
-        
-        
-        
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveImage(image:didFinishSavingWithError:contextInfo:)), nil)
-            
-        }else if let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-            print("sds")
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-            }) { (boo, error) in
-                if boo {
-                    let option = PHFetchOptions()
-                    option.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-                    let result = PHAsset.fetchAssets(with: .video, options: option)
-                    let phasset = result.firstObject
-                    if let imageAsset = phasset {
-                        let model = LMediaResourcesModel(dataProtocol: imageAsset, dateEnum: .video, videoTime: LImagePickerManager.shared.getNewTimeFromDurationSecond(duration: Int(imageAsset.duration)))
-                        self.dataArray.append(model)
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                        }
-                        
-                    }
-                    
-                }
-            }
-            
-            
-
-        }
-        
         
         switch mediaType {
         case kUTTypeMovie:
-            print("kUTTypeMovie")
+            if let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+                }) { (success, error) in
+                    if success {
+                        let option = PHFetchOptions()
+                        option.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+                        let result = PHAsset.fetchAssets(with: .video, options: option)
+                        let phasset = result.firstObject
+                        if let imageAsset = phasset {
+                            let model = LMediaResourcesModel(dataProtocol: imageAsset, dateEnum: .video, videoTime: LImagePickerManager.shared.getNewTimeFromDurationSecond(duration: Int(imageAsset.duration)))
+                            self.dataArray.append(model)
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
+                            
+                        }
+                    }
+                }
+            }
         case kUTTypeImage:
-            print("kUTTypeImage")
-            
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveImage(image:didFinishSavingWithError:contextInfo:)), nil)
+            }
         default: break
         }
-        
         dismiss(animated: true, completion: nil)
     }
     
