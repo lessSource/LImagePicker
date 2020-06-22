@@ -1,22 +1,22 @@
 //
-//  ShowImageViewController.swift
-//  ImitationShaking
+//  LShowImageViewController.swift
+//  LImageShow
 //
-//  Created by Lj on 2019/6/25.
-//  Copyright © 2019 study. All rights reserved.
+//  Created by L j on 2020/6/19.
+//  Copyright © 2020 L. All rights reserved.
 //
-
 
 import UIKit
 import Photos
+import LPublicImageParameter
 
 private let cellMargin: CGFloat = 20
 
-public class ShowImageViewController: UICollectionViewController {
+public class LShowImageViewController: UICollectionViewController {
         
-    weak var imageDelegate: ShowImageVCDelegate?
+    weak var imageDelegate: LShowImageVCDelegate?
     
-    fileprivate lazy var configuration = ShowImageConfiguration()
+    fileprivate lazy var configuration = LShowImageConfiguration()
     
     /** 是否显示导航栏 */
     fileprivate lazy var isNacBar: Bool = true
@@ -27,14 +27,14 @@ public class ShowImageViewController: UICollectionViewController {
         }
     }
 
-    fileprivate lazy var navView: ShowImageNavView = {
-        let navView = ShowImageNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar), configuration: configuration)        
+    fileprivate lazy var navView: LShowImageNavView = {
+        let navView = LShowImageNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar), configuration: configuration)
         navView.imageDelegate = self
         return navView
     }()
     
-    fileprivate lazy var tabBarView: ShowImageTabBarView = {
-        let barView: ShowImageTabBarView = ShowImageTabBarView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
+    fileprivate lazy var tabBarView: LShowImageTabBarView = {
+        let barView: LShowImageTabBarView = LShowImageTabBarView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
         barView.imageDelegate = self
         return barView
     }()
@@ -48,7 +48,7 @@ public class ShowImageViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(configuration: ShowImageConfiguration) {
+    convenience init(configuration: LShowImageConfiguration) {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: LConstant.screenWidth + cellMargin, height: LConstant.screenHeight)
         layout.minimumLineSpacing = 0
@@ -78,7 +78,7 @@ public class ShowImageViewController: UICollectionViewController {
         collectionView?.alwaysBounceHorizontal = true
         collectionView?.isPagingEnabled = true
         collectionView?.showsHorizontalScrollIndicator = false
-        collectionView?.register(ShowImageCollectionViewCell.self, forCellWithReuseIdentifier: ShowImageCollectionViewCell.l_identifire)
+        collectionView?.register(LShowImageCollectionViewCell.self, forCellWithReuseIdentifier: LShowImageCollectionViewCell.l_identifire)
         collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex), at: .left, animated: false)
         view.addSubview(navView)
         view.addSubview(tabBarView)
@@ -88,7 +88,7 @@ public class ShowImageViewController: UICollectionViewController {
         tabBarView.selectCount = configuration.selectCount
     }
     
-    fileprivate func imageClick(_ cell: ShowImageCollectionViewCell, cellForItemAt indexPath: IndexPath, type: ShowImageCollectionViewCell.ActionEnum) {
+    fileprivate func imageClick(_ cell: LShowImageCollectionViewCell, cellForItemAt indexPath: IndexPath, type: LShowImageCollectionViewCell.ActionEnum) {
         switch type {
         case .tap:
             UIView.animate(withDuration: 0.15, animations: {
@@ -101,18 +101,18 @@ public class ShowImageViewController: UICollectionViewController {
         case .long:
             if configuration.isSave {
             }
-        case .play:
-            let showVideoPlayVC = ShowVideoPlayViewController()
-            showVideoPlayVC.videoModel = configuration.dataArray[indexPath.section]
-            showVideoPlayVC.currentImage = cell.currentImage.image
-            showVideoPlayVC.modalPresentationStyle = .custom
-            present(showVideoPlayVC, animated: false, completion: nil)
+        case .play: break
+//            let showVideoPlayVC = ShowVideoPlayViewController()
+//            showVideoPlayVC.videoModel = configuration.dataArray[indexPath.section]
+//            showVideoPlayVC.currentImage = cell.currentImage.image
+//            showVideoPlayVC.modalPresentationStyle = .custom
+//            present(showVideoPlayVC, animated: false, completion: nil)
         }
     }
 }
 
 // MARK: UICollectionViewDataSource
-extension ShowImageViewController {
+extension LShowImageViewController {
     override public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return configuration.dataArray.count
     }
@@ -122,7 +122,7 @@ extension ShowImageViewController {
     }
     
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowImageCollectionViewCell.l_identifire, for: indexPath) as! ShowImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LShowImageCollectionViewCell.l_identifire, for: indexPath) as! LShowImageCollectionViewCell
         
         cell.updateImage(imageData: configuration.dataArray[indexPath.section])
         cell.imageClick(action: { [weak self] (type) in
@@ -132,7 +132,7 @@ extension ShowImageViewController {
     }
     
     override public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let showImageCell =  cell as? ShowImageCollectionViewCell {
+        if let showImageCell =  cell as? LShowImageCollectionViewCell {
             showImageCell.scrollView.zoomScale = 1.0
             showImageCell.livePhoto.stopPlayback()
             showImageCell.livePhoto.isHidden = true
@@ -158,7 +158,7 @@ extension ShowImageViewController {
         switch configuration.selectType {
         case .default: break
         case .video:
-            if configuration.dataArray[currentIndex].dateEnum != .video {
+            if configuration.dataArray[currentIndex].dataEnum != .video {
                 navView.selectButton.isUserInteractionEnabled = false
                 navView.selectImageView.isHidden = true
             }else {
@@ -166,7 +166,7 @@ extension ShowImageViewController {
                 navView.selectImageView.isHidden = false
             }
         case .image:
-            if configuration.dataArray[currentIndex].dateEnum == .video {
+            if configuration.dataArray[currentIndex].dataEnum == .video {
                 navView.selectButton.isUserInteractionEnabled = false
                 navView.selectImageView.isHidden = true
             }else {
@@ -178,9 +178,9 @@ extension ShowImageViewController {
 }
 
 // MARK: ShowImageNavTabDelegate
-extension ShowImageViewController: ShowImageNavTabDelegate {
+extension LShowImageViewController: LShowImageNavTabDelegate {
 
-    func showImageNavDidSelect(_ view: ShowImageNavView, buttonType: ShowImageButtonType) {
+    func showImageNavDidSelect(_ view: LShowImageNavView, buttonType: ShowImageButtonType) {
         switch buttonType {
         case .select:
             if self.imageDelegate?.showImageDidSelect(self, index: currentIndex, imageData: configuration.dataArray[currentIndex]) == true {
@@ -193,7 +193,7 @@ extension ShowImageViewController: ShowImageNavTabDelegate {
                 }
                 tabBarView.selectCount = configuration.selectCount
 //                collectionView.reloadData()
-// 
+//
                 
             }
         case .delete:
@@ -213,7 +213,7 @@ extension ShowImageViewController: ShowImageNavTabDelegate {
         }
     }
     
-    func showImageBarDidSelect(_ view: ShowImageTabBarView, buttonType: ShowImageButtonType) {
+    func showImageBarDidSelect(_ view: LShowImageTabBarView, buttonType: ShowImageButtonType) {
         switch buttonType {
         case .complete:
             self.dismiss(animated: false, completion: nil)

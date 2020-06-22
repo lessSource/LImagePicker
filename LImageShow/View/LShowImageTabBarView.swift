@@ -1,17 +1,18 @@
 //
-//  ShowImageTabBarView.swift
-//  ImagePicker
+//  LShowImageTabBarView.swift
+//  LImageShow
 //
-//  Created by Lj on 2019/10/5.
-//  Copyright © 2019 Less. All rights reserved.
+//  Created by L j on 2020/6/19.
+//  Copyright © 2020 L. All rights reserved.
 //
 
 import UIKit
+import LPublicImageParameter
 
-class ShowImageTabBarView: UIView {
-
-    public weak var imageDelegate: ShowImageNavTabDelegate?
-                
+class LShowImageTabBarView: UIView {
+    
+    public weak var imageDelegate: LShowImageNavTabDelegate?
+    
     public var maxCount: Int = 1
     
     public var selectCount: Int = 0 {
@@ -43,8 +44,8 @@ class ShowImageTabBarView: UIView {
         button.setTitle("原图", for: .normal)
         button.setTitleColor(UIColor(white: 1.0, alpha: 1.0), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        button.setImage(UIImage.imageNameFromBundle("icon_album_nor"), for: .normal)
-        button.setImage(UIImage.imageNameFromBundle("icon_album_sel"), for: .selected)
+//        button.setImage(UIImage.imageNameFromBundle("icon_album_nor"), for: .normal)
+//        button.setImage(UIImage.imageNameFromBundle("icon_album_sel"), for: .selected)
         button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         button.imageView?.contentMode = .scaleAspectFit
         return button
@@ -77,5 +78,6 @@ class ShowImageTabBarView: UIView {
         originalButton.isSelected = !originalButton.isSelected
         imageDelegate?.showImageBarDidSelect(self, buttonType: .original)
     }
-
+    
+    
 }

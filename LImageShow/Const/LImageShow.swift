@@ -1,22 +1,23 @@
 //
-//  ShowImage.swift
-//  ImitationShaking
+//  LImageShow.swift
+//  LImageShow
 //
-//  Created by Lj on 2019/6/25.
-//  Copyright © 2019 study. All rights reserved.
+//  Created by L j on 2020/6/19.
+//  Copyright © 2020 L. All rights reserved.
 //
 
 import UIKit
+import LPublicImageParameter
 
 public protocol ShowImageProtocol { }
 
 
 extension ShowImageProtocol where Self: UIViewController {
-    func showImage(_ configuration: ShowImageConfiguration, formVC: UIViewController? = nil) {
+    func showImage(_ configuration: LShowImageConfiguration, formVC: UIViewController? = nil) {
         assert(configuration.dataArray.count != 0, "数组不能为空！！！！")
         assert(configuration.dataArray.count > configuration.currentIndex, "序号能不能大于数组数量！！！！")
-        let showImageVC = ShowImageViewController(configuration: configuration)
-        showImageVC.imageDelegate = formVC as? ShowImageVCDelegate
+        let showImageVC = LShowImageViewController(configuration: configuration)
+        showImageVC.imageDelegate = formVC as? LShowImageVCDelegate
         showImageVC.modalPresentationStyle = .custom
         present(showImageVC, animated: true, completion: nil)
     }
@@ -24,11 +25,11 @@ extension ShowImageProtocol where Self: UIViewController {
 
 extension ShowImageProtocol where Self: UIViewController, Self: UIViewControllerTransitioningDelegate {
     // 带动画的显示大图 ---- 必须遵循UIViewControllerTransitioningDelegate
-    func showImage(_ configuration: ShowImageConfiguration, delegate: ModelAnimationDelegate? = nil, formVC: UIViewController? = nil) {
+    func showImage(_ configuration: LShowImageConfiguration, delegate: ModelAnimationDelegate? = nil, formVC: UIViewController? = nil) {
         assert(configuration.dataArray.count != 0, "数组不能为空！！！！")
         assert(configuration.dataArray.count > configuration.currentIndex, "序号能不能大于数组数量！！！！")
-        let showImageVC = ShowImageViewController(configuration: configuration)
-        showImageVC.imageDelegate = formVC as? ShowImageVCDelegate
+        let showImageVC = LShowImageViewController(configuration: configuration)
+        showImageVC.imageDelegate = formVC as? LShowImageVCDelegate
         showImageVC.transitioningDelegate = delegate
         showImageVC.modalPresentationStyle = .custom
         if let _ = delegate {
@@ -151,7 +152,7 @@ extension ModelAnimationDelegate {
     // 消失动画
     fileprivate func dismissViewAnimation(transitionContext: UIViewControllerContextTransitioning) {
         // 获取一系列view
-        guard let formVC = transitionContext.viewController(forKey: .from) as? ShowImageViewController, let cell = formVC.collectionView?.visibleCells.first as? ShowImageCollectionViewCell,let image = cell.currentImage.image ,let window = UIApplication.shared.delegate?.window,let _ = contentImage else {
+        guard let formVC = transitionContext.viewController(forKey: .from) as? LShowImageViewController, let cell = formVC.collectionView?.visibleCells.first as? LShowImageCollectionViewCell,let image = cell.currentImage.image ,let window = UIApplication.shared.delegate?.window,let _ = contentImage else {
             dismissViewDefaultAnimation(transitionContext: transitionContext)
             return
         }
@@ -224,3 +225,6 @@ extension ModelAnimationDelegate {
         }
     }
 }
+
+
+

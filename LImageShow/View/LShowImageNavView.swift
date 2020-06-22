@@ -1,22 +1,22 @@
 //
-//  ShowImageNavView.swift
-//  ImagePicker
+//  LShowImageNavView.swift
+//  LImageShow
 //
-//  Created by Lj on 2019/10/5.
-//  Copyright © 2019 Less. All rights reserved.
+//  Created by L j on 2020/6/19.
+//  Copyright © 2020 L. All rights reserved.
 //
 
 import UIKit
+import LPublicImageParameter
 
-class ShowImageNavView: UIView {
+class LShowImageNavView: UIView {
+    public weak var imageDelegate: LShowImageNavTabDelegate?
     
-    public weak var imageDelegate: ShowImageNavTabDelegate?
-        
-    fileprivate lazy var configuration = ShowImageConfiguration()
-        
+    fileprivate lazy var configuration = LShowImageConfiguration()
+    
     public var isImageSelect: Bool = false {
         didSet {
-            selectImageView.image = !isImageSelect ? UIImage.imageNameFromBundle("icon_album_nor") : UIImage.imageNameFromBundle("icon_album_sel")
+//            selectImageView.image = !isImageSelect ? UIImage.imageNameFromBundle("icon_album_nor") : UIImage.imageNameFromBundle("icon_album_sel")
         }
     }
     
@@ -53,7 +53,7 @@ class ShowImageNavView: UIView {
         backgroundColor = UIColor(white: 0.0, alpha: 0.5)
     }
     
-    convenience init(frame: CGRect, configuration: ShowImageConfiguration) {
+    convenience init(frame: CGRect, configuration: LShowImageConfiguration) {
         self.init(frame: frame)
         self.configuration = configuration
         layoutView()
@@ -71,11 +71,11 @@ class ShowImageNavView: UIView {
         addSubview(backButton)
         
         if configuration.isDelete {
-            selectImageView.image = UIImage.imageNameFromBundle("icon_del")
+//            selectImageView.image = UIImage.imageNameFromBundle("icon_del")
         }
         if configuration.isSelect {
-//            addSubview(backButton)
-//            backButton.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
+            //            addSubview(backButton)
+            //            backButton.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
         }
         backButton.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
         selectButton.addTarget(self, action: #selector(selectButtonClick(_ :)), for: .touchUpInside)
@@ -83,7 +83,7 @@ class ShowImageNavView: UIView {
     
     // MARK:- public
     public func selectImageViewAnimation(_ isSelect: Bool) {
-        if isSelect { selectImageView.showOscillatoryAnimation() }
+//        if isSelect { selectImageView.showOscillatoryAnimation() }
         isImageSelect = isSelect
     }
     
@@ -94,12 +94,13 @@ class ShowImageNavView: UIView {
     
     @objc fileprivate func selectButtonClick(_ sender: UIButton) {
         imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
-
-//        if configuration.isDelete {
-//            imageDelegate?.showImageNavDidSelect(self, buttonType: .delete)
-//        }else if configuration.isSelect {
-//            imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
-//        }
+        
+        //        if configuration.isDelete {
+        //            imageDelegate?.showImageNavDidSelect(self, buttonType: .delete)
+        //        }else if configuration.isSelect {
+        //            imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
+        //        }
     }
+    
     
 }

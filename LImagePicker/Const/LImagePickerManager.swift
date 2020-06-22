@@ -8,6 +8,8 @@
 
 import UIKit
 import Photos
+import LPublicImageParameter
+
 
 final class LImagePickerManager  {
     

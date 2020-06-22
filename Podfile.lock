@@ -1,0 +1,22 @@
+PODS:
+  - FHHFPSIndicator (1.0.2)
+  - Kingfisher (5.13.4):
+    - Kingfisher/Core (= 5.13.4)
+  - Kingfisher/Core (5.13.4)
+
+DEPENDENCIES:
+  - FHHFPSIndicator
+  - Kingfisher
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - FHHFPSIndicator
+    - Kingfisher
+
+SPEC CHECKSUMS:
+  FHHFPSIndicator: 29d986402ea729a941a3cda184e3635d1def69ae
+  Kingfisher: d2279a7abece3c7f25a80cd2b7f363ca5cf3f44c
+
+PODFILE CHECKSUM: b1415479d4d20602a6b12bd95a64efa1eb8bdd6c
+
+COCOAPODS: 1.8.4

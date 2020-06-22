@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LPublicImageParameter
 
 enum ImageTabBarButtonType {
     /** 完成 */

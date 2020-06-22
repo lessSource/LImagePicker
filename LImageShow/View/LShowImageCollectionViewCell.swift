@@ -1,18 +1,17 @@
 //
-//  ShowImageCollectionViewCell.swift
-//  ImitationShaking
+//  LShowImageCollectionViewCell.swift
+//  LImageShow
 //
-//  Created by Lj on 2019/6/25.
-//  Copyright © 2019 study. All rights reserved.
+//  Created by L j on 2020/6/19.
+//  Copyright © 2020 L. All rights reserved.
 //
 
 import UIKit
 import Photos
 import PhotosUI
-import Kingfisher
+import LPublicImageParameter
 
-class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
-    
+class LShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     enum ActionEnum {
         case tap    // 点击
         case long   // 长按
@@ -24,7 +23,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     private var isLivePhoto: Bool = false
     
     private(set) var action: actionClosure?
-
+    
     private(set) var imageRequestID: PHImageRequestID?
     
     private(set) var assetIdentifier: String = ""
@@ -52,7 +51,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         image.isUserInteractionEnabled = true
         return image
     }()
-
+    
     public lazy var livePhoto: PHLivePhotoView = {
         let livePhoto = PHLivePhotoView()
         livePhoto.contentMode = .scaleAspectFit
@@ -63,7 +62,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
     fileprivate lazy var playerButton: UIButton = {
         let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.width/2 - 25, y: UIScreen.main.bounds.height/2 - 25, width: 80, height: 80))
-        button.setImage(UIImage.imageNameFromBundle("icon_video"), for: .normal)
+        //            button.setImage(UIImage.imageNameFromBundle("icon_video"), for: .normal)
         button.isHidden = true
         return button
     }()
@@ -99,7 +98,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureClick(_ :)))
         currentImage.addGestureRecognizer(longGesture)
         
-        let doubleGesture = UITapGestureRecognizer(target: self, action: #selector(ShowImageCollectionViewCell.doubleGestureClick(_ :)))
+        let doubleGesture = UITapGestureRecognizer(target: self, action: #selector(LShowImageCollectionViewCell.doubleGestureClick(_ :)))
         doubleGesture.numberOfTapsRequired = 2;
         currentImage.addGestureRecognizer(doubleGesture)
         tapGesture.require(toFail: doubleGesture)
@@ -150,21 +149,22 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     public func updateImage(imageData: LMediaResourcesModel) {
         let start = CACurrentMediaTime()
         livePhoto.isHidden = true
+        
         if let image = imageData.dataProtocol as? UIImage {
             currentImage.image = image
         }else if let asset = imageData.dataProtocol as? PHAsset {
-            loadImage(asset, dateEnum: imageData.dateEnum)
+            loadImage(asset, dateEnum: imageData.dataEnum)
         }else if let string = imageData.dataProtocol as? String {
             if string.hasPrefix("http") {
-                if imageData.dateEnum == .image, let url = URL(string: string) {
-                    currentImage.kf.setImage(with: ImageResource(downloadURL: url), placeholder: UIImage(named: ""))
+                if imageData.dataEnum == .image, let url = URL(string: string) {
+//                    currentImage.kf.setImage(with: ImageResource(downloadURL: url), placeholder: UIImage(named: ""))
                     print(url)
-                }else if imageData.dateEnum == .video {
+                }else if imageData.dataEnum == .video {
                     if !imageData.videoCover.isEmpty, let url = URL(string: imageData.videoCover) {
-                        currentImage.kf.setImage(with: ImageResource(downloadURL: url), placeholder: UIImage(named: ""))
+//                        currentImage.kf.setImage(with: ImageResource(downloadURL: url), placeholder: UIImage(named: ""))
                         print(url)
                     }else {
-                        currentImage.l_getNetWorkVidoeImage(urlStr: string, placeholder: "")
+//                        currentImage.l_getNetWorkVidoeImage(urlStr: string, placeholder: "")
                     }
                 }else {
                     currentImage.image = UIImage(named: "")
@@ -173,7 +173,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
                 currentImage.image = UIImage(named: string)
             }
         }
-        playerButton.isHidden = imageData.dateEnum != .video
+        playerButton.isHidden = imageData.dataEnum != .video
         let end = CACurrentMediaTime()
         print("方法耗时为：\(end-start)")
     }
@@ -181,9 +181,9 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     public func imageClick(action: @escaping actionClosure) {
         self.action = action
     }
-
+    
     // MARK:- fileprivate
-    fileprivate func loadImage(_ asset: PHAsset, dateEnum: ImageDataEnum) {
+    fileprivate func loadImage(_ asset: PHAsset, dateEnum: LImageDataEnum) {
         if livePhotoPlay { livePhoto.stopPlayback() }
         self.asset = asset
         assetIdentifier = asset.localIdentifier
@@ -192,21 +192,21 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         option.resizeMode = .fast
         option.isSynchronous = true
         let start = CACurrentMediaTime()
-
+        
         let imageRequestID = PHImageManager.default().requestImageData(for: asset, options: option) { (data, str, orientation, info) in
             let end = CACurrentMediaTime()
             print("方法耗时为11111：\(end-start)")
             let start1 = CACurrentMediaTime()
             print(Thread.current)
             if self.assetIdentifier == asset.localIdentifier, let imageData = data {
-                if dateEnum == .gif, let gifImageClass = ImagePickerGifImage(from: imageData)  {
-                    self.currentImage.animationImages = gifImageClass.images
-                    self.currentImage.animationDuration = gifImageClass.duration
-                    self.currentImage.animationRepeatCount = 0 // 循环
-                    self.currentImage.startAnimating()
-                }else {
-                    self.currentImage.image = UIImage(data: imageData)
-                }
+//                if dateEnum == .gif, let gifImageClass = ImagePickerGifImage(from: imageData)  {
+//                    self.currentImage.animationImages = gifImageClass.images
+//                    self.currentImage.animationDuration = gifImageClass.duration
+//                    self.currentImage.animationRepeatCount = 0 // 循环
+//                    self.currentImage.startAnimating()
+//                }else {
+//                    self.currentImage.image = UIImage(data: imageData)
+//                }
                 let end1 = CACurrentMediaTime()
                 print("方法耗时为2222：\(end1-start1)")
             }else {
@@ -252,7 +252,7 @@ class ShowImageCollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
 }
 
 
-extension ShowImageCollectionViewCell: PHLivePhotoViewDelegate {
+extension LShowImageCollectionViewCell: PHLivePhotoViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         if livePhotoPlay {
             return livePhoto
@@ -262,10 +262,11 @@ extension ShowImageCollectionViewCell: PHLivePhotoViewDelegate {
     
     func livePhotoView(_ livePhotoView: PHLivePhotoView, willBeginPlaybackWith playbackStyle: PHLivePhotoViewPlaybackStyle) {
         livePhoto.isHidden = false
-     }
+    }
     
     func livePhotoView(_ livePhotoView: PHLivePhotoView, didEndPlaybackWith playbackStyle: PHLivePhotoViewPlaybackStyle) {
         livePhoto.isHidden = true
         livePhotoPlay = false
     }
+    
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LPublicImageParameter
 
 class LAlbumPickerTableViewCell: UITableViewCell {
 

@@ -9,9 +9,20 @@
 import UIKit
 import LImagePicker
 import Photos
+import LImageShow
 
 class ViewController: UIViewController {
 
+    fileprivate lazy var contentImage: UIImageView = {
+        let image = UIImageView(frame: CGRect(x: 100, y: 300, width: 200, height: 200))
+        image.backgroundColor = UIColor.red
+        image.layer.cornerRadius = 5
+        image.clipsToBounds = true
+        image.contentMode = .scaleAspectFill
+        return image
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -21,6 +32,8 @@ class ViewController: UIViewController {
         button.setTitle("测试", for: .normal)
         button.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
         view.addSubview(button)
+        
+        view.addSubview(contentImage)
     }
     
     
@@ -33,7 +46,6 @@ class ViewController: UIViewController {
         imagePicker.allowPickingVideo = true
 //        imagePicker.allowPickingMultipleVideo = true
         self.present(imagePicker, animated: true, completion: nil)
-        
     }
     
 }
@@ -41,6 +53,7 @@ class ViewController: UIViewController {
 extension ViewController: LImagePickerDelegate {
     func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [LMediaResourcesModel]) {
         print("ddd")
+        contentImage.image = photos[0]
         if asset[0].dateEnum == .audio {
             print("dsd")
         }
