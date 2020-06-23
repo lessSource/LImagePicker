@@ -18,7 +18,6 @@ class LAlbumPickerController: UIViewController {
         let navView = LImageNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
         navView.backButton.isHidden = true
         navView.titleLabel.text = "全部图片"
-        navView.backgroundColor = UIColor.white
         return navView
     }()
     

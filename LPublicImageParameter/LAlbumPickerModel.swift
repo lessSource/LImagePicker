@@ -9,7 +9,6 @@
 import UIKit
 import Photos
 
-
 public protocol LImageDataProtocol { }
 
 extension UIImage: LImageDataProtocol { }
@@ -42,7 +41,7 @@ public struct LMediaResourcesModel: Equatable {
     /** 描述 */
     public var message: String
     
-    init(dataProtocol: LImageDataProtocol, dataEnum: LImageDataEnum, isSelect: Bool = false, videoTime: String = "", videoCover: String = "", selectIndex: Int = 0, message: String = "") {
+    public init(dataProtocol: LImageDataProtocol, dataEnum: LImageDataEnum, isSelect: Bool = false, videoTime: String = "", videoCover: String = "", selectIndex: Int = 0, message: String = "") {
         self.dataProtocol = dataProtocol
         self.dataEnum = dataEnum
         self.isSelect = isSelect

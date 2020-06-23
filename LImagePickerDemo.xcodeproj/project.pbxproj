@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		098E3A6AA59062F2C212B5F4 /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */; };
 		1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */; };
+		2A3E1E5324A1ED1200D14A6A /* LAboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5224A1ED1200D14A6A /* LAboutApp.swift */; };
+		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
+		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
 		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
 		2A75812224A106E000592990 /* LEditPickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812124A106E000592990 /* LEditPickerNavView.swift */; };
 		2A75812424A1071C00592990 /* LEditPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812324A1071C00592990 /* LEditPhotosViewController.swift */; };
@@ -30,8 +33,6 @@
 		2AEE0D8E24626E57008D5179 /* LImagePicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8924626E57008D5179 /* LImagePicker.bundle */; };
 		2AEE0D8F24626E57008D5179 /* LImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */; };
 		2AEE0D9024626E57008D5179 /* LPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8B24626E57008D5179 /* LPhotoPickerController.swift */; };
-		2AEE0DA22462710C008D5179 /* LAlbumPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D922462710C008D5179 /* LAlbumPickerModel.swift */; };
-		2AEE0DA42462710C008D5179 /* AboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D942462710C008D5179 /* AboutApp.swift */; };
 		2AEE0DA62462710C008D5179 /* LImageNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D972462710C008D5179 /* LImageNavView.swift */; };
 		2AEE0DA72462710C008D5179 /* LAlbumPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D982462710C008D5179 /* LAlbumPickerTableViewCell.swift */; };
 		2AEE0DA82462710C008D5179 /* LImageTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D992462710C008D5179 /* LImageTabBarView.swift */; };
@@ -178,6 +179,9 @@
 
 /* Begin PBXFileReference section */
 		2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
+		2A3E1E5224A1ED1200D14A6A /* LAboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAboutApp.swift; sourceTree = "<group>"; };
+		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
+		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
 		2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowVideoPlayViewController.swift; sourceTree = "<group>"; };
 		2A75812124A106E000592990 /* LEditPickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPickerNavView.swift; sourceTree = "<group>"; };
 		2A75812324A1071C00592990 /* LEditPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPhotosViewController.swift; sourceTree = "<group>"; };
@@ -206,8 +210,6 @@
 		2AEE0D8924626E57008D5179 /* LImagePicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LImagePicker.bundle; sourceTree = "<group>"; };
 		2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImagePickerManager.swift; sourceTree = "<group>"; };
 		2AEE0D8B24626E57008D5179 /* LPhotoPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LPhotoPickerController.swift; sourceTree = "<group>"; };
-		2AEE0D922462710C008D5179 /* LAlbumPickerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAlbumPickerModel.swift; sourceTree = "<group>"; };
-		2AEE0D942462710C008D5179 /* AboutApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutApp.swift; sourceTree = "<group>"; };
 		2AEE0D972462710C008D5179 /* LImageNavView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImageNavView.swift; sourceTree = "<group>"; };
 		2AEE0D982462710C008D5179 /* LAlbumPickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAlbumPickerTableViewCell.swift; sourceTree = "<group>"; };
 		2AEE0D992462710C008D5179 /* LImageTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImageTabBarView.swift; sourceTree = "<group>"; };
@@ -463,9 +465,8 @@
 		2AEE0D912462710C008D5179 /* Const */ = {
 			isa = PBXGroup;
 			children = (
-				2AEE0D922462710C008D5179 /* LAlbumPickerModel.swift */,
-				2AEE0D942462710C008D5179 /* AboutApp.swift */,
 				2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */,
+				2A3E1E5224A1ED1200D14A6A /* LAboutApp.swift */,
 			);
 			path = Const;
 			sourceTree = "<group>";
@@ -488,6 +489,8 @@
 				2AEEED7F249BAF850009AAE1 /* Info.plist */,
 				2AEEED99249BAFE40009AAE1 /* LAlbumPickerModel.swift */,
 				2AEEED9B249BB32A0009AAE1 /* LAboutApp.swift */,
+				2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */,
+				2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */,
 			);
 			path = LPublicImageParameter;
 			sourceTree = "<group>";
@@ -900,6 +903,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1109,11 +1113,10 @@
 				2AEE0D9024626E57008D5179 /* LPhotoPickerController.swift in Sources */,
 				2AEE0D8C24626E57008D5179 /* LImagePickerController.swift in Sources */,
 				2AEE0DA62462710C008D5179 /* LImageNavView.swift in Sources */,
-				2AEE0DA42462710C008D5179 /* AboutApp.swift in Sources */,
+				2A3E1E5324A1ED1200D14A6A /* LAboutApp.swift in Sources */,
 				2AEE0DA92462710C008D5179 /* LImagePickerCell.swift in Sources */,
 				2AEE0DA72462710C008D5179 /* LAlbumPickerTableViewCell.swift in Sources */,
 				2AEE0DA82462710C008D5179 /* LImageTabBarView.swift in Sources */,
-				2AEE0DA22462710C008D5179 /* LAlbumPickerModel.swift in Sources */,
 				2AEE0D8D24626E57008D5179 /* LAlbumPickerController.swift in Sources */,
 				2AEE0D8F24626E57008D5179 /* LImagePickerManager.swift in Sources */,
 			);
@@ -1131,6 +1134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */,
 				2AEEED9C249BB32A0009AAE1 /* LAboutApp.swift in Sources */,
 				2AEEED9A249BAFE40009AAE1 /* LAlbumPickerModel.swift in Sources */,
 			);

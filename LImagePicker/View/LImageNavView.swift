@@ -25,7 +25,7 @@ class LImageNavView: UIView {
         let button = UIButton()
         button.setTitle("返回", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(UIColor.lLabelColor, for: .normal)
         button.contentHorizontalAlignment = .left
         button.frame = CGRect(x: 15, y: LConstant.statusHeight + 2, width: 60, height: 40)
         button.addTarget(self, action: #selector(backButtonClick), for: .touchUpInside)
@@ -36,7 +36,7 @@ class LImageNavView: UIView {
         let button = UIButton()
         button.setTitle("取消", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitleColor(UIColor.lLabelColor, for: .normal)
         button.contentHorizontalAlignment = .right
         button.frame = CGRect(x: LConstant.screenWidth - 75, y: LConstant.statusHeight + 2, width: 60, height: 40)
         button.addTarget(self, action: #selector(completeButtonClick), for: .touchUpInside)
@@ -45,6 +45,7 @@ class LImageNavView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = UIColor.lBackWhite
         addSubview(titleLabel)
         addSubview(backButton)
         addSubview(cancleButton)
@@ -56,12 +57,11 @@ class LImageNavView: UIView {
     
     // MARK:- Event
     @objc fileprivate func backButtonClick() {
-        viewController()?.navigationController?.popViewController(animated: true)
-        
+        getControllerFromView()?.navigationController?.popViewController(animated: true)
     }
     
     @objc fileprivate func completeButtonClick() {
-        viewController()?.navigationController?.dismiss(animated: true, completion: nil)
+        getControllerFromView()?.navigationController?.dismiss(animated: true, completion: nil)
     }
 
 }

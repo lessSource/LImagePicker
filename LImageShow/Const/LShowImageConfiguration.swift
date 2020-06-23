@@ -10,7 +10,7 @@ import UIKit
 import LPublicImageParameter
 
 /** 选择类型 */
-enum LImagePickerSelectEnum {
+public enum LImagePickerSelectEnum {
     case `default`
     case image
     case video

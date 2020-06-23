@@ -76,6 +76,19 @@ extension UIDevice {
     
 }
 
+public struct App {
+    
+    private static var info: Dictionary<String, Any> {
+        return Bundle.main.infoDictionary ?? [String: Any]()
+    }
+    
+    /** 名称 */
+    public static var appName: String {
+        return info["CFBundleDisplayName"] as? String ?? ""
+    }
+    
+}
+
 
 public extension UIView {
     var l_width: CGFloat {
@@ -113,9 +126,82 @@ public extension UIView {
             self.frame = frame
         }
     }
+}
+
+extension UIColor {
     
+    /** 字体颜色 */
+    public class var lLabelColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor.label
+        } else {
+            return UIColor.black
+        }
+        
+//        return UIColor(hue: 0.0, saturation: 0.0, brightness: 0.0, alpha: 1.0)
+
+    }
     
-    func getControllerFromView() -> UIViewController? {
+    /** 白色背景色 */
+    public class var lBackWhite: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { (trailCollection) -> UIColor in
+                if trailCollection.userInterfaceStyle == .light {
+                    return UIColor(hue: 0.0, saturation: 0.0, brightness: 1.0, alpha: 1.0)
+                }else {
+                    return UIColor(hue: 240.0, saturation: 0.067, brightness: 0.118, alpha: 1.0)
+                }
+            }
+        } else {
+            return UIColor.white
+        }
+    }
+    
+    // 返回HSBA模式颜色值
+    public var hsba: (hue: CGFloat, saturation: CGFloat, brightness: CGFloat, alpha: CGFloat) {
+        var h: CGFloat = 0
+        var s: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        self.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+        return (h * 360, s, b, a)
+    }
+    
+    class func withHex(hexString hex: String, alpha: CGFloat = 1) -> UIColor {
+        // 去除空格
+        var cString: String = hex.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines).uppercased()
+        // 去除#
+        if cString.hasPrefix("#") {
+            cString = (cString as NSString).substring(from: 1)
+        }
+        if cString.count != 6 {
+            return UIColor.gray
+        }
+        
+        var red: UInt32 = 0, green: UInt32 = 0, blue: UInt32 = 0
+        Scanner(string: cString[0..<2]).scanHexInt32(&red)
+        Scanner(string: cString[2..<4]).scanHexInt32(&green)
+        Scanner(string: cString[4..<6]).scanHexInt32(&blue)
+        return UIColor(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: alpha)
+    }
+}
+
+extension String {
+    
+    subscript (r: Range<Int>) -> String {
+        get {
+            let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
+            let endIndex = self.index(self.startIndex, offsetBy: r.upperBound)
+            return String(self[startIndex..<endIndex])
+        }
+    }
+}
+
+extension UIView {
+    
+    public typealias ViewBlock = (_ view: LPromptView) -> ()
+    
+    public func getControllerFromView() -> UIViewController? {
         for view in sequence(first: self.superview, next: { $0?.superview }) {
             if let responder = view?.next, responder is UIViewController {
                 return responder as? UIViewController
@@ -123,16 +209,13 @@ public extension UIView {
         }
         return nil
     }
-}
-
-extension UIView {
     
-    func showOscillatoryAnimation() {
+    public func showOscillatoryAnimation() {
         UIView.animate(withDuration: 0.15, delay: 0, options: [.beginFromCurrentState, .curveEaseInOut], animations: {
-            self.layer.setValue(0.92, forKeyPath: "transform.scale")
+            self.layer.setValue(0.90, forKeyPath: "transform.scale")
         }) { (finished) in
             UIView.animate(withDuration: 0.15, delay: 0, options: [.beginFromCurrentState, .curveEaseInOut], animations: {
-                self.layer.setValue(0.92, forKeyPath: "transform.scale")
+                self.layer.setValue(0.90, forKeyPath: "transform.scale")
             }) { (finished) in
                 UIView.animate(withDuration: 0.1, delay: 0, options: [.beginFromCurrentState, .curveEaseInOut], animations: {
                     self.layer.setValue(1.0, forKeyPath: "transform.scale")
@@ -140,7 +223,56 @@ extension UIView {
             }
         }
     }
-
+    
+    public func placeholderShow(_ show: Bool,_ viewBlock: ViewBlock? = nil) {
+        if show {
+            showPromptView()
+            if let block = viewBlock {
+                block(promptView)
+            }
+        }else {
+            promptView.removeFromSuperview()
+        }
+    }
+    
+    // MARK:- private
+    private func showPromptView() {
+        if self.subviews.count > 0 {
+            var t_v = self
+            for v in self.subviews {
+                if v.isKind(of: UITableView.self) {
+                    t_v = v
+                }
+            }
+            t_v.insertSubview(promptView, aboveSubview: t_v.subviews[0])
+            promptView.backgroundColor = t_v.backgroundColor
+        }else {
+            self.addSubview(promptView)
+        }
+    }
+    
+    private struct AssociatedKeys {
+        static var PromptViewKey: String = "PromptViewKey"
+    }
+    
+    private var promptView: LPromptView {
+        get {
+            guard let view = objc_getAssociatedObject(self, &AssociatedKeys.PromptViewKey) as? LPromptView else {
+                return generatePromptView()
+            }
+            return view
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.PromptViewKey, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+    
+    private func generatePromptView() -> LPromptView {
+        let view: LPromptView = LPromptView(frame: bounds)
+        promptView = view
+        return view
+    }
+    
 }
 
 
@@ -158,23 +290,23 @@ extension NSObject {
 }
 
 
-//extension Bundle {
-//    static func imagePickerBundle() -> Bundle? {
-//        let path = Bundle(for: LPublicImageParameter.self).path(forResource: "LImagePicker", ofType: "bundle")
-//        let bundle = Bundle(path: path ?? "")
-//        return bundle
-//    }
-//}
-//
-//extension UIImage {
-//    static func imageNameFromBundle(_ name: String) -> UIImage? {
-//        let imageName = name + "@2x"
-//        let imageBundle  = Bundle.imagePickerBundle()
-//        let imagePath = imageBundle?.path(forResource: imageName, ofType: "png")
-//        let image = UIImage(contentsOfFile: imagePath ?? "")
-//        return image
-//    }
-//}
+extension Bundle {
+    static func imagePickerBundle() -> Bundle? {
+        let path = Bundle(for: LPromptView.self).path(forResource: "LPublicImageParameter", ofType: "bundle")
+        let bundle = Bundle(path: path ?? "")
+        return bundle
+    }
+}
+
+extension UIImage {
+    public static func imageNameFromBundle(_ name: String) -> UIImage? {
+        let imageName = name + "@2x"
+        let imageBundle  = Bundle.imagePickerBundle()
+        let imagePath = imageBundle?.path(forResource: imageName, ofType: "png")
+        let image = UIImage(contentsOfFile: imagePath ?? "")
+        return image
+    }
+}
 
 extension UIViewController {
     

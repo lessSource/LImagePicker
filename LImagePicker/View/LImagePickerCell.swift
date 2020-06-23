@@ -15,22 +15,22 @@ class LImagePickerCell: UICollectionViewCell {
     typealias SelectClosure = (Bool) -> (Bool)
     
     public var didSelectButtonClosure: SelectClosure?
-
-        public var assetModel: LMediaResourcesModel? {
-            didSet {
-                guard let model = assetModel else {  return }
-                selectButton.isSelected  = model.isSelect
-                selectImageView.image = model.isSelect ? UIImage.imageNameFromBundle("icon_album_sel") : UIImage.imageNameFromBundle("icon_album_nor")
-                timeLabel.text = model.videoTime
-                if let asset = model.dataProtocol as? PHAsset {
-                    let width = (LConstant.screenWidth - 3)/4
-                    LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: width) { (image, dic) in
-                        self.imageView.image = image
-                    }
-                    backView.isHidden = asset.mediaType == .image
+    
+    public var assetModel: LMediaResourcesModel? {
+        didSet {
+            guard let model = assetModel else {  return }
+            selectButton.isSelected  = model.isSelect
+            selectImageView.image = model.isSelect ? UIImage.imageNameFromBundle("icon_album_sel") : UIImage.imageNameFromBundle("icon_album_nor")
+            timeLabel.text = model.videoTime
+            if let asset = model.dataProtocol as? PHAsset {                
+                let width = (LConstant.screenWidth - 3)/4
+                LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: width) { (image, dic) in
+                    self.imageView.image = image
                 }
+                backView.isHidden = asset.mediaType == .image
             }
         }
+    }
     
     public lazy var imageView: UIImageView = {
         let image = UIImageView(frame: self.bounds)
@@ -86,7 +86,7 @@ class LImagePickerCell: UICollectionViewCell {
     }
     
     // MARK:- Event
-     @objc fileprivate func selectButtonClick(_ sender: UIButton) {
+    @objc fileprivate func selectButtonClick(_ sender: UIButton) {
         guard let closure = didSelectButtonClosure else { return }
         if closure(sender.isSelected) {
             selectImageView.image = sender.isSelected ? UIImage.imageNameFromBundle("icon_album_nor") : UIImage.imageNameFromBundle("icon_album_sel")

@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import LPublicImageParameter
 
 public protocol LImagePickerDelegate: class {
     func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [LMediaResourcesModel])
@@ -19,7 +20,7 @@ extension LImagePickerDelegate {
 
 
 public class LImagePickerController: UINavigationController {
-
+    
     weak var imageDelegete: LImagePickerDelegate?
     /** 最多可选数量 默认9 */
     var maxSelectCount: Int = 0
@@ -35,9 +36,6 @@ public class LImagePickerController: UINavigationController {
     public var allowTakePicture: Bool = false
     /** 是否允许拍摄视频 默认false */
     public var allowTakeVideo: Bool = false
-    
-
-
     /** 视频最大拍摄时间 默认30s */
     public var videoMaximumDuration: Double = 30.0
     /** 超时时间 默认15秒，当选取图片时间超过15还没取成功时，会自动dismiss */
@@ -80,29 +78,26 @@ public class LImagePickerController: UINavigationController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         setNavigationBarHidden(true, animated: true)
         reuquetsPhotosAuthorization()
-
+        
     }
     
     private func reuquetsPhotosAuthorization() {
         if !LImagePickerManager.shared.reuquetsPhotosAuthorization() {
-////            view.placeholderShow(true) { (promptView) in
-////                promptView.viewFrame(CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar))
-////                promptView.imageName(R.image.icon_permissions.name)
-////                promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(App.appName)访问你的手机相册")
-////                promptView.titleLabel.height = 60
-////                promptView.imageTop(LConstant.screenHeight/2 - 150)
-        ////                promptView.delegate = self
-        //            }
-                }
+            view.placeholderShow(true) { (promptView) in
+                promptView.frame = CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar)
+                promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(App.appName)访问你的手机相册")
+                promptView.image(UIImage.imageNameFromBundle("icon_permissions"))
+                promptView.delegate = self
+            }
+        }
     }
-    
 }
 
-extension LImagePickerController: UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+extension LImagePickerController: UIGestureRecognizerDelegate, UINavigationControllerDelegate, LPromptViewDelegate {
     
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return navigationController?.viewControllers.count != 1
@@ -124,4 +119,12 @@ extension LImagePickerController: UIGestureRecognizerDelegate, UINavigationContr
         }
         super.pushViewController(viewController, animated: true)
     }
+    
+    public func promptViewImageClick(_ view: LPromptView) {
+        let setUr = URL(string: UIApplication.openSettingsURLString)
+        if let url = setUr, UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [: ], completionHandler: nil)
+        }
+    }
+
 }

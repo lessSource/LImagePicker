@@ -10,6 +10,7 @@ import UIKit
 import LImagePicker
 import Photos
 import LImageShow
+import LPublicImageParameter
 
 class ViewController: UIViewController {
 
@@ -44,7 +45,6 @@ class ViewController: UIViewController {
         imagePicker.allowTakePicture = true
         imagePicker.allowTakeVideo = true
         imagePicker.allowPickingVideo = true
-//        imagePicker.allowPickingMultipleVideo = true
         self.present(imagePicker, animated: true, completion: nil)
     }
     
@@ -54,7 +54,7 @@ extension ViewController: LImagePickerDelegate {
     func imagePickerController(_ picker: LImagePickerController, photos: [UIImage], asset: [LMediaResourcesModel]) {
         print("ddd")
         contentImage.image = photos[0]
-        if asset[0].dateEnum == .audio {
+        if asset[0].dataEnum == .audio {
             print("dsd")
         }
     }

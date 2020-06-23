@@ -43,23 +43,16 @@ class LImageTabBarView: UIView {
                 completeButton.setTitle("完成", for: .normal)
                 completeButton.isUserInteractionEnabled = false
                 previewButton.isUserInteractionEnabled = false
-                completeButton.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .normal)
-                previewButton.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .normal)
+                completeButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(0.5), for: .normal)
+                previewButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(0.5), for: .normal)
             }else {
                 completeButton.setTitle("完成(\(currentCount)/\(maxCount))", for: .normal)
                 completeButton.isUserInteractionEnabled = true
                 previewButton.isUserInteractionEnabled = true
-                completeButton.setTitleColor(UIColor(white: 0, alpha: 1.0), for: .normal)
-                previewButton.setTitleColor(UIColor(white: 0, alpha: 1.0), for: .normal)
+                completeButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(1.0) ,for: .normal)
+                previewButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(1.0) ,for: .normal)
             }
-            if currentCount == 1 {
-                editButton.isUserInteractionEnabled = true
-                editButton.setTitleColor(UIColor(white: 0, alpha: 1.0), for: .normal)
-            }else {
-                editButton.isUserInteractionEnabled = false
-                editButton.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .normal)
-            }
-            
+            editButton.isHidden = currentCount != 1
             completeButton.l_width = completeButton.titleLabel?.intrinsicContentSize.width ?? 0
             completeButton.l_x = LConstant.screenWidth - 15 - completeButton.l_width
         }
@@ -84,7 +77,7 @@ class LImageTabBarView: UIView {
     fileprivate lazy var editButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 60, y: 4.5, width: 40, height: 40))
         button.setTitle("编辑", for: .normal)
-        button.setTitleColor(UIColor(white: 0, alpha: 0.5), for: .normal)
+        button.setTitleColor(UIColor.lLabelColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         return button
     }()

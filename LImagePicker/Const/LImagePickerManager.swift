@@ -105,7 +105,7 @@ extension LImagePickerManager {
         if let result = fetchResult {
             result.enumerateObjects({ (mediaAsset, index, stop) in
                 let time = mediaAsset.mediaType == .video ? self.getNewTimeFromDurationSecond(duration: Int(mediaAsset.duration)) : ""
-                let model = LMediaResourcesModel(dataProtocol: mediaAsset, dateEnum: self.getAssetType(asset: mediaAsset), videoTime: time)
+                let model = LMediaResourcesModel(dataProtocol: mediaAsset, dataEnum: self.getAssetType(asset: mediaAsset), videoTime: time)
                 if mediaAsset.mediaType == .image || (mediaAsset.mediaType == .video && Int(mediaAsset.duration) <= duration) {
                     asset.append(model)
                 }
@@ -115,7 +115,7 @@ extension LImagePickerManager {
             getPhotoAlbumResources(mediaType) { (assetsFetchResult) in
                 assetsFetchResult.enumerateObjects({ (mediaAsset, index, stop) in
                     let time = mediaAsset.mediaType == .video ? self.getNewTimeFromDurationSecond(duration: Int(mediaAsset.duration)) : ""
-                    let model = LMediaResourcesModel(dataProtocol: mediaAsset, dateEnum: self.getAssetType(asset: mediaAsset), videoTime: time)
+                    let model = LMediaResourcesModel(dataProtocol: mediaAsset, dataEnum: self.getAssetType(asset: mediaAsset), videoTime: time)
                     if mediaAsset.mediaType == .image || (mediaAsset.mediaType == .video && Int(mediaAsset.duration) <= duration) {
                         asset.append(model)
                     }
@@ -164,7 +164,8 @@ extension LImagePickerManager {
         imageSize = CGSize(width: pixelWith, height: piexlHeight)
         let option = PHImageRequestOptions()
         option.resizeMode = .fast
-        option.isSynchronous =  true
+        option.isSynchronous =  false
+        
         let imageRequestId = PHImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: option) { (result, info) in
             if let image = result {
                 completion(image, info)
@@ -198,7 +199,7 @@ extension LImagePickerManager {
     
     // 获取查看大图
     @discardableResult
-    func getToViewLargerVersion(_ dataProtocol: ImageDataProtocol,requestId: PHImageRequestID?, completion: @escaping (Data?) -> ()) -> PHImageRequestID? {
+    func getToViewLargerVersion(_ dataProtocol: LImageDataProtocol,requestId: PHImageRequestID?, completion: @escaping (Data?) -> ()) -> PHImageRequestID? {
         guard let asset = dataProtocol as? PHAsset else {
             return nil
         }
@@ -248,7 +249,7 @@ extension LImagePickerManager {
 
 extension LImagePickerManager { 
     // 获取资源类型
-    fileprivate func getAssetType(asset: PHAsset) -> ImageDataEnum {
+    fileprivate func getAssetType(asset: PHAsset) -> LImageDataEnum {
         if asset.mediaType == .video { return .video }
         if asset.mediaType == .audio { return .audio }
         if asset.mediaType == .image {
