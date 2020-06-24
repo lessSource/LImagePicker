@@ -101,11 +101,18 @@ class LPhotoPickerController: UIViewController {
         guard let navVC = navigationController as? LImagePickerController else { return }
         tabBarView.maxCount = navVC.maxSelectCount
         tabBarView.currentCount = navVC.selectArray.count
-        dataArray = dataArray.map {
-            var model = $0
-            model.isSelect = navVC.selectArray.contains(where: {$0 == model})
-            return model
+        DispatchQueue.global().async {
+            self.dataArray = self.dataArray.map {
+                var model = $0
+                model.isSelect = navVC.selectArray.contains(where: {$0 == model})
+                return model
+            }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
+        
+
     }
     
     // MARK:- 选择
@@ -207,6 +214,11 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         }
     }
     
+    
+    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        return false
+    }
 }
 
 

@@ -91,8 +91,7 @@ public class LImagePickerController: UINavigationController {
                 promptView.frame = CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar)
                 promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(App.appName)访问你的手机相册")
                 promptView.image(UIImage.imageNameFromBundle("icon_permissions"))
-                promptView.delegate = self
-            }
+             }
         }
     }
 }

@@ -10,11 +10,11 @@ import UIKit
 import LPublicImageParameter
 
 class LAlbumPickerTableViewCell: UITableViewCell {
-
+    
     public var albumModel: LAlbumPickerModel = LAlbumPickerModel() {
         didSet {
             nameLabel.text = "\(albumModel.title)(\(albumModel.count))"
-            numberLabel.text = "\(albumModel.selectCount)"
+            numberLabel.text = "\(albumModel.selectCount) "
             numberLabel.isHidden = albumModel.selectCount == 0
             if let asset = albumModel.asset {
                 LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: 80) { (image, dic) in
@@ -33,13 +33,13 @@ class LAlbumPickerTableViewCell: UITableViewCell {
     
     fileprivate lazy var lineView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.groupTableViewBackground
+        view.backgroundColor = UIColor.lLineColor
         return view
     }()
     
     fileprivate lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black
+        label.textColor = UIColor.lLabelColor
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
@@ -60,10 +60,10 @@ class LAlbumPickerTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -72,29 +72,43 @@ class LAlbumPickerTableViewCell: UITableViewCell {
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-         super.init(style: style, reuseIdentifier: reuseIdentifier)
-         selectionStyle = .none
-         accessoryType = .disclosureIndicator
-         layoutView()
-     }
-     
-
-     override func layoutSubviews() {
-         super.layoutSubviews()
-
-         coverImage.frame = CGRect(x: 0, y: 0, width: bounds.height, height: bounds.height - 1)
-         lineView.frame = CGRect(x: coverImage.frame.maxX, y: coverImage.l_height, width: LConstant.screenWidth - coverImage.l_width, height: 1)
-         nameLabel.frame = CGRect(x: coverImage.l_width + 10, y: 20, width: contentView.l_width - coverImage.l_width - 60, height: bounds.height - 40)
-         let width = CGFloat.maximum(numberLabel.intrinsicContentSize.width + 8, 24)
-         numberLabel.frame = CGRect(x: nameLabel.frame.maxX + 45 - width, y: bounds.height/2 - 12, width: width, height: 24)
-     }
-     
-     // MARK:- layoutView
-     fileprivate func layoutView() {
-         contentView.addSubview(coverImage)
-         contentView.addSubview(lineView)
-         contentView.addSubview(nameLabel)
-         contentView.addSubview(numberLabel)
-     }
-
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
+        accessoryType = .disclosureIndicator
+        layoutView()
+    }
+    
+    // MARK:- layoutView
+    fileprivate func layoutView() {
+        contentView.addSubview(coverImage)
+        contentView.addSubview(lineView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(numberLabel)
+        
+        coverImage.translatesAutoresizingMaskIntoConstraints = false
+        coverImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        coverImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        coverImage.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        coverImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: coverImage.bottomAnchor).isActive = true
+        lineView.leftAnchor.constraint(equalTo: coverImage.rightAnchor).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: LConstant.screenWidth - 80).isActive = true
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.centerYAnchor.constraint(equalTo: coverImage.centerYAnchor).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: coverImage.rightAnchor, constant: 10).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -30).isActive = true
+        
+        numberLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberLabel.centerYAnchor.constraint(equalTo: coverImage.centerYAnchor).isActive = true
+        numberLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
+        numberLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        numberLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 24).isActive = true
+        
+        
+    }
+    
 }

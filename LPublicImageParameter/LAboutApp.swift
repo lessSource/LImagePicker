@@ -138,8 +138,24 @@ extension UIColor {
             return UIColor.black
         }
         
-//        return UIColor(hue: 0.0, saturation: 0.0, brightness: 0.0, alpha: 1.0)
-
+        //        return UIColor(hue: 0.0, saturation: 0.0, brightness: 0.0, alpha: 1.0)
+        
+    }
+    
+    // 线的颜色
+    public class var lLineColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { (trailCollection) -> UIColor in
+                if trailCollection.userInterfaceStyle == .light {
+                    return groupTableViewBackground
+                }else {
+                    return UIColor.black
+                }
+            }
+            
+        } else {
+            return UIColor.groupTableViewBackground
+        }
     }
     
     /** 白色背景色 */

@@ -44,6 +44,7 @@ extension LImagePickerManager {
     }
 }
 
+
 extension LImagePickerManager {
     // 获取相册
     func getAlbumResources(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown,duration: Int = Int.max, complete: @escaping (_ dataArray: [LAlbumPickerModel]) -> ()) {
@@ -64,7 +65,7 @@ extension LImagePickerManager {
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
                 if collection.assetCollectionSubtype == .smartAlbumAllHidden { return }
                 if collection.assetCollectionSubtype.rawValue == 1000000201 { return } // [最近删除] 相册
-
+                
                 if fetchResult.count > 0 {
                     let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, count: fetchResult.count, selectCount: 0)
                     if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
@@ -97,7 +98,13 @@ extension LImagePickerManager {
                 complete(array)
             }
         }
-    }
+    }    
+}
+
+
+
+
+extension LImagePickerManager {
     
     // 获取相册中资源
     func getPhotoAlbumMedia(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown,duration: Int = Int.max, fetchResult: PHFetchResult<PHAsset>?, successPHAsset: @escaping ([LMediaResourcesModel]) -> () ) {
@@ -197,25 +204,6 @@ extension LImagePickerManager {
         return imageRequestId
     }
     
-    // 获取查看大图
-    @discardableResult
-    func getToViewLargerVersion(_ dataProtocol: LImageDataProtocol,requestId: PHImageRequestID?, completion: @escaping (Data?) -> ()) -> PHImageRequestID? {
-        guard let asset = dataProtocol as? PHAsset else {
-            return nil
-        }
-        let option = PHImageRequestOptions()
-        option.resizeMode = .fast
-        option.isSynchronous = true
-        let imageRequestID = PHImageManager.default().requestImageData(for: asset, options: option) { (data, str, orientation, info) in
-            completion(data)
-        }
-        if let requestId = requestId {
-            PHImageManager.default().cancelImageRequest(requestId)
-        }
-        
-        return imageRequestID
-    }
-    
     // 获取选中的图片
     func getSelectPhotoWithAsset(_ dataArray: [LMediaResourcesModel],isOriginal: Bool = true, completion: @escaping ([UIImage], [LMediaResourcesModel]) -> ()) {
         let group = DispatchGroup()
@@ -258,7 +246,7 @@ extension LImagePickerManager {
         }
         return .image
     }
-
+    
     // 格式化视频时间
     func getNewTimeFromDurationSecond(duration: Int) -> String {
         var newTime = ""

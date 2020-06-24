@@ -11,6 +11,7 @@ import LImagePicker
 import Photos
 import LImageShow
 import LPublicImageParameter
+import Kingfisher
 
 class ViewController: UIViewController {
 
@@ -35,12 +36,13 @@ class ViewController: UIViewController {
         view.addSubview(button)
         
         view.addSubview(contentImage)
+        
     }
     
     
     @objc func buttonClick() {
         print("buttonClick")
-        let imagePicker = LImagePickerController(delegate: self)
+        let imagePicker = LImagePickerController(withMacImage: 100, delegate: self)
         imagePicker.modalPresentationStyle = .custom
         imagePicker.allowTakePicture = true
         imagePicker.allowTakeVideo = true
