@@ -71,17 +71,6 @@ class LPhotoPickerController: UIViewController {
     // MARK:- initData
     func initData() {
         guard let navVC = navigationController as? LImagePickerController else { return }
-        allowPickingMultipleVideo = navVC.allowPickingMultipleVideo
-        if allowPickingMultipleVideo || navVC.selectArray.count == 0 || navVC.allowPickingVideo {
-            selectType = .default
-        }else {
-            if navVC.selectArray[0].dataEnum == .video {
-                selectType = .video
-            }else {
-                selectType = .image
-            }
-        }
-        
         LImagePickerManager.shared.getPhotoAlbumMedia(navVC.allowPickingVideo ? .unknown : .image,duration: navVC.videoSelectMaxDuration ,fetchResult: pickerModel?.fetchResult) { (dataArray) in
             self.dataArray = dataArray
             if let model = self.pickerModel {
@@ -89,14 +78,13 @@ class LPhotoPickerController: UIViewController {
             }else {
                 self.navView.titleLabel.text = "相机胶卷(\(dataArray.count))"
             }
-            
             self.checkSelectedMediaResources()
             self.collectionView.reloadData()
-            self.collectionView.scrollToItem(at: IndexPath(item: (navVC.allowTakePicture || navVC.allowPickingVideo) ? dataArray.count : dataArray.count - 1, section: 0), at: .bottom, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(item: dataArray.count - 1, section: 0), at: .bottom, animated: false)
         }
     }
     
-    // MARK:- 获取选中资源
+    // MARK:- 标记选中资源
     fileprivate func checkSelectedMediaResources() {
         guard let navVC = navigationController as? LImagePickerController else { return }
         tabBarView.maxCount = navVC.maxSelectCount
@@ -111,8 +99,6 @@ class LPhotoPickerController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
-        
-
     }
     
     // MARK:- 选择
@@ -129,7 +115,7 @@ class LPhotoPickerController: UIViewController {
                     }else {
                         selectType = .image
                     }
-                    collectionView.reloadData()
+                    collectionView.reloadItems(at: [IndexPath(item: selectIndex, section: 0)])
                 }
                 return true
             }else {
@@ -142,7 +128,7 @@ class LPhotoPickerController: UIViewController {
             tabBarView.currentCount = navVC.selectArray.count
             if navVC.selectArray.count == 0 && !allowPickingMultipleVideo && navVC.allowPickingVideo {
                 selectType = .default
-                collectionView.reloadData()
+                collectionView.reloadItems(at: [IndexPath(item: selectIndex, section: 0)])
             }
             return true
         }
@@ -151,47 +137,15 @@ class LPhotoPickerController: UIViewController {
 
 extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewDataSource,UIViewControllerTransitioningDelegate, ImageTabBarViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let navVC = navigationController as? LImagePickerController else { return 0 }
-        return dataArray.count + ((navVC.allowPickingVideo || navVC.allowTakePicture) ? 1 : 0)
+//        guard let navVC = navigationController as? LImagePickerController else { return 0 }
+//        return dataArray.count + ((navVC.allowPickingVideo || navVC.allowTakePicture) ? 1 : 0)
+        return dataArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell: LImagePickerCell = collectionView.dequeueReusableCell(withReuseIdentifier: LImagePickerCell.l_identifire, for: indexPath) as! LImagePickerCell
-        
-        if indexPath.item == dataArray.count {
-            cell.selectImageView.isHidden = true
-            cell.selectButton.isUserInteractionEnabled = false
-            cell.imageView.image = UIImage.imageNameFromBundle("icon_addPhoto")
-            cell.imageView.contentMode = .center
-            cell.backView.isHidden = true
-            return cell
-        }
-        
-        switch selectType {
-        case .default:
-            cell.selectImageView.isHidden = false
-            cell.selectButton.isUserInteractionEnabled = true
-        case .image:
-            cell.backView.isHidden = true
-            if dataArray[indexPath.item].dataEnum == .video {
-                cell.selectImageView.isHidden = true
-                cell.selectButton.isUserInteractionEnabled = false
-            }else {
-                cell.selectImageView.isHidden = false
-                cell.selectButton.isUserInteractionEnabled = true
-            }
-        case .video:
-            cell.backView.isHidden = false
-            if dataArray[indexPath.item].dataEnum != .video {
-                cell.selectImageView.isHidden = true
-                cell.selectButton.isUserInteractionEnabled = false
-            }else {
-                cell.selectImageView.isHidden = false
-                cell.selectButton.isUserInteractionEnabled = true
-            }
-        }
         cell.assetModel = dataArray[indexPath.item]
-        print(indexPath.item)
         cell.didSelectButtonClosure = { [weak self] select in
             guard let `self` = self else { return false }
             return self.resourcesSelect(viewController: self, isSelect: select, selectIndex: indexPath.item)
@@ -206,7 +160,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         switch buttonType {
         case .preview: break
         case .complete:
-            LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: isOriginalImage) { (imageArr, assetArr) in
+            LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: false) { (imageArr, assetArr) in
                 navVC.imageDelegete?.imagePickerController(navVC, photos: imageArr, asset: assetArr)
                 self.dismiss(animated: true, completion: nil)
             }

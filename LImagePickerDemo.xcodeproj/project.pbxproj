@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		098E3A6AA59062F2C212B5F4 /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */; };
 		1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */; };
-		2A3E1E5324A1ED1200D14A6A /* LAboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5224A1ED1200D14A6A /* LAboutApp.swift */; };
 		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
 		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
 		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
@@ -179,7 +178,6 @@
 
 /* Begin PBXFileReference section */
 		2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
-		2A3E1E5224A1ED1200D14A6A /* LAboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAboutApp.swift; sourceTree = "<group>"; };
 		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
 		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
 		2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowVideoPlayViewController.swift; sourceTree = "<group>"; };
@@ -466,7 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */,
-				2A3E1E5224A1ED1200D14A6A /* LAboutApp.swift */,
 			);
 			path = Const;
 			sourceTree = "<group>";
@@ -1113,7 +1110,6 @@
 				2AEE0D9024626E57008D5179 /* LPhotoPickerController.swift in Sources */,
 				2AEE0D8C24626E57008D5179 /* LImagePickerController.swift in Sources */,
 				2AEE0DA62462710C008D5179 /* LImageNavView.swift in Sources */,
-				2A3E1E5324A1ED1200D14A6A /* LAboutApp.swift in Sources */,
 				2AEE0DA92462710C008D5179 /* LImagePickerCell.swift in Sources */,
 				2AEE0DA72462710C008D5179 /* LAlbumPickerTableViewCell.swift in Sources */,
 				2AEE0DA82462710C008D5179 /* LImageTabBarView.swift in Sources */,
@@ -1503,6 +1499,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1532,6 +1529,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1705,6 +1703,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageCamera;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1733,6 +1732,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageCamera;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

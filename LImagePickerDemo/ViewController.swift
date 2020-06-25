@@ -15,6 +15,8 @@ import Kingfisher
 
 class ViewController: UIViewController {
 
+    fileprivate var delegate: ModelAnimationDelegate?
+    
     fileprivate lazy var contentImage: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 100, y: 300, width: 200, height: 200))
         image.backgroundColor = UIColor.red
@@ -24,6 +26,9 @@ class ViewController: UIViewController {
         return image
     }()
     
+    fileprivate let semaphore = DispatchSemaphore(value: 1)
+    
+    fileprivate var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +38,14 @@ class ViewController: UIViewController {
         button.backgroundColor = UIColor.red
         button.setTitle("测试", for: .normal)
         button.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
-        view.addSubview(button)
-        
         view.addSubview(contentImage)
+        view.addSubview(button)
+
+        contentImage.isUserInteractionEnabled = true
+        contentImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(contentImageClick)))
         
     }
-    
-    
+
     @objc func buttonClick() {
         print("buttonClick")
         let imagePicker = LImagePickerController(withMacImage: 100, delegate: self)
@@ -50,6 +56,7 @@ class ViewController: UIViewController {
         self.present(imagePicker, animated: true, completion: nil)
     }
     
+
 }
 
 extension ViewController: LImagePickerDelegate {
@@ -60,4 +67,21 @@ extension ViewController: LImagePickerDelegate {
             print("dsd")
         }
     }
+}
+
+
+extension ViewController: ShowImageProtocol, UIViewControllerTransitioningDelegate {
+    
+ @objc func contentImageClick() {
+      print("12345")
+    let configuration = LShowImageConfiguration(dataArray: [LMediaResourcesModel(dataProtocol: contentImage.image!, dataEnum: .image)], currentIndex: 0)
+//    showImage(configuration, formVC: self)
+//    showima
+    
+    delegate = ModelAnimationDelegate(contentImage: contentImage, superView: view)
+    
+    showImage(configuration, delegate: delegate, formVC: self)
+    
+  }
+    
 }

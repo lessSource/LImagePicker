@@ -83,7 +83,6 @@ class LShowImageNavView: UIView {
     
     // MARK:- public
     public func selectImageViewAnimation(_ isSelect: Bool) {
-//        if isSelect { selectImageView.showOscillatoryAnimation() }
         isImageSelect = isSelect
     }
     
@@ -94,12 +93,6 @@ class LShowImageNavView: UIView {
     
     @objc fileprivate func selectButtonClick(_ sender: UIButton) {
         imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
-        
-        //        if configuration.isDelete {
-        //            imageDelegate?.showImageNavDidSelect(self, buttonType: .delete)
-        //        }else if configuration.isSelect {
-        //            imageDelegate?.showImageNavDidSelect(self, buttonType: .select)
-        //        }
     }
     
     

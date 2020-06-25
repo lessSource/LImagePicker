@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 public struct LConstant {
     /** 屏幕宽度 */
@@ -321,6 +322,34 @@ extension UIImage {
         let imagePath = imageBundle?.path(forResource: imageName, ofType: "png")
         let image = UIImage(contentsOfFile: imagePath ?? "")
         return image
+    }
+}
+
+extension UIImageView {
+    
+    // 获取视频截图
+    func l_getNetWorkVidoeImage(urlStr: String, placeholder: String) {
+        guard let url = URL(string: urlStr)  else {
+            image = UIImage(named: placeholder)
+            return
+        }
+        DispatchQueue.global().async {
+            var resultImage: UIImage?
+            let asset = AVURLAsset(url: url)
+            let gen = AVAssetImageGenerator(asset: asset)
+            gen.appliesPreferredTrackTransform = true
+            let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 1)
+            var actualTime: CMTime = CMTimeMakeWithSeconds(0, preferredTimescale: 0)
+            do {
+                let thumbImage = try gen.copyCGImage(at: time, actualTime: &actualTime)
+                resultImage = UIImage(cgImage: thumbImage)
+            } catch  {
+                self.image = UIImage(named: placeholder)
+            }
+            DispatchQueue.main.async {
+                self.image = resultImage
+            }
+        }
     }
 }
 

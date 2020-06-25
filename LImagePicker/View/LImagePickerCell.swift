@@ -22,15 +22,27 @@ class LImagePickerCell: UICollectionViewCell {
             selectButton.isSelected  = model.isSelect
             selectImageView.image = model.isSelect ? UIImage.imageNameFromBundle("icon_album_sel") : UIImage.imageNameFromBundle("icon_album_nor")
             timeLabel.text = model.videoTime
-            if let asset = model.dataProtocol as? PHAsset {                
-                let width = (LConstant.screenWidth - 3)/4
-                LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: width) { (image, dic) in
-                    self.imageView.image = image
+            if let asset = model.dataProtocol as? PHAsset {
+                DispatchQueue.global().async {
+                    let width = (LConstant.screenWidth - 3)/4
+                    var successImage: UIImage?
+                    LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: width) { (image, dic) in
+                        successImage = image
+                     }
+                    DispatchQueue.main.async {
+                        self.imageView.image = successImage 
+                    }
+                    
                 }
+                
+                
+ 
                 backView.isHidden = asset.mediaType == .image
             }
         }
     }
+    
+ 
     
     public lazy var imageView: UIImageView = {
         let image = UIImageView(frame: self.bounds)

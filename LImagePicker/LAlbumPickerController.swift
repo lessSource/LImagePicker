@@ -101,3 +101,17 @@ extension LAlbumPickerController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+
+
+struct LAlbumPickerModel {
+    /** 标题 */
+    var title: String = ""
+    /** first PHAsset */
+    var asset: PHAsset?
+    /** 媒体资源 */
+    var fetchResult: PHFetchResult<PHAsset>?
+    /** 数量 */
+    var count: Int = 0
+    /** 选中数量 */
+    var selectCount: Int = 0
+}

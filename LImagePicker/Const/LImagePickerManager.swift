@@ -98,13 +98,7 @@ extension LImagePickerManager {
                 complete(array)
             }
         }
-    }    
-}
-
-
-
-
-extension LImagePickerManager {
+    }
     
     // 获取相册中资源
     func getPhotoAlbumMedia(_ mediaType: PHAssetMediaType = PHAssetMediaType.unknown,duration: Int = Int.max, fetchResult: PHFetchResult<PHAsset>?, successPHAsset: @escaping ([LMediaResourcesModel]) -> () ) {
@@ -152,9 +146,6 @@ extension LImagePickerManager {
         }
     }
     
-}
-
-extension LImagePickerManager {
     // 获取图片
     @discardableResult
     func getPhotoWithAsset(_ asset: PHAsset, photoWidth: CGFloat, completion: @escaping (UIImage, [AnyHashable: Any]?) -> ()) -> PHImageRequestID {
@@ -171,7 +162,7 @@ extension LImagePickerManager {
         imageSize = CGSize(width: pixelWith, height: piexlHeight)
         let option = PHImageRequestOptions()
         option.resizeMode = .fast
-        option.isSynchronous =  false
+        option.isSynchronous =  true
         
         let imageRequestId = PHImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: option) { (result, info) in
             if let image = result {
@@ -189,13 +180,6 @@ extension LImagePickerManager {
         option.progressHandler = progressHandler
         option.resizeMode = .fast
         option.isSynchronous = true
-        //        let imageRequestId = PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .aspectFit, options: option) { (result, info) in
-        //            let downloadFinined = !(info?[PHImageCancelledKey] as? Bool == true) && info?[PHImageErrorKey] != nil
-        //            if result != nil && downloadFinined && info != nil {
-        //                completion(result!, info)
-        //            }
-        //        }
-        
         let imageRequestId = PHImageManager.default().requestImageData(for: asset, options: option) { (data, str, orientation, info) in
             if let imageData = data, let image = UIImage(data: imageData) {
                 completion(image, info)
@@ -203,7 +187,9 @@ extension LImagePickerManager {
         }
         return imageRequestId
     }
-    
+}
+
+extension LImagePickerManager {
     // 获取选中的图片
     func getSelectPhotoWithAsset(_ dataArray: [LMediaResourcesModel],isOriginal: Bool = true, completion: @escaping ([UIImage], [LMediaResourcesModel]) -> ()) {
         let group = DispatchGroup()

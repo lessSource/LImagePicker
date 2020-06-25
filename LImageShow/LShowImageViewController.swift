@@ -81,7 +81,7 @@ public class LShowImageViewController: UICollectionViewController {
         collectionView?.register(LShowImageCollectionViewCell.self, forCellWithReuseIdentifier: LShowImageCollectionViewCell.l_identifire)
         collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex), at: .left, animated: false)
         view.addSubview(navView)
-        view.addSubview(tabBarView)
+//        view.addSubview(tabBarView)
         navView.titleLabel.text = "\(currentIndex + 1)/\(configuration.dataArray.count)"
         tabBarView.originalButton.isSelected = configuration.isOriginalImage
         tabBarView.maxCount = configuration.maxCount
@@ -93,7 +93,6 @@ public class LShowImageViewController: UICollectionViewController {
         case .tap:
             UIView.animate(withDuration: 0.15, animations: {
                 self.tabBarView.l_y = !self.isNacBar ? LConstant.screenHeight - self.tabBarView.l_height : LConstant.screenHeight
-                
                 self.navView.l_y = !self.isNacBar ? 0 : -LConstant.navbarAndStatusBar
             }) { (successful) in
                 self.isNacBar = !self.isNacBar
@@ -101,6 +100,10 @@ public class LShowImageViewController: UICollectionViewController {
         case .long:
             if configuration.isSave {
             }
+            showAlertController("提示", message: nil, preferredStyle: .actionSheet, actionTitles: ["保存", "取消"]) { (index) in
+                
+            }
+            print("long")
         case .play: break
 //            let showVideoPlayVC = ShowVideoPlayViewController()
 //            showVideoPlayVC.videoModel = configuration.dataArray[indexPath.section]
@@ -123,7 +126,6 @@ extension LShowImageViewController {
     
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LShowImageCollectionViewCell.l_identifire, for: indexPath) as! LShowImageCollectionViewCell
-        
         cell.updateImage(imageData: configuration.dataArray[indexPath.section])
         cell.imageClick(action: { [weak self] (type) in
             self?.imageClick(cell, cellForItemAt: indexPath, type: type)

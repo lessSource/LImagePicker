@@ -16,7 +16,6 @@ public enum LImagePickerSelectEnum {
     case video
 }
 
-
 public struct LShowImageConfiguration {
     /** 数据源 */
     var dataArray: [LMediaResourcesModel]
@@ -39,7 +38,7 @@ public struct LShowImageConfiguration {
     var isSave: Bool
 
     
-    init(dataArray: [LMediaResourcesModel] = [], currentIndex: Int = 0, isDelete: Bool = false, isSelect: Bool = false, isSave: Bool = false,selectCount: Int = 0, maxCount: Int = 0, isOriginalImage: Bool = false, selectType: LImagePickerSelectEnum = .default) {
+    public init(dataArray: [LMediaResourcesModel] = [], currentIndex: Int = 0, isDelete: Bool = false, isSelect: Bool = false, isSave: Bool = false,selectCount: Int = 0, maxCount: Int = 0, isOriginalImage: Bool = false, selectType: LImagePickerSelectEnum = .default) {
         self.dataArray = dataArray
         self.currentIndex = currentIndex
         self.isDelete = isDelete

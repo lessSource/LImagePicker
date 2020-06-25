@@ -13,7 +13,7 @@ public protocol ShowImageProtocol { }
 
 
 extension ShowImageProtocol where Self: UIViewController {
-    func showImage(_ configuration: LShowImageConfiguration, formVC: UIViewController? = nil) {
+    public func showImage(_ configuration: LShowImageConfiguration, formVC: UIViewController? = nil) {
         assert(configuration.dataArray.count != 0, "数组不能为空！！！！")
         assert(configuration.dataArray.count > configuration.currentIndex, "序号能不能大于数组数量！！！！")
         let showImageVC = LShowImageViewController(configuration: configuration)
@@ -25,7 +25,7 @@ extension ShowImageProtocol where Self: UIViewController {
 
 extension ShowImageProtocol where Self: UIViewController, Self: UIViewControllerTransitioningDelegate {
     // 带动画的显示大图 ---- 必须遵循UIViewControllerTransitioningDelegate
-    func showImage(_ configuration: LShowImageConfiguration, delegate: ModelAnimationDelegate? = nil, formVC: UIViewController? = nil) {
+    public func showImage(_ configuration: LShowImageConfiguration, delegate: ModelAnimationDelegate? = nil, formVC: UIViewController? = nil) {
         assert(configuration.dataArray.count != 0, "数组不能为空！！！！")
         assert(configuration.dataArray.count > configuration.currentIndex, "序号能不能大于数组数量！！！！")
         let showImageVC = LShowImageViewController(configuration: configuration)
