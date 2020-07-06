@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         let imagePicker = LImagePickerController(withMacImage: 100, delegate: self)
         imagePicker.modalPresentationStyle = .custom
         imagePicker.allowTakePicture = true
-        imagePicker.allowTakeVideo = true
+//        imagePicker.allowTakeVideo = true
         imagePicker.allowPickingVideo = true
         self.present(imagePicker, animated: true, completion: nil)
     }
@@ -75,11 +75,7 @@ extension ViewController: ShowImageProtocol, UIViewControllerTransitioningDelega
  @objc func contentImageClick() {
       print("12345")
     let configuration = LShowImageConfiguration(dataArray: [LMediaResourcesModel(dataProtocol: contentImage.image!, dataEnum: .image)], currentIndex: 0)
-//    showImage(configuration, formVC: self)
-//    showima
-    
     delegate = ModelAnimationDelegate(contentImage: contentImage, superView: view)
-    
     showImage(configuration, delegate: delegate, formVC: self)
     
   }

@@ -200,7 +200,6 @@ extension LImagePickerManager {
             queue.async(group: group, execute: DispatchWorkItem(block: {
                 guard let asset = mediaModel.dataProtocol as? PHAsset else { return }
                 if isOriginal {
-                    print(Thread.current)
                     self.getOriginalPhotoWithAsset(asset, progressHandler: nil) { (image, info) in
                         imageArr.append(image)
                         assetArr.append(mediaModel)

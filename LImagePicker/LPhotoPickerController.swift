@@ -11,6 +11,7 @@ import CoreServices
 import Photos
 import LPublicImageParameter
 import LImageShow
+import LImageCamera
 
 class LPhotoPickerController: UIViewController {
 
@@ -63,6 +64,7 @@ class LPhotoPickerController: UIViewController {
         view.addSubview(navView)
         view.addSubview(collectionView)
         view.addSubview(tabBarView)
+        
         collectionView.register(LImagePickerCell.self, forCellWithReuseIdentifier: LImagePickerCell.l_identifire)
         initData()
 
@@ -72,7 +74,13 @@ class LPhotoPickerController: UIViewController {
     func initData() {
         guard let navVC = navigationController as? LImagePickerController else { return }
         LImagePickerManager.shared.getPhotoAlbumMedia(navVC.allowPickingVideo ? .unknown : .image,duration: navVC.videoSelectMaxDuration ,fetchResult: pickerModel?.fetchResult) { (dataArray) in
+            
             self.dataArray = dataArray
+            if (navVC.allowTakeVideo || navVC.allowTakePicture), let image = UIImage.imageNameFromBundle("icon_addImage") {
+                let addMediaModel = LMediaResourcesModel(dataProtocol: image, dataEnum: .image, message: "addImage")
+                self.dataArray.append(addMediaModel)
+            }
+            
             if let model = self.pickerModel {
                 self.navView.titleLabel.text = "\(model.title)(\(dataArray.count))"
             }else {
@@ -80,7 +88,7 @@ class LPhotoPickerController: UIViewController {
             }
             self.checkSelectedMediaResources()
             self.collectionView.reloadData()
-            self.collectionView.scrollToItem(at: IndexPath(item: dataArray.count - 1, section: 0), at: .bottom, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(item: self.dataArray.count - 1, section: 0), at: .bottom, animated: false)
         }
     }
     
@@ -137,8 +145,6 @@ class LPhotoPickerController: UIViewController {
 
 extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewDataSource,UIViewControllerTransitioningDelegate, ImageTabBarViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        guard let navVC = navigationController as? LImagePickerController else { return 0 }
-//        return dataArray.count + ((navVC.allowPickingVideo || navVC.allowTakePicture) ? 1 : 0)
         return dataArray.count
     }
     
@@ -153,10 +159,21 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if dataArray[indexPath.item].message == "addImage" {
+            let cameraVC = LImageCameraViewController()
+            cameraVC.modalPresentationStyle = .custom
+            present(cameraVC, animated: true, completion: nil)
+        }else {
+            print(indexPath)
+        }
+    }
+    
 
     func imageTabBarViewButton(_ buttonType: ImageTabBarButtonType) {
-        guard let navVC = navigationController as? LImagePickerController else { return }
+        print(buttonType.rawValue)
         
+        guard let navVC = navigationController as? LImagePickerController else { return }
         switch buttonType {
         case .preview: break
         case .complete:
@@ -165,6 +182,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
                 self.dismiss(animated: true, completion: nil)
             }
         case .edit: break
+        case .original: break
         }
     }
     

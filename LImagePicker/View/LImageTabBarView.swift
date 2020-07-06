@@ -9,13 +9,15 @@
 import UIKit
 import LPublicImageParameter
 
-enum ImageTabBarButtonType {
+enum ImageTabBarButtonType: String {
     /** 完成 */
-    case complete
+    case complete = "完成"
     /** 预览 */
-    case preview
+    case preview = "预览"
     /** 编辑 */
-    case edit
+    case edit = "编辑"
+    /** 原图 */
+    case original = "原图"
 }
 
 protocol ImageTabBarViewDelegate: NSObjectProtocol {
@@ -52,7 +54,13 @@ class LImageTabBarView: UIView {
                 completeButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(1.0) ,for: .normal)
                 previewButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(1.0) ,for: .normal)
             }
-            editButton.isHidden = currentCount != 1
+            if currentCount == 1 {
+                editButton.isUserInteractionEnabled = true
+                editButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(1.0) ,for: .normal)
+            }else {
+                editButton.isUserInteractionEnabled = false
+                editButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(0.5), for: .normal)
+            }
             completeButton.l_width = completeButton.titleLabel?.intrinsicContentSize.width ?? 0
             completeButton.l_x = LConstant.screenWidth - 15 - completeButton.l_width
         }
@@ -82,6 +90,17 @@ class LImageTabBarView: UIView {
         return button
     }()
     
+    fileprivate lazy var originalButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 110, y: 4.5, width: 60, height: 40)
+        button.setTitle("原图", for: .normal)
+        editButton.setTitleColor(UIColor.lLabelColor.withAlphaComponent(0.5), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setImage(UIImage.imageNameFromBundle("icon_album_nor"), for: .normal)
+        button.setImage(UIImage.imageNameFromBundle("icon_album_sel"), for: .selected)
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutView()
@@ -96,9 +115,15 @@ class LImageTabBarView: UIView {
         addSubview(completeButton)
         addSubview(previewButton)
         addSubview(editButton)
+        addSubview(originalButton)
         completeButton.addTarget(self, action: #selector(completeButtonClick(_ :)), for: .touchUpInside)
         previewButton.addTarget(self, action: #selector(previewButtonClick(_ :)), for: .touchUpInside)
         editButton.addTarget(self, action: #selector(editButtonClick(_ :)), for: .touchUpInside)
+        originalButton.addTarget(self, action: #selector(originalButtonClick(_ :)), for: .touchUpInside)
+        
+        originalButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        originalButton.imageView?.contentMode = .scaleAspectFit
+        
         let lineView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: 1))
         lineView.backgroundColor = UIColor.groupTableViewBackground
         addSubview(lineView)
@@ -115,5 +140,10 @@ class LImageTabBarView: UIView {
 
     @objc fileprivate func editButtonClick(_ sender: UIButton) {
         delegate?.imageTabBarViewButton(.edit)
+    }
+    
+    @objc fileprivate func originalButtonClick(_ sender: UIButton) {
+        originalButton.isSelected = !originalButton.isSelected
+        delegate?.imageTabBarViewButton(.original)
     }
 }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		098E3A6AA59062F2C212B5F4 /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */; };
 		1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */; };
+		2A271AFA24B33BAC009239EA /* LImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */; };
+		2A271AFD24B36CC2009239EA /* LImageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AFC24B36CC2009239EA /* LImageCameraView.swift */; };
 		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
 		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
 		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
@@ -178,6 +180,8 @@
 
 /* Begin PBXFileReference section */
 		2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
+		2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraViewController.swift; sourceTree = "<group>"; };
+		2A271AFC24B36CC2009239EA /* LImageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraView.swift; sourceTree = "<group>"; };
 		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
 		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
 		2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowVideoPlayViewController.swift; sourceTree = "<group>"; };
@@ -354,6 +358,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		2A271AFB24B36C99009239EA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2A271AFC24B36CC2009239EA /* LImageCameraView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		2A75811D24A1054600592990 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,8 +516,10 @@
 		2AEEEDB6249C91E60009AAE1 /* LImageCamera */ = {
 			isa = PBXGroup;
 			children = (
+				2A271AFB24B36C99009239EA /* View */,
 				2AEEEDB7249C91E60009AAE1 /* LImageCamera.h */,
 				2AEEEDB8249C91E60009AAE1 /* Info.plist */,
+				2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */,
 			);
 			path = LImageCamera;
 			sourceTree = "<group>";
@@ -820,6 +834,7 @@
 					};
 					2AEEEDB4249C91E60009AAE1 = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1200;
 					};
 					2AEEEDBC249C91E60009AAE1 = {
 						CreatedOnToolsVersion = 11.5;
@@ -1148,6 +1163,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A271AFD24B36CC2009239EA /* LImageCameraView.swift in Sources */,
+				2A271AFA24B33BAC009239EA /* LImageCameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1685,6 +1702,7 @@
 		2AEEEDCD249C91E60009AAE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1694,7 +1712,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LImageCamera/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1704,6 +1722,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1714,6 +1733,7 @@
 		2AEEEDCE249C91E60009AAE1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1723,7 +1743,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LImageCamera/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
