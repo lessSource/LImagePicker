@@ -163,6 +163,8 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         if dataArray[indexPath.item].message == "addImage" {
             let cameraVC = LImageCameraViewController()
             cameraVC.modalPresentationStyle = .custom
+            cameraVC.isSave = true
+            cameraVC.delegate = self
             present(cameraVC, animated: true, completion: nil)
         }else {
             print(indexPath)
@@ -194,3 +196,22 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
 }
 
 
+extension LPhotoPickerController: LImageCameraViewDelegate {
+    
+    func imageCameraViewSuccess(viewController: LImageCameraViewController) {
+        var mediaTypePHAsset: PHFetchResult<PHAsset> = PHFetchResult()
+        let allPhotosOptions = PHFetchOptions()
+        
+        mediaTypePHAsset = PHAsset.fetchAssets(with: allPhotosOptions)
+        
+        guard let asset = mediaTypePHAsset.lastObject else {
+            return
+        }
+        let model = LMediaResourcesModel(dataProtocol: asset, dataEnum: .video)
+        self.dataArray.append(model)
+        self.collectionView.reloadData()
+        
+        
+    }
+    
+}

@@ -11,6 +11,9 @@
 		1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */; };
 		2A271AFA24B33BAC009239EA /* LImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */; };
 		2A271AFD24B36CC2009239EA /* LImageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AFC24B36CC2009239EA /* LImageCameraView.swift */; };
+		2A271AFF24B4224E009239EA /* LImageCameraOperationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */; };
+		2A271B0124B4B1C9009239EA /* LImageCameraTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */; };
+		2A271B0324B4C7E7009239EA /* LImageCameraPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */; };
 		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
 		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
 		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
@@ -182,6 +185,9 @@
 		2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
 		2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraViewController.swift; sourceTree = "<group>"; };
 		2A271AFC24B36CC2009239EA /* LImageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraView.swift; sourceTree = "<group>"; };
+		2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraOperationView.swift; sourceTree = "<group>"; };
+		2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraTabBarView.swift; sourceTree = "<group>"; };
+		2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraPlayerView.swift; sourceTree = "<group>"; };
 		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
 		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
 		2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowVideoPlayViewController.swift; sourceTree = "<group>"; };
@@ -362,6 +368,9 @@
 			isa = PBXGroup;
 			children = (
 				2A271AFC24B36CC2009239EA /* LImageCameraView.swift */,
+				2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */,
+				2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */,
+				2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1165,6 +1174,9 @@
 			files = (
 				2A271AFD24B36CC2009239EA /* LImageCameraView.swift in Sources */,
 				2A271AFA24B33BAC009239EA /* LImageCameraViewController.swift in Sources */,
+				2A271B0324B4C7E7009239EA /* LImageCameraPlayerView.swift in Sources */,
+				2A271B0124B4B1C9009239EA /* LImageCameraTabBarView.swift in Sources */,
+				2A271AFF24B4224E009239EA /* LImageCameraOperationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

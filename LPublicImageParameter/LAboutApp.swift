@@ -88,6 +88,10 @@ public struct App {
         return info["CFBundleDisplayName"] as? String ?? ""
     }
     
+    /** 路径 */
+    public static var cocumentsPath: String {
+        return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
+    }
 }
 
 
@@ -378,4 +382,13 @@ extension UIViewController {
     }
 }
 
-
+extension Date {
+    
+    // 获取当前时间戳
+    public var milliStamp: String {
+        let timeInterval: TimeInterval = self.timeIntervalSince1970
+        let millisecond = CLongLong(round(timeInterval * 1000))
+        return "\(millisecond)"
+    }
+    
+}
