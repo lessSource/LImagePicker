@@ -141,7 +141,7 @@ extension LImageCameraViewController: LImageCameraDelegate, LImageCameraOperatio
         case .remake:
             videoView.captureSession.startRunning()
             tabBarView.isHidden = true
-            playerView.dddddd()
+            playerView.removeView()
         }
     }
     

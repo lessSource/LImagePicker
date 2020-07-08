@@ -92,13 +92,6 @@ class LImageCameraOperationView: UIView {
     }
     
     @objc fileprivate func tapGestureClick() {
-//        if delegate?.operationViewPlayStatus() == true {
-//            takingAnimation(1, radius: 30, forKey: "endAnimationKey")
-//            delegate?.operationViewDidSelect(buttonType: .suspended)
-//        }else {
-//            takingAnimation(0.5, radius: 5, forKey: "startAnimationKey")
-//            delegate?.operationViewDidSelect(buttonType: .shooting)
-//        }
         delegate?.operationViewDidSelect(buttonType: .taking)
     }
     

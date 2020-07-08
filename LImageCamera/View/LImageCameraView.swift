@@ -275,17 +275,14 @@ class LImageCameraView: UIView {
     }
     
     fileprivate func stopCountDurTimer() {
-        if self.countDurTime != nil {
-            self.countDurTime?.invalidate()
-            self.countDurTime = nil
-        }
+        countDurTime?.invalidate()
+        countDurTime = nil
     }
     
     // 删除视频文件
     fileprivate func deleteVideoFile(filePathArr: [String]) {
         if filePathArr.isEmpty { return }
         let manager = FileManager.default
-        
         for item in filePathArr {
             do {
                 try manager.removeItem(atPath: item)
@@ -299,7 +296,7 @@ class LImageCameraView: UIView {
 extension LImageCameraView: AVCaptureFileOutputRecordingDelegate, AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
-        
+
         guard let sampleBuffer = photoSampleBuffer, let previewBuffer = previewPhotoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: previewBuffer) else {
             return
         }

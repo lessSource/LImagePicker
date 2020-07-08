@@ -10,18 +10,21 @@ import UIKit
 import AVKit
 
 class LImageCameraPlayerView: UIView {
-    
     // 是否循环播放
     public var isLoopPlay: Bool = false
-    
-    fileprivate var avplayer: AVPlayer!
     // 显示视频
-    private var videoView: VideoPlayer!
-    private var playerItem: AVPlayerItem!
+    fileprivate lazy var videoView: VideoPlayer = {
+        let videoView = VideoPlayer(frame: self.bounds)
+        return videoView
+    }()
+    
+    fileprivate var avplayer: AVPlayer?
+    fileprivate var playerItem: AVPlayerItem?
+
     
     // 视频总时长
     var totalTimeFormat: String {
-        if let totalTime = self.avplayer.currentItem?.duration {
+        if let totalTime = avplayer?.currentItem?.duration {
             let totalTimeSec = CMTimeGetSeconds(totalTime)
             if totalTimeSec.isNaN {
                 return "00:00"
@@ -33,7 +36,7 @@ class LImageCameraPlayerView: UIView {
     
     // 视频播放时长
     var currentTimeFormat: String {
-        if let playTime = self.avplayer.currentItem?.currentTime() {
+        if let playTime = avplayer?.currentItem?.currentTime() {
             let playTimeSec = CMTimeGetSeconds(playTime)
             if playTimeSec.isNaN {
                 return "00:00"
@@ -55,21 +58,18 @@ class LImageCameraPlayerView: UIView {
     
     // MARK: - initView
     fileprivate func initView() {
-        videoView = VideoPlayer(frame: bounds)
         addSubview(videoView)
     }
     
     func play(url: URL) {
         let asset = AVURLAsset(url: url)
-        let playerItem = AVPlayerItem(asset: asset)
-        self.playerItem = playerItem
+        playerItem = AVPlayerItem(asset: asset)
         // 监听它状态的改变，实现kvo的方法
-        playerItem.addObserver(self, forKeyPath: "status", options: .new, context: nil)
-        self.avplayer = AVPlayer(playerItem: playerItem)
+        playerItem?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
+        avplayer = AVPlayer(playerItem: playerItem)
         if let playerLayer = videoView.layer as? AVPlayerLayer {
             playerLayer.player = avplayer
         }
-        
         // 播放结束的通知
         NotificationCenter.default.addObserver(self, selector: #selector(playToEndTime), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
@@ -79,7 +79,7 @@ class LImageCameraPlayerView: UIView {
         if keyPath == "status" {
             // 资源准备好，可以播放
             if palyerItem.status == .readyToPlay {
-                self.avplayer.play()
+                avplayer?.play()
             }else {
                 print("load error")
             }
@@ -89,20 +89,20 @@ class LImageCameraPlayerView: UIView {
     
     // 暂停
     func pause() {
-        avplayer.pause()
+        avplayer?.pause()
     }
     
     // 继续
     func resume() {
-        avplayer.play()
+        avplayer?.play()
     }
     
-    public func dddddd() {
-        avplayer.pause()
+    // 移出
+    public func removeView() {
+        avplayer?.pause()
         avplayer = nil
-//        avplayer.removel
         videoView.removeFromSuperview()
-        self.removeFromSuperview()
+        removeFromSuperview()
     }
     
     // 播放进度
@@ -112,11 +112,11 @@ class LImageCameraPlayerView: UIView {
             return
         }
         
-        if let totalTime = avplayer.currentItem?.duration {
+        if let totalTime = avplayer?.currentItem?.duration {
             let totalSec = CMTimeGetSeconds(totalTime)
             let platTimeSec = totalSec * progress
             let currentTime = CMTimeMake(value: Int64(platTimeSec), timescale: 1)
-            self.avplayer.seek(to: currentTime) { (finished) in
+            avplayer?.seek(to: currentTime) { (finished) in
             }
         }
         
@@ -124,12 +124,12 @@ class LImageCameraPlayerView: UIView {
     
     // 几倍数
     func rate(_ multiple: Float) {
-        avplayer.rate = multiple
+        avplayer?.rate = multiple
     }
     
     // 静音
     func muted() {
-        avplayer.isMuted = false
+        avplayer?.isMuted = false
     }
     
     // 音量
@@ -138,22 +138,22 @@ class LImageCameraPlayerView: UIView {
             return
         }
         if sender.value > 0 {
-            avplayer.isMuted = false
+            avplayer?.isMuted = false
         }
-        avplayer.volume = sender.value
+        avplayer?.volume = sender.value
     }
     
     // 播放完成
     @objc fileprivate func playToEndTime() {
         if isLoopPlay {
-            avplayer.seek(to: CMTimeMake(value: 0, timescale: 1)) { (success) in
-                self.avplayer.play()
+            avplayer?.seek(to: CMTimeMake(value: 0, timescale: 1)) { (success) in
+                self.avplayer?.play()
             }
         }
     }
     
     deinit {
-        playerItem.removeObserver(self, forKeyPath: "status")
+        playerItem?.removeObserver(self, forKeyPath: "status")
         NotificationCenter.default.removeObserver(self)
         print("LImageCameraPlayerView ++++  释放")
     }
