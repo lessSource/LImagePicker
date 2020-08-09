@@ -16,6 +16,16 @@
 		2A271B0324B4C7E7009239EA /* LImageCameraPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */; };
 		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
 		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
+		2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7DE524DC11B3008709E3 /* Normal.vsh */; };
+		2A6A7DE824DC11B3008709E3 /* Normal.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7DE624DC11B3008709E3 /* Normal.fsh */; };
+		2A6A7E7D24DFC315008709E3 /* FilterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A6A7E7B24DFC315008709E3 /* FilterView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A6A7E7E24DFC315008709E3 /* FilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A7E7C24DFC315008709E3 /* FilterView.m */; };
+		2A6A7E8824DFF6C3008709E3 /* Gray.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8724DFF6C3008709E3 /* Gray.fsh */; };
+		2A6A7E8A24DFF6D2008709E3 /* Gray.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8924DFF6D2008709E3 /* Gray.vsh */; };
+		2A6A7E8D24E00222008709E3 /* SplitScreen2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8C24E00222008709E3 /* SplitScreen2.fsh */; };
+		2A6A7E8F24E0022E008709E3 /* SplitScreen2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8E24E0022E008709E3 /* SplitScreen2.vsh */; };
+		2A6A7E9124E00776008709E3 /* LShowImageFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A7E9024E00776008709E3 /* LShowImageFilterBar.swift */; };
+		2A6A7E9324E00785008709E3 /* LShowImageFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A7E9224E00785008709E3 /* LShowImageFilterCell.swift */; };
 		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
 		2A75812224A106E000592990 /* LEditPickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812124A106E000592990 /* LEditPickerNavView.swift */; };
 		2A75812424A1071C00592990 /* LEditPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812324A1071C00592990 /* LEditPhotosViewController.swift */; };
@@ -190,6 +200,16 @@
 		2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraPlayerView.swift; sourceTree = "<group>"; };
 		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
 		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
+		2A6A7DE524DC11B3008709E3 /* Normal.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.vsh; sourceTree = "<group>"; };
+		2A6A7DE624DC11B3008709E3 /* Normal.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.fsh; sourceTree = "<group>"; };
+		2A6A7E7B24DFC315008709E3 /* FilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterView.h; sourceTree = "<group>"; };
+		2A6A7E7C24DFC315008709E3 /* FilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterView.m; sourceTree = "<group>"; };
+		2A6A7E8724DFF6C3008709E3 /* Gray.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Gray.fsh; sourceTree = "<group>"; };
+		2A6A7E8924DFF6D2008709E3 /* Gray.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Gray.vsh; sourceTree = "<group>"; };
+		2A6A7E8C24E00222008709E3 /* SplitScreen2.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen2.fsh; sourceTree = "<group>"; };
+		2A6A7E8E24E0022E008709E3 /* SplitScreen2.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen2.vsh; sourceTree = "<group>"; };
+		2A6A7E9024E00776008709E3 /* LShowImageFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowImageFilterBar.swift; sourceTree = "<group>"; };
+		2A6A7E9224E00785008709E3 /* LShowImageFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowImageFilterCell.swift; sourceTree = "<group>"; };
 		2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowVideoPlayViewController.swift; sourceTree = "<group>"; };
 		2A75812124A106E000592990 /* LEditPickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPickerNavView.swift; sourceTree = "<group>"; };
 		2A75812324A1071C00592990 /* LEditPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPhotosViewController.swift; sourceTree = "<group>"; };
@@ -375,6 +395,45 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		2A6A7E8424DFF566008709E3 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				2A6A7E8B24E001B9008709E3 /* SplitScreen2 */,
+				2A6A7E7B24DFC315008709E3 /* FilterView.h */,
+				2A6A7E7C24DFC315008709E3 /* FilterView.m */,
+				2A6A7E8524DFF579008709E3 /* Normal */,
+				2A6A7E8624DFF5F1008709E3 /* Gray */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		2A6A7E8524DFF579008709E3 /* Normal */ = {
+			isa = PBXGroup;
+			children = (
+				2A6A7DE624DC11B3008709E3 /* Normal.fsh */,
+				2A6A7DE524DC11B3008709E3 /* Normal.vsh */,
+			);
+			path = Normal;
+			sourceTree = "<group>";
+		};
+		2A6A7E8624DFF5F1008709E3 /* Gray */ = {
+			isa = PBXGroup;
+			children = (
+				2A6A7E8724DFF6C3008709E3 /* Gray.fsh */,
+				2A6A7E8924DFF6D2008709E3 /* Gray.vsh */,
+			);
+			path = Gray;
+			sourceTree = "<group>";
+		};
+		2A6A7E8B24E001B9008709E3 /* SplitScreen2 */ = {
+			isa = PBXGroup;
+			children = (
+				2A6A7E8C24E00222008709E3 /* SplitScreen2.fsh */,
+				2A6A7E8E24E0022E008709E3 /* SplitScreen2.vsh */,
+			);
+			path = SplitScreen2;
+			sourceTree = "<group>";
+		};
 		2A75811D24A1054600592990 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +441,8 @@
 				2AEEEDFE249CE1D80009AAE1 /* LShowImageTabBarView.swift */,
 				2AEEEE00249CE2650009AAE1 /* LShowImageCollectionViewCell.swift */,
 				2A75812124A106E000592990 /* LEditPickerNavView.swift */,
+				2A6A7E9024E00776008709E3 /* LShowImageFilterBar.swift */,
+				2A6A7E9224E00785008709E3 /* LShowImageFilterCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -545,6 +606,7 @@
 		2AEEEDD8249C92160009AAE1 /* LImageShow */ = {
 			isa = PBXGroup;
 			children = (
+				2A6A7E8424DFF566008709E3 /* Filter */,
 				2A75811E24A1056900592990 /* Const */,
 				2A75811D24A1054600592990 /* View */,
 				2AEEEDD9249C92160009AAE1 /* LImageShow.h */,
@@ -608,6 +670,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AEEEDE9249C92160009AAE1 /* LImageShow.h in Headers */,
+				2A6A7E7D24DFC315008709E3 /* FilterView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,6 +1016,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A6A7E8D24E00222008709E3 /* SplitScreen2.fsh in Resources */,
+				2A6A7DE824DC11B3008709E3 /* Normal.fsh in Resources */,
+				2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */,
+				2A6A7E8A24DFF6D2008709E3 /* Gray.vsh in Resources */,
+				2A6A7E8824DFF6C3008709E3 /* Gray.fsh in Resources */,
+				2A6A7E8F24E0022E008709E3 /* SplitScreen2.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1197,10 +1266,13 @@
 				2AEEEDF7249C940C0009AAE1 /* LShowImageConfiguration.swift in Sources */,
 				2AEEEDFF249CE1D80009AAE1 /* LShowImageTabBarView.swift in Sources */,
 				2AEEEDFB249C95CC0009AAE1 /* LShowImageVCDelegate.swift in Sources */,
+				2A6A7E9324E00785008709E3 /* LShowImageFilterCell.swift in Sources */,
 				2A75812424A1071C00592990 /* LEditPhotosViewController.swift in Sources */,
 				2A75812224A106E000592990 /* LEditPickerNavView.swift in Sources */,
 				2AEEEDF5249C92E20009AAE1 /* LImageShow.swift in Sources */,
+				2A6A7E7E24DFC315008709E3 /* FilterView.m in Sources */,
 				2AEEEE01249CE2650009AAE1 /* LShowImageCollectionViewCell.swift in Sources */,
+				2A6A7E9124E00776008709E3 /* LShowImageFilterBar.swift in Sources */,
 				2AEEEDF9249C958F0009AAE1 /* LShowImageViewController.swift in Sources */,
 				2AEEEE03249CE6110009AAE1 /* LGifImage.swift in Sources */,
 			);
@@ -1837,6 +1909,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1868,6 +1941,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

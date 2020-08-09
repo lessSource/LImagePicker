@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FilterView.h"
 
 //! Project version number for LImageShow.
 FOUNDATION_EXPORT double LImageShowVersionNumber;

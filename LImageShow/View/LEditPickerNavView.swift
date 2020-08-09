@@ -55,8 +55,7 @@ class LEditPickerNavView: UIView {
     
     // MARK:- Event
     @objc fileprivate func cancleButtonClick() {
-        //            viewController()?.navigationController?.popViewController(animated: true)
-        
+        getControllerFromView()?.navigationController?.popViewController(animated: true)
     }
     
     @objc fileprivate func saveButtonClick() {

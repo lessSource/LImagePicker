@@ -183,7 +183,13 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
                 navVC.imageDelegete?.imagePickerController(navVC, photos: imageArr, asset: assetArr)
                 self.dismiss(animated: true, completion: nil)
             }
-        case .edit: break
+        case .edit:
+            LImagePickerManager.shared.getSelectPhotoWithAsset(navVC.selectArray, isOriginal: true) { (imageArr, assetArr) in
+                if imageArr.count == 0 { return }
+                let editPhotosVC = LEditPhotosViewController()
+                editPhotosVC.contentImage = imageArr[0]
+                self.pushAndHideTabbar(editPhotosVC)
+            }
         case .original: break
         }
     }
