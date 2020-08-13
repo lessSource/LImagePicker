@@ -10,9 +10,20 @@ import UIKit
 import LPublicImageParameter
 
 enum FilterType {
-    case normal  // 默认
-    case gray    // 灰度
-    case split2  // 二分屏
+    case normal      // 默认
+    case gray        // 灰度
+    case split2      // 二分屏
+    case split9      // 九分屏
+    case upsideDown  // 颠倒
+    case mosaic1     // 马赛克1
+    case mosaic2     // 马赛克2
+    case mosaic3     // 马赛克3
+    case zoom        // 缩放
+    case outside     // 灵魂出窍
+    case jitter      //
+    case flashWhite  // 闪白
+    case illusion    //
+    case burr        // 毛刺
     
     var filterName: String {
         switch self {
@@ -22,6 +33,29 @@ enum FilterType {
             return "Gray"
         case .split2:
             return "SplitScreen2"
+        case .split9:
+            return "SplitScreen9"
+        case .upsideDown:
+            return "UpsideDown"
+        case .mosaic1:
+            return "Mosaic1"
+        case .mosaic2:
+            return "Mosaic2"
+        case .mosaic3:
+            return "Mosaic3"
+        case .zoom:
+            return "Zoom"
+        case .outside:
+            return "Outside"
+        case .jitter:
+            return "Jitter"
+        case .flashWhite:
+            return "FlashWhite"
+        case .illusion:
+            return "Illusion"
+        case .burr:
+            return "Burr"
+            
         }
     }
     
@@ -53,7 +87,7 @@ public class LEditPhotosViewController: UIViewController {
         view.backgroundColor = UIColor.white
         
         view.addSubview(navView)
-        dataArray = [.normal, .gray, .split2]
+        dataArray = [.normal, .gray, .split2, .split9, .upsideDown, .mosaic1, .mosaic2, .mosaic3, .zoom, .outside, .jitter, .flashWhite, .illusion, .burr]
 
         
         DispatchQueue.main.asyncAfter(deadline: .now()) {
@@ -66,9 +100,7 @@ public class LEditPhotosViewController: UIViewController {
             self.view.addSubview(filerBarView)
             
             filerBarView.itemList = self.dataArray
-        }
-        
-        
+        }        
         
     }
 

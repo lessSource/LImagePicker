@@ -14,6 +14,28 @@
 		2A271AFF24B4224E009239EA /* LImageCameraOperationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */; };
 		2A271B0124B4B1C9009239EA /* LImageCameraTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */; };
 		2A271B0324B4C7E7009239EA /* LImageCameraPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */; };
+		2A2AECBF24E1712700DF26EA /* SplitScreen9.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECBE24E1712700DF26EA /* SplitScreen9.fsh */; };
+		2A2AECC124E1713900DF26EA /* SplitScreen9.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECC024E1713900DF26EA /* SplitScreen9.vsh */; };
+		2A2AECC724E1766500DF26EA /* UpsideDown.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECC624E1766500DF26EA /* UpsideDown.fsh */; };
+		2A2AECC924E1766D00DF26EA /* UpsideDown.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECC824E1766D00DF26EA /* UpsideDown.vsh */; };
+		2A2AECCB24E1767C00DF26EA /* Mosaic1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECCA24E1767C00DF26EA /* Mosaic1.fsh */; };
+		2A2AECCD24E1768400DF26EA /* Mosaic1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECCC24E1768400DF26EA /* Mosaic1.vsh */; };
+		2A2AECCF24E1768E00DF26EA /* Mosaic2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECCE24E1768E00DF26EA /* Mosaic2.fsh */; };
+		2A2AECD124E1769500DF26EA /* Mosaic2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECD024E1769500DF26EA /* Mosaic2.vsh */; };
+		2A2AECD324E176A000DF26EA /* Mosaic3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECD224E176A000DF26EA /* Mosaic3.fsh */; };
+		2A2AECD524E176A600DF26EA /* Mosaic3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECD424E176A600DF26EA /* Mosaic3.vsh */; };
+		2A2AECDB24E4127F00DF26EA /* Zoom.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECDA24E4127F00DF26EA /* Zoom.fsh */; };
+		2A2AECDD24E4128B00DF26EA /* Zoom.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECDC24E4128B00DF26EA /* Zoom.vsh */; };
+		2A2AECDF24E412AB00DF26EA /* Outside.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECDE24E412AB00DF26EA /* Outside.fsh */; };
+		2A2AECE124E412B600DF26EA /* Outside.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE024E412B600DF26EA /* Outside.vsh */; };
+		2A2AECE324E41E6F00DF26EA /* Jitter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE224E41E6F00DF26EA /* Jitter.fsh */; };
+		2A2AECE524E41E7700DF26EA /* Jitter.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE424E41E7700DF26EA /* Jitter.vsh */; };
+		2A2AECE724E41E8500DF26EA /* FlashWhite.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE624E41E8500DF26EA /* FlashWhite.fsh */; };
+		2A2AECE924E41E8D00DF26EA /* FlashWhite.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE824E41E8D00DF26EA /* FlashWhite.vsh */; };
+		2A2AECEC24E41ECC00DF26EA /* Illusion.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECEB24E41ECC00DF26EA /* Illusion.fsh */; };
+		2A2AECEE24E41ED600DF26EA /* Illusion.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECED24E41ED600DF26EA /* Illusion.vsh */; };
+		2A2AECF124E4291500DF26EA /* Burr.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECF024E4291500DF26EA /* Burr.fsh */; };
+		2A2AECF324E4291D00DF26EA /* Burr.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECF224E4291D00DF26EA /* Burr.vsh */; };
 		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
 		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
 		2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7DE524DC11B3008709E3 /* Normal.vsh */; };
@@ -198,6 +220,28 @@
 		2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraOperationView.swift; sourceTree = "<group>"; };
 		2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraTabBarView.swift; sourceTree = "<group>"; };
 		2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraPlayerView.swift; sourceTree = "<group>"; };
+		2A2AECBE24E1712700DF26EA /* SplitScreen9.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen9.fsh; sourceTree = "<group>"; };
+		2A2AECC024E1713900DF26EA /* SplitScreen9.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen9.vsh; sourceTree = "<group>"; };
+		2A2AECC624E1766500DF26EA /* UpsideDown.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = UpsideDown.fsh; sourceTree = "<group>"; };
+		2A2AECC824E1766D00DF26EA /* UpsideDown.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = UpsideDown.vsh; sourceTree = "<group>"; };
+		2A2AECCA24E1767C00DF26EA /* Mosaic1.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Mosaic1.fsh; sourceTree = "<group>"; };
+		2A2AECCC24E1768400DF26EA /* Mosaic1.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Mosaic1.vsh; sourceTree = "<group>"; };
+		2A2AECCE24E1768E00DF26EA /* Mosaic2.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Mosaic2.fsh; sourceTree = "<group>"; };
+		2A2AECD024E1769500DF26EA /* Mosaic2.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Mosaic2.vsh; sourceTree = "<group>"; };
+		2A2AECD224E176A000DF26EA /* Mosaic3.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Mosaic3.fsh; sourceTree = "<group>"; };
+		2A2AECD424E176A600DF26EA /* Mosaic3.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Mosaic3.vsh; sourceTree = "<group>"; };
+		2A2AECDA24E4127F00DF26EA /* Zoom.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Zoom.fsh; sourceTree = "<group>"; };
+		2A2AECDC24E4128B00DF26EA /* Zoom.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Zoom.vsh; sourceTree = "<group>"; };
+		2A2AECDE24E412AB00DF26EA /* Outside.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Outside.fsh; sourceTree = "<group>"; };
+		2A2AECE024E412B600DF26EA /* Outside.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Outside.vsh; sourceTree = "<group>"; };
+		2A2AECE224E41E6F00DF26EA /* Jitter.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Jitter.fsh; sourceTree = "<group>"; };
+		2A2AECE424E41E7700DF26EA /* Jitter.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Jitter.vsh; sourceTree = "<group>"; };
+		2A2AECE624E41E8500DF26EA /* FlashWhite.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FlashWhite.fsh; sourceTree = "<group>"; };
+		2A2AECE824E41E8D00DF26EA /* FlashWhite.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = FlashWhite.vsh; sourceTree = "<group>"; };
+		2A2AECEB24E41ECC00DF26EA /* Illusion.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Illusion.fsh; sourceTree = "<group>"; };
+		2A2AECED24E41ED600DF26EA /* Illusion.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Illusion.vsh; sourceTree = "<group>"; };
+		2A2AECF024E4291500DF26EA /* Burr.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Burr.fsh; sourceTree = "<group>"; };
+		2A2AECF224E4291D00DF26EA /* Burr.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Burr.vsh; sourceTree = "<group>"; };
 		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
 		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
 		2A6A7DE524DC11B3008709E3 /* Normal.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.vsh; sourceTree = "<group>"; };
@@ -395,9 +439,119 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		2A2AECBD24E170EC00DF26EA /* SplitScreen9 */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECBE24E1712700DF26EA /* SplitScreen9.fsh */,
+				2A2AECC024E1713900DF26EA /* SplitScreen9.vsh */,
+			);
+			path = SplitScreen9;
+			sourceTree = "<group>";
+		};
+		2A2AECC224E1760300DF26EA /* UpsideDown */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECC624E1766500DF26EA /* UpsideDown.fsh */,
+				2A2AECC824E1766D00DF26EA /* UpsideDown.vsh */,
+			);
+			path = UpsideDown;
+			sourceTree = "<group>";
+		};
+		2A2AECC324E1760500DF26EA /* Mosaic1 */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECCA24E1767C00DF26EA /* Mosaic1.fsh */,
+				2A2AECCC24E1768400DF26EA /* Mosaic1.vsh */,
+			);
+			path = Mosaic1;
+			sourceTree = "<group>";
+		};
+		2A2AECC424E1760800DF26EA /* Mosaic2 */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECCE24E1768E00DF26EA /* Mosaic2.fsh */,
+				2A2AECD024E1769500DF26EA /* Mosaic2.vsh */,
+			);
+			path = Mosaic2;
+			sourceTree = "<group>";
+		};
+		2A2AECC524E1760900DF26EA /* Mosaic3 */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECD224E176A000DF26EA /* Mosaic3.fsh */,
+				2A2AECD424E176A600DF26EA /* Mosaic3.vsh */,
+			);
+			path = Mosaic3;
+			sourceTree = "<group>";
+		};
+		2A2AECD624E4120D00DF26EA /* Zoom */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECDA24E4127F00DF26EA /* Zoom.fsh */,
+				2A2AECDC24E4128B00DF26EA /* Zoom.vsh */,
+			);
+			path = Zoom;
+			sourceTree = "<group>";
+		};
+		2A2AECD724E4121800DF26EA /* Outside */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECDE24E412AB00DF26EA /* Outside.fsh */,
+				2A2AECE024E412B600DF26EA /* Outside.vsh */,
+			);
+			path = Outside;
+			sourceTree = "<group>";
+		};
+		2A2AECD824E4122F00DF26EA /* Jitter */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECE224E41E6F00DF26EA /* Jitter.fsh */,
+				2A2AECE424E41E7700DF26EA /* Jitter.vsh */,
+			);
+			path = Jitter;
+			sourceTree = "<group>";
+		};
+		2A2AECD924E4125600DF26EA /* FlashWhite */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECE624E41E8500DF26EA /* FlashWhite.fsh */,
+				2A2AECE824E41E8D00DF26EA /* FlashWhite.vsh */,
+			);
+			path = FlashWhite;
+			sourceTree = "<group>";
+		};
+		2A2AECEA24E41EBF00DF26EA /* Illusion */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECEB24E41ECC00DF26EA /* Illusion.fsh */,
+				2A2AECED24E41ED600DF26EA /* Illusion.vsh */,
+			);
+			path = Illusion;
+			sourceTree = "<group>";
+		};
+		2A2AECEF24E4290500DF26EA /* Burr */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AECF024E4291500DF26EA /* Burr.fsh */,
+				2A2AECF224E4291D00DF26EA /* Burr.vsh */,
+			);
+			path = Burr;
+			sourceTree = "<group>";
+		};
 		2A6A7E8424DFF566008709E3 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
+				2A2AECEF24E4290500DF26EA /* Burr */,
+				2A2AECEA24E41EBF00DF26EA /* Illusion */,
+				2A2AECD924E4125600DF26EA /* FlashWhite */,
+				2A2AECD824E4122F00DF26EA /* Jitter */,
+				2A2AECD724E4121800DF26EA /* Outside */,
+				2A2AECD624E4120D00DF26EA /* Zoom */,
+				2A2AECC524E1760900DF26EA /* Mosaic3 */,
+				2A2AECC424E1760800DF26EA /* Mosaic2 */,
+				2A2AECC324E1760500DF26EA /* Mosaic1 */,
+				2A2AECC224E1760300DF26EA /* UpsideDown */,
+				2A2AECBD24E170EC00DF26EA /* SplitScreen9 */,
 				2A6A7E8B24E001B9008709E3 /* SplitScreen2 */,
 				2A6A7E7B24DFC315008709E3 /* FilterView.h */,
 				2A6A7E7C24DFC315008709E3 /* FilterView.m */,
@@ -1016,12 +1170,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A2AECCF24E1768E00DF26EA /* Mosaic2.fsh in Resources */,
 				2A6A7E8D24E00222008709E3 /* SplitScreen2.fsh in Resources */,
+				2A2AECD324E176A000DF26EA /* Mosaic3.fsh in Resources */,
+				2A2AECE124E412B600DF26EA /* Outside.vsh in Resources */,
+				2A2AECEC24E41ECC00DF26EA /* Illusion.fsh in Resources */,
 				2A6A7DE824DC11B3008709E3 /* Normal.fsh in Resources */,
+				2A2AECF324E4291D00DF26EA /* Burr.vsh in Resources */,
+				2A2AECE724E41E8500DF26EA /* FlashWhite.fsh in Resources */,
+				2A2AECBF24E1712700DF26EA /* SplitScreen9.fsh in Resources */,
 				2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */,
+				2A2AECCB24E1767C00DF26EA /* Mosaic1.fsh in Resources */,
+				2A2AECC124E1713900DF26EA /* SplitScreen9.vsh in Resources */,
+				2A2AECDF24E412AB00DF26EA /* Outside.fsh in Resources */,
 				2A6A7E8A24DFF6D2008709E3 /* Gray.vsh in Resources */,
+				2A2AECE924E41E8D00DF26EA /* FlashWhite.vsh in Resources */,
+				2A2AECDB24E4127F00DF26EA /* Zoom.fsh in Resources */,
+				2A2AECD524E176A600DF26EA /* Mosaic3.vsh in Resources */,
+				2A2AECF124E4291500DF26EA /* Burr.fsh in Resources */,
+				2A2AECD124E1769500DF26EA /* Mosaic2.vsh in Resources */,
 				2A6A7E8824DFF6C3008709E3 /* Gray.fsh in Resources */,
+				2A2AECEE24E41ED600DF26EA /* Illusion.vsh in Resources */,
+				2A2AECE324E41E6F00DF26EA /* Jitter.fsh in Resources */,
 				2A6A7E8F24E0022E008709E3 /* SplitScreen2.vsh in Resources */,
+				2A2AECE524E41E7700DF26EA /* Jitter.vsh in Resources */,
+				2A2AECC724E1766500DF26EA /* UpsideDown.fsh in Resources */,
+				2A2AECC924E1766D00DF26EA /* UpsideDown.vsh in Resources */,
+				2A2AECDD24E4128B00DF26EA /* Zoom.vsh in Resources */,
+				2A2AECCD24E1768400DF26EA /* Mosaic1.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
