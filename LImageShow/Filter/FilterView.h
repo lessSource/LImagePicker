@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 // 设置滤镜动画
 - (void)setupsetupShaderProgram:(NSString *)name;
 
+
+// 保存图片
+- (UIImage *)saveImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

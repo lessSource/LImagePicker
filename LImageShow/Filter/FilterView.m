@@ -406,6 +406,43 @@ typedef struct {
     return backingHeight;
 }
 
+- (UIImage *)saveImage {
+//    UIImage *image = [UIImage alloc]init
+
+    GLuint frameBuffer;
+    glGenFramebuffers(1, &frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    
+    GLuint texture;
+    glGenFramebuffers(1, &texture);
+    glBindFramebuffer(GL_FRAMEBUFFER, texture);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 200, 300, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    // 纹理图片加载帧缓存区
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+    
+    glViewport(0, 0, 200, 300);
+    
+//    self.program
+    glUseProgram(self.program);
+    
+    GLuint positionSlot = glGetAttribLocation(self.program, "Position");
+    GLuint textureSlot = glGetUniformLocation(self.program, "Texture");
+    GLuint textureCoordsSlot = glGetAttribLocation(self.program, "TextureCoords");
+    
+    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, self.textureID.)
+    glUniform1f(textureSlot, 0);
+    
+    return nil;
+    
+}
 
 @end
 
