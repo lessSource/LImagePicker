@@ -76,7 +76,6 @@ public class LImageCameraViewController: UIViewController {
         view.addSubview(tabBarView)
         tabBarView.isHidden = true
         videoView.captureSession.startRunning()
-        
     }
 
     // MARK: - fileprivate
@@ -85,6 +84,9 @@ public class LImageCameraViewController: UIViewController {
         tabBarView.isHidden = false
     }
     
+    deinit {
+        print("LImageCameraViewController +++ 释放")
+    }
 }
 
 extension LImageCameraViewController: LImageCameraDelegate, LImageCameraOperationDelegate {
@@ -112,14 +114,9 @@ extension LImageCameraViewController: LImageCameraDelegate, LImageCameraOperatio
         }
         
         if isSave {
-//            PHPhotoLibrary.shared().performChanges {
+//            PHPhotoLibrary.shared().performChanges({
 //                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: filePathUrl)
-//                DispatchQueue.main.async {
-//                    self.delegate?.imageCameraViewSuccess(viewController: self)
-//                }
-//            } completionHandler: { (success, error) in
-//
-//            }
+//            }, completionHandler: nil)
         }
     }
     

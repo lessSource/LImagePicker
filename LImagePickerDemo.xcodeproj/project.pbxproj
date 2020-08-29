@@ -36,6 +36,25 @@
 		2A2AECEE24E41ED600DF26EA /* Illusion.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECED24E41ED600DF26EA /* Illusion.vsh */; };
 		2A2AECF124E4291500DF26EA /* Burr.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECF024E4291500DF26EA /* Burr.fsh */; };
 		2A2AECF324E4291D00DF26EA /* Burr.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECF224E4291D00DF26EA /* Burr.vsh */; };
+		2A2AED9C24F89A3400DF26EA /* LImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */; };
+		2A2AEDA324F89A3400DF26EA /* LImagePickerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDA224F89A3400DF26EA /* LImagePickerControllerTests.swift */; };
+		2A2AEDA524F89A3400DF26EA /* LImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2AED9524F89A3400DF26EA /* LImagePickerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A2AEDA824F89A3400DF26EA /* LImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */; };
+		2A2AEDA924F89A3400DF26EA /* LImagePickerController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2A2AEDB324F89B8500DF26EA /* LImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB224F89B8500DF26EA /* LImagePickerController.swift */; };
+		2A2AEDB524F8A3D600DF26EA /* LImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB424F8A3D600DF26EA /* LImagePickerManager.swift */; };
+		2A2AEDB724F8AB8200DF26EA /* LPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB624F8AB8200DF26EA /* LPhotoPickerController.swift */; };
+		2A2AEDB924F8AD0700DF26EA /* LImagePickerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB824F8AD0700DF26EA /* LImagePickerPromptView.swift */; };
+		2A2AEDBB24F8B08700DF26EA /* LImagePickerViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDBA24F8B08700DF26EA /* LImagePickerViewExtensions.swift */; };
+		2A2AEDBD24F8D8AD00DF26EA /* LImagePickerAboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDBC24F8D8AD00DF26EA /* LImagePickerAboutApp.swift */; };
+		2A2AEDBF24F8D97A00DF26EA /* LImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AEDBE24F8D97A00DF26EA /* LImagePickerController.bundle */; };
+		2A2AEDC124F8D9F300DF26EA /* LImagePickerAboutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC024F8D9F300DF26EA /* LImagePickerAboutExtensions.swift */; };
+		2A2AEDC324F8DFD700DF26EA /* LAlbumPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC224F8DFD700DF26EA /* LAlbumPickerController.swift */; };
+		2A2AEDC524F8E21000DF26EA /* LImagePickerColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC424F8E21000DF26EA /* LImagePickerColorExtensions.swift */; };
+		2A2AEDC724F8E52500DF26EA /* LImageShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC624F8E52500DF26EA /* LImageShowViewController.swift */; };
+		2A2AEDC924F8E66800DF26EA /* LImageShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC824F8E66800DF26EA /* LImageShow.swift */; };
+		2A2AEDCB24F8E9E300DF26EA /* LCameraPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDCA24F8E9E300DF26EA /* LCameraPickerViewController.swift */; };
+		2A2AEDCD24F8F23400DF26EA /* LImageShowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDCC24F8F23400DF26EA /* LImageShowCollectionViewCell.swift */; };
 		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
 		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
 		2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7DE524DC11B3008709E3 /* Normal.vsh */; };
@@ -51,6 +70,8 @@
 		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
 		2A75812224A106E000592990 /* LEditPickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812124A106E000592990 /* LEditPickerNavView.swift */; };
 		2A75812424A1071C00592990 /* LEditPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812324A1071C00592990 /* LEditPhotosViewController.swift */; };
+		2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */; };
+		2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D324FA329200761046 /* LCameraPickerView.swift */; };
 		2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2124626C87008D5179 /* AppDelegate.swift */; };
 		2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2324626C87008D5179 /* SceneDelegate.swift */; };
 		2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2524626C87008D5179 /* ViewController.swift */; };
@@ -103,6 +124,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2A2AED9D24F89A3400DF26EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A2AED9224F89A3400DF26EA;
+			remoteInfo = LImagePickerController;
+		};
+		2A2AED9F24F89A3400DF26EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2AEE0D1D24626C87008D5179;
+			remoteInfo = LImagePickerDemo;
+		};
+		2A2AEDA624F89A3400DF26EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A2AED9224F89A3400DF26EA;
+			remoteInfo = LImagePickerController;
+		};
 		2AEE0D3824626C8B008D5179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
@@ -206,6 +248,7 @@
 				2AEEEDED249C92160009AAE1 /* LImageShow.framework in Embed Frameworks */,
 				2AEEED92249BAF850009AAE1 /* LPublicImageParameter.framework in Embed Frameworks */,
 				2AEE0D6124626D16008D5179 /* LImagePicker.framework in Embed Frameworks */,
+				2A2AEDA924F89A3400DF26EA /* LImagePickerController.framework in Embed Frameworks */,
 				2AEEEDCB249C91E60009AAE1 /* LImageCamera.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -242,6 +285,26 @@
 		2A2AECED24E41ED600DF26EA /* Illusion.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Illusion.vsh; sourceTree = "<group>"; };
 		2A2AECF024E4291500DF26EA /* Burr.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Burr.fsh; sourceTree = "<group>"; };
 		2A2AECF224E4291D00DF26EA /* Burr.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Burr.vsh; sourceTree = "<group>"; };
+		2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LImagePickerController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A2AED9524F89A3400DF26EA /* LImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LImagePickerController.h; sourceTree = "<group>"; };
+		2A2AED9624F89A3400DF26EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A2AED9B24F89A3400DF26EA /* LImagePickerControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LImagePickerControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A2AEDA224F89A3400DF26EA /* LImagePickerControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerControllerTests.swift; sourceTree = "<group>"; };
+		2A2AEDA424F89A3400DF26EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A2AEDB224F89B8500DF26EA /* LImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerController.swift; sourceTree = "<group>"; };
+		2A2AEDB424F8A3D600DF26EA /* LImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerManager.swift; sourceTree = "<group>"; };
+		2A2AEDB624F8AB8200DF26EA /* LPhotoPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotoPickerController.swift; sourceTree = "<group>"; };
+		2A2AEDB824F8AD0700DF26EA /* LImagePickerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerPromptView.swift; sourceTree = "<group>"; };
+		2A2AEDBA24F8B08700DF26EA /* LImagePickerViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerViewExtensions.swift; sourceTree = "<group>"; };
+		2A2AEDBC24F8D8AD00DF26EA /* LImagePickerAboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerAboutApp.swift; sourceTree = "<group>"; };
+		2A2AEDBE24F8D97A00DF26EA /* LImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LImagePickerController.bundle; sourceTree = "<group>"; };
+		2A2AEDC024F8D9F300DF26EA /* LImagePickerAboutExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerAboutExtensions.swift; sourceTree = "<group>"; };
+		2A2AEDC224F8DFD700DF26EA /* LAlbumPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlbumPickerController.swift; sourceTree = "<group>"; };
+		2A2AEDC424F8E21000DF26EA /* LImagePickerColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerColorExtensions.swift; sourceTree = "<group>"; };
+		2A2AEDC624F8E52500DF26EA /* LImageShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageShowViewController.swift; sourceTree = "<group>"; };
+		2A2AEDC824F8E66800DF26EA /* LImageShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageShow.swift; sourceTree = "<group>"; };
+		2A2AEDCA24F8E9E300DF26EA /* LCameraPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCameraPickerViewController.swift; sourceTree = "<group>"; };
+		2A2AEDCC24F8F23400DF26EA /* LImageShowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageShowCollectionViewCell.swift; sourceTree = "<group>"; };
 		2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPromptView.swift; sourceTree = "<group>"; };
 		2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LPublicImageParameter.bundle; sourceTree = "<group>"; };
 		2A6A7DE524DC11B3008709E3 /* Normal.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Normal.vsh; sourceTree = "<group>"; };
@@ -257,6 +320,8 @@
 		2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LShowVideoPlayViewController.swift; sourceTree = "<group>"; };
 		2A75812124A106E000592990 /* LEditPickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPickerNavView.swift; sourceTree = "<group>"; };
 		2A75812324A1071C00592990 /* LEditPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPhotosViewController.swift; sourceTree = "<group>"; };
+		2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerConfiguration.swift; sourceTree = "<group>"; };
+		2AAF62D324FA329200761046 /* LCameraPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCameraPickerView.swift; sourceTree = "<group>"; };
 		2ACD8224246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2ACD8225246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2AEE0D1E24626C87008D5179 /* LImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,6 +393,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2A2AED9024F89A3400DF26EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A2AED9824F89A3400DF26EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2AED9C24F89A3400DF26EA /* LImagePickerController.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2AEE0D1B24626C87008D5179 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -336,6 +416,7 @@
 				1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */,
 				2AEEEDEC249C92160009AAE1 /* LImageShow.framework in Frameworks */,
 				2AEEEDCA249C91E60009AAE1 /* LImageCamera.framework in Frameworks */,
+				2A2AEDA824F89A3400DF26EA /* LImagePickerController.framework in Frameworks */,
 				2AEEED91249BAF850009AAE1 /* LPublicImageParameter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -538,6 +619,47 @@
 			path = Burr;
 			sourceTree = "<group>";
 		};
+		2A2AED8A24F7869B00DF26EA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2A2AED9424F89A3400DF26EA /* LImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AEDB224F89B8500DF26EA /* LImagePickerController.swift */,
+				2A2AEDB424F8A3D600DF26EA /* LImagePickerManager.swift */,
+				2A2AEDB824F8AD0700DF26EA /* LImagePickerPromptView.swift */,
+				2A2AEDBA24F8B08700DF26EA /* LImagePickerViewExtensions.swift */,
+				2A2AEDC024F8D9F300DF26EA /* LImagePickerAboutExtensions.swift */,
+				2A2AEDC424F8E21000DF26EA /* LImagePickerColorExtensions.swift */,
+				2A2AEDBC24F8D8AD00DF26EA /* LImagePickerAboutApp.swift */,
+				2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */,
+				2A2AEDB624F8AB8200DF26EA /* LPhotoPickerController.swift */,
+				2A2AEDC224F8DFD700DF26EA /* LAlbumPickerController.swift */,
+				2A2AEDC624F8E52500DF26EA /* LImageShowViewController.swift */,
+				2A2AEDCC24F8F23400DF26EA /* LImageShowCollectionViewCell.swift */,
+				2A2AEDCA24F8E9E300DF26EA /* LCameraPickerViewController.swift */,
+				2AAF62D324FA329200761046 /* LCameraPickerView.swift */,
+				2A2AED9524F89A3400DF26EA /* LImagePickerController.h */,
+				2A2AEDC824F8E66800DF26EA /* LImageShow.swift */,
+				2A2AED9624F89A3400DF26EA /* Info.plist */,
+				2A2AEDBE24F8D97A00DF26EA /* LImagePickerController.bundle */,
+			);
+			path = LImagePickerController;
+			sourceTree = "<group>";
+		};
+		2A2AEDA124F89A3400DF26EA /* LImagePickerControllerTests */ = {
+			isa = PBXGroup;
+			children = (
+				2A2AEDA224F89A3400DF26EA /* LImagePickerControllerTests.swift */,
+				2A2AEDA424F89A3400DF26EA /* Info.plist */,
+			);
+			path = LImagePickerControllerTests;
+			sourceTree = "<group>";
+		};
 		2A6A7E8424DFF566008709E3 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,6 +747,8 @@
 				2AEEEDC3249C91E60009AAE1 /* LImageCameraTests */,
 				2AEEEDD8249C92160009AAE1 /* LImageShow */,
 				2AEEEDE5249C92160009AAE1 /* LImageShowTests */,
+				2A2AED9424F89A3400DF26EA /* LImagePickerController */,
+				2A2AEDA124F89A3400DF26EA /* LImagePickerControllerTests */,
 				2AEE0D1F24626C87008D5179 /* Products */,
 				23192FF879ABADA43BE2E2F6 /* Pods */,
 				5C038BAF68630AD9CE8F1587 /* Frameworks */,
@@ -644,6 +768,8 @@
 				2AEEEDBD249C91E60009AAE1 /* LImageCameraTests.xctest */,
 				2AEEEDD7249C92160009AAE1 /* LImageShow.framework */,
 				2AEEEDDF249C92160009AAE1 /* LImageShowTests.xctest */,
+				2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */,
+				2A2AED9B24F89A3400DF26EA /* LImagePickerControllerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -740,6 +866,7 @@
 		2AEEEDB6249C91E60009AAE1 /* LImageCamera */ = {
 			isa = PBXGroup;
 			children = (
+				2A2AED8A24F7869B00DF26EA /* Model */,
 				2A271AFB24B36C99009239EA /* View */,
 				2AEEEDB7249C91E60009AAE1 /* LImageCamera.h */,
 				2AEEEDB8249C91E60009AAE1 /* Info.plist */,
@@ -795,6 +922,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		2A2AED8E24F89A3400DF26EA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2AEDA524F89A3400DF26EA /* LImagePickerController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2AEE0D4624626D15008D5179 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -831,6 +966,43 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2A2AED9224F89A3400DF26EA /* LImagePickerController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A2AEDAE24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerController" */;
+			buildPhases = (
+				2A2AED8E24F89A3400DF26EA /* Headers */,
+				2A2AED8F24F89A3400DF26EA /* Sources */,
+				2A2AED9024F89A3400DF26EA /* Frameworks */,
+				2A2AED9124F89A3400DF26EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LImagePickerController;
+			productName = LImagePickerController;
+			productReference = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		2A2AED9A24F89A3400DF26EA /* LImagePickerControllerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A2AEDAF24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerControllerTests" */;
+			buildPhases = (
+				2A2AED9724F89A3400DF26EA /* Sources */,
+				2A2AED9824F89A3400DF26EA /* Frameworks */,
+				2A2AED9924F89A3400DF26EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A2AED9E24F89A3400DF26EA /* PBXTargetDependency */,
+				2A2AEDA024F89A3400DF26EA /* PBXTargetDependency */,
+			);
+			name = LImagePickerControllerTests;
+			productName = LImagePickerControllerTests;
+			productReference = 2A2AED9B24F89A3400DF26EA /* LImagePickerControllerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2AEE0D1D24626C87008D5179 /* LImagePickerDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2AEE0D4024626C8B008D5179 /* Build configuration list for PBXNativeTarget "LImagePickerDemo" */;
@@ -849,6 +1021,7 @@
 				2AEEED90249BAF850009AAE1 /* PBXTargetDependency */,
 				2AEEEDC9249C91E60009AAE1 /* PBXTargetDependency */,
 				2AEEEDEB249C92160009AAE1 /* PBXTargetDependency */,
+				2A2AEDA724F89A3400DF26EA /* PBXTargetDependency */,
 			);
 			name = LImagePickerDemo;
 			productName = LImagePickerDemo;
@@ -1032,10 +1205,18 @@
 		2AEE0D1624626C87008D5179 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
+				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = L;
 				TargetAttributes = {
+					2A2AED9224F89A3400DF26EA = {
+						CreatedOnToolsVersion = 11.6;
+						LastSwiftMigration = 1160;
+					};
+					2A2AED9A24F89A3400DF26EA = {
+						CreatedOnToolsVersion = 11.6;
+						TestTargetID = 2AEE0D1D24626C87008D5179;
+					};
 					2AEE0D1D24626C87008D5179 = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
@@ -1100,11 +1281,28 @@
 				2AEEEDBC249C91E60009AAE1 /* LImageCameraTests */,
 				2AEEEDD6249C92160009AAE1 /* LImageShow */,
 				2AEEEDDE249C92160009AAE1 /* LImageShowTests */,
+				2A2AED9224F89A3400DF26EA /* LImagePickerController */,
+				2A2AED9A24F89A3400DF26EA /* LImagePickerControllerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2A2AED9124F89A3400DF26EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2AEDBF24F8D97A00DF26EA /* LImagePickerController.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A2AED9924F89A3400DF26EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2AEE0D1C24626C87008D5179 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1353,6 +1551,36 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2A2AED8F24F89A3400DF26EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2AEDB524F8A3D600DF26EA /* LImagePickerManager.swift in Sources */,
+				2A2AEDB924F8AD0700DF26EA /* LImagePickerPromptView.swift in Sources */,
+				2A2AEDC724F8E52500DF26EA /* LImageShowViewController.swift in Sources */,
+				2A2AEDBD24F8D8AD00DF26EA /* LImagePickerAboutApp.swift in Sources */,
+				2A2AEDCD24F8F23400DF26EA /* LImageShowCollectionViewCell.swift in Sources */,
+				2A2AEDC924F8E66800DF26EA /* LImageShow.swift in Sources */,
+				2A2AEDB724F8AB8200DF26EA /* LPhotoPickerController.swift in Sources */,
+				2A2AEDCB24F8E9E300DF26EA /* LCameraPickerViewController.swift in Sources */,
+				2A2AEDBB24F8B08700DF26EA /* LImagePickerViewExtensions.swift in Sources */,
+				2A2AEDB324F89B8500DF26EA /* LImagePickerController.swift in Sources */,
+				2A2AEDC324F8DFD700DF26EA /* LAlbumPickerController.swift in Sources */,
+				2A2AEDC524F8E21000DF26EA /* LImagePickerColorExtensions.swift in Sources */,
+				2A2AEDC124F8D9F300DF26EA /* LImagePickerAboutExtensions.swift in Sources */,
+				2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */,
+				2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A2AED9724F89A3400DF26EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2AEDA324F89A3400DF26EA /* LImagePickerControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2AEE0D1A24626C87008D5179 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1465,6 +1693,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2A2AED9E24F89A3400DF26EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A2AED9224F89A3400DF26EA /* LImagePickerController */;
+			targetProxy = 2A2AED9D24F89A3400DF26EA /* PBXContainerItemProxy */;
+		};
+		2A2AEDA024F89A3400DF26EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
+			targetProxy = 2A2AED9F24F89A3400DF26EA /* PBXContainerItemProxy */;
+		};
+		2A2AEDA724F89A3400DF26EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A2AED9224F89A3400DF26EA /* LImagePickerController */;
+			targetProxy = 2A2AEDA624F89A3400DF26EA /* PBXContainerItemProxy */;
+		};
 		2AEE0D3924626C8B008D5179 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
@@ -1554,6 +1797,109 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2A2AEDAA24F89A3400DF26EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = AZM26TJN7U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LImagePickerController/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerController;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		2A2AEDAB24F89A3400DF26EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = AZM26TJN7U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LImagePickerController/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerController;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		2A2AEDAC24F89A3400DF26EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5P2JD4K827;
+				INFOPLIST_FILE = LImagePickerControllerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerControllerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
+			};
+			name = Debug;
+		};
+		2A2AEDAD24F89A3400DF26EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5P2JD4K827;
+				INFOPLIST_FILE = LImagePickerControllerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerControllerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
+			};
+			name = Release;
+		};
 		2AEE0D3E24626C8B008D5179 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2170,6 +2516,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2A2AEDAE24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A2AEDAA24F89A3400DF26EA /* Debug */,
+				2A2AEDAB24F89A3400DF26EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A2AEDAF24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerControllerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A2AEDAC24F89A3400DF26EA /* Debug */,
+				2A2AEDAD24F89A3400DF26EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2AEE0D1924626C87008D5179 /* Build configuration list for PBXProject "LImagePickerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -84,7 +84,6 @@ class LImageCameraPlayerView: UIView {
                 print("load error")
             }
         }
-        
     }
     
     // 暂停
@@ -101,7 +100,6 @@ class LImageCameraPlayerView: UIView {
     public func removeView() {
         avplayer?.pause()
         avplayer = nil
-        videoView.removeFromSuperview()
         removeFromSuperview()
     }
     
@@ -153,6 +151,7 @@ class LImageCameraPlayerView: UIView {
     }
     
     deinit {
+        videoView.removeFromSuperview()
         playerItem?.removeObserver(self, forKeyPath: "status")
         NotificationCenter.default.removeObserver(self)
         print("LImageCameraPlayerView ++++  释放")

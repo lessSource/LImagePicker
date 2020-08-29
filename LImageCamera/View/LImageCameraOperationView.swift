@@ -36,6 +36,16 @@ class LImageCameraOperationView: UIView {
         return button
     }()
     
+    fileprivate lazy var completeButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: LConstant.screenWidth - 60, y: LConstant.statusHeight + 10, width: 45, height: 30))
+        button.setTitle("完成", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.isHidden = true
+        return button
+    }()
+    
+    
     // 摄像按钮
     fileprivate lazy var takingView: UIView = {
         let view = UIView(frame: CGRect(x: LConstant.screenWidth/2 - 30, y: LConstant.screenHeight - 130, width: 60, height: 60))
@@ -65,6 +75,7 @@ class LImageCameraOperationView: UIView {
     // MARK: - initView
     fileprivate func initView() {
         addSubview(cancleButton)
+        addSubview(completeButton)
         addSubview(ringView)
         addSubview(takingView)
         cancleButton.addTarget(self, action: #selector(cancleButtonClick(_ :)), for: .touchUpInside)
@@ -77,7 +88,10 @@ class LImageCameraOperationView: UIView {
     
     public func shootingComplete() {
         cancleButton.setTitle("重拍", for: .normal)
-        
+        completeButton.isHidden = false
+        ringView.isHidden = true
+        ringView.animate(0)
+        takingView.isHidden = true
     }
     
     
@@ -87,6 +101,9 @@ class LImageCameraOperationView: UIView {
         }else {
             cancleButton.setTitle("取消", for: .normal)
             delegate?.operationViewDidSelect(buttonType: .remake)
+            completeButton.isHidden = true
+            takingView.isHidden = false
+            ringView.isHidden = false
         }
         
     }
@@ -163,6 +180,5 @@ class RingShapLayerView: UIView {
     public func animate(_ progress: CGFloat) {
         shapeLayer.strokeColor = UIColor.red.cgColor
         shapeLayer.strokeEnd = progress
-        
     }
 }
