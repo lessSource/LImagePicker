@@ -157,5 +157,219 @@ extension LImagePickerManager {
         
     }
     
+    //
+    func requestImageDataForAsset(_ asset: PHAsset, completion: @escaping ((Data?, String?, UIImage.Orientation, [AnyHashable : Any]?) -> ()), progressHandler: @escaping PHAssetImageProgressHandler) -> PHImageRequestID {
+        let options = PHImageRequestOptions()
+        
+        options.progressHandler = { progress, error, stop, info in
+            DispatchQueue.main.async {
+                progressHandler(progress, error, stop, info)
+            }
+        }
+        
+        options.isNetworkAccessAllowed = true
+        options.resizeMode = .fast
+        let imageRequestID = PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: completion)
+        
+        return imageRequestID
+    }
+    
+    // 获取原图
+    func getOriginalPhotoWithAsset(asset: PHAsset, progressHandler: @escaping PHAssetImageProgressHandler, completion: (UIImage, [AnyHashable : Any], Bool) -> ()) -> PHImageRequestID {
+        
+        let option = PHImageRequestOptions()
+        option.isNetworkAccessAllowed = true
+        option.progressHandler = progressHandler
+        
+        option.resizeMode = .fast
+        
+        let imageRequestID = PHImageManager.default().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: option) { (result, info) in
+            
+            print(info as Any)
+            
+        }
+        
+        return imageRequestID
+        
+    }
+    
+    
+    // 获取图片
+    func getPhotoWithAsset(_ asset: PHAsset, photoWidth: CGFloat, completion: @escaping (UIImage, Dictionary<AnyHashable, Any>, Bool) -> (), progressHandler: @escaping PHAssetImageProgressHandler, networkAccessAllowed: Bool) -> PHImageRequestID {
+        var imageSize: CGSize = .zero
+        
+        if photoWidth < LConstant.screenWidth {
+            imageSize = CGSize(width: photoWidth, height: photoWidth)
+        }else {
+            let phAsset = asset
+            let aspectRation: CGFloat = CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
+            var pixelWidth = photoWidth * 1.5
+            
+            // 超宽图片
+            if aspectRation > 1.8 {
+                pixelWidth = pixelWidth * aspectRation
+            }
+            
+            // 超高图片
+            if aspectRation < 0.2 {
+                pixelWidth = pixelWidth * 0.5
+            }
+            let pixelHeight = pixelWidth / aspectRation
+            imageSize = CGSize(width: pixelWidth, height: pixelHeight)
+            
+        }
+        
+        let option = PHImageRequestOptions()
+        option.resizeMode = PHImageRequestOptionsResizeMode.fast
+        
+        let imageRequestID = PHImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: option) { (result, info) in
+            let cancelled: Bool = info?[PHImageCancelledKey] as? Bool ?? false
+            
+            guard var resultImg = result else { return }
+            
+            if !cancelled {
+                
+                resultImg = self.fixOrientation(aImage: resultImg)
+                
+                completion(resultImg, info!, info?[PHImageResultIsDegradedKey] as! Bool)
+                
+            }
+            
+            // Dowunload image from iCloud / 从iCloud下载图片
+            if (info?[PHImageResultIsInCloudKey] != nil) && !(result != nil) && networkAccessAllowed {
+                
+                let options = PHImageRequestOptions()
+                
+//                DispatchQueue.main.async {
+//                    options.progressHandler = progressHandler
+//                }
+                
+                options.progressHandler = { progress, error, stop, info in
+                    DispatchQueue.main.async {
+                        progressHandler(progress, error, stop, info)
+                    }
+                }
+                
+                options.isNetworkAccessAllowed = true
+                options.resizeMode = .fast
+                PHImageManager.default().requestImageData(for: asset, options: options) { (imageData, dataUTI, orientation, info) in
+                    
+                    var resultImage = UIImage(data: imageData!)
+                    
+                    if !(resultImage != nil) && (result != nil) {
+                        resultImage = result
+                    }
+                    
+                    resultImage = self.fixOrientation(aImage: resultImage!)
+                    completion(resultImage!, info!, false)
+                }
+            }
+            
+            
+            
+        }
+        
+        return imageRequestID
+        
+    }
+    
+    
+    // 修改图片转向
+    fileprivate func fixOrientation(aImage: UIImage) -> UIImage {
+//        if (!self.shouldFixOrientation) return aImage;
+
+        if aImage.imageOrientation == .up {
+            return aImage
+        }
+        
+        var transform: CGAffineTransform = CGAffineTransform()
+        
+        switch aImage.imageOrientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: aImage.size.width, y: aImage.size.height)
+            transform = transform.rotated(by: CGFloat.pi)
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: aImage.size.width, y: 0)
+            transform = transform.rotated(by: CGFloat.pi / 2)
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: aImage.size.height)
+            transform = transform.rotated(by: -CGFloat.pi / 2)
+        default: break
+        }
+        
+        switch aImage.imageOrientation {
+        case .upMirrored, .downMirrored:
+            transform = transform.translatedBy(x: aImage.size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translatedBy(x: aImage.size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+            
+        default: break
+
+        }
+        
+        guard let cgImage = aImage.cgImage, let colorSpace = cgImage.colorSpace, let ctx: CGContext = CGContext(data: nil, width: Int(aImage.size.width), height: Int(aImage.size.height), bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: cgImage.bitmapInfo.rawValue) else {
+            return aImage
+        }
+        
+        transform.concatenating(ctx.ctm)
+        
+        switch aImage.imageOrientation {
+        case .leftMirrored, .left, .rightMirrored, .right:
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: aImage.size.height, height: aImage.size.width))
+        default:
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: aImage.size.width, height: aImage.size.height))
+        }
+        
+        let cgimg = ctx.makeImage()
+        let image = UIImage(cgImage: cgimg ?? cgImage)
+        
+        return image
+        
+    }
+    
+    
+    // 获取一组图片的大小
+    fileprivate func getPhotosBytesWith(assetArray: [PHAsset], completion: @escaping ((String) -> ())) {
+        if assetArray.count == 0 {
+            completion("0B")
+            return
+        }
+        var dataLength: Int = 0
+        for asset in assetArray {
+            let options = PHImageRequestOptions()
+            options.resizeMode = .fast
+            options.isNetworkAccessAllowed = true
+            
+//            options.version = .original
+            PHImageManager.default().requestImageData(for: asset, options: options) { (imageData, dataUIT, orientation, info) in
+                if let data = imageData {
+                    dataLength += data.count
+                    
+                    if asset == assetArray.last {
+                        let bytes = self.getBytesFromData(length: Double(dataLength))
+                        completion(bytes)
+                    }
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    // 格式化图片大小
+    fileprivate func getBytesFromData(length: Double) -> String {
+        var bytes: String = ""
+        if length >= 0.1 * (1024.0 * 1024.0) {
+            bytes = "\(length/1024.0/1024.0)M"
+        }else if length >= 1024.0 {
+            bytes = "\(length/1024.0)K"
+        }else {
+            bytes = "\(length)B"
+        }
+        return bytes
+    }
     
 }

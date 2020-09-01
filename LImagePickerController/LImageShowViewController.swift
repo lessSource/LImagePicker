@@ -94,4 +94,13 @@ extension LImageShowViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let imageShowCell = cell as? LImageShowCollectionViewCell {
+            imageShowCell.scrollView.zoomScale = 1.0
+//            imageShowCell.li
+        }
+    }
+    
+    
+    
 }

@@ -48,6 +48,7 @@ public class LImagePickerController: UINavigationController {
     public convenience init(ddd row:Int, delegate: LImagePickerController?) {
         let cameraPickerVC = LCameraPickerViewController()
         self.init(rootViewController: cameraPickerVC)
+//        self.mode
         requestsCameraPickerAuthorization()
     }
     
@@ -55,6 +56,7 @@ public class LImagePickerController: UINavigationController {
         super.init(rootViewController: rootViewController)
         setNavigationBarHidden(true, animated: false)
         view.backgroundColor = UIColor.lBackGround
+        self.modalPresentationStyle = .custom
         delegate = self
         if self.responds(to: #selector(getter: interactivePopGestureRecognizer)) {
             self.interactivePopGestureRecognizer?.delegate = self
@@ -78,7 +80,6 @@ public class LImagePickerController: UINavigationController {
 
         // Do any additional setup after loading the view.
     }
-
     
     deinit {
         print(self, "++++++释放")
@@ -102,7 +103,7 @@ extension LImagePickerController {
         if !LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .video) {
             view.placeholderShow(true) { (promptView) in
                 promptView.delegate = self
-                promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(App.appName)访问你的手机相册")
+                promptView.title("请在iPhone的\'设置-隐私-相机'选项中\r允许\(App.appName)访问你的手机相机")
                 promptView.image(UIImage.imageNameFromBundle("icon_permissions"))
 
             }

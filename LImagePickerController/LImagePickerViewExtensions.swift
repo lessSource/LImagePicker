@@ -103,3 +103,16 @@ extension UIView {
     }
     
 }
+
+extension UIView {
+    
+    func getControllerFromView() -> UIViewController? {
+        for view in sequence(first: self.superview, next: { $0?.superview }) {
+            if let responder = view?.next, responder is UIViewController {
+                return responder as? UIViewController
+            }
+        }
+        return nil
+    }
+    
+}

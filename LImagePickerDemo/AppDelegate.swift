@@ -19,11 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 //        window = UIWindow.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        window?.makeKeyAndVisible()
-        window?.backgroundColor = .white
-        window?.rootViewController = ViewController()
+        if #available(iOS 13.0, *) {
+            
+        }else {
+            
+               window?.makeKeyAndVisible()
+               window?.backgroundColor = .white
+               window?.rootViewController = ViewController()
 
-        FHHFPSIndicator.shared()?.show()
+               FHHFPSIndicator.shared()?.show()
+        }
+        
+   
 
         return true
     }

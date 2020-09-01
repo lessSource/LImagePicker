@@ -9,6 +9,22 @@
 import UIKit
 import Photos
 
+enum LImagePickerMediaType {
+    case photo
+    case livePhoto
+    case photoGif
+    case video
+    case audio
+}
+
+protocol LImagePickerMediaProtocol { }
+
+extension String: LImagePickerMediaProtocol { }
+
+extension PHAsset: LImagePickerMediaProtocol { }
+
+extension UIImage: LImagePickerMediaProtocol { }
+
 struct LImagePickerConfiguration {
     
     /** 当前数据 */
@@ -32,6 +48,23 @@ struct LAlbumPickerModel {
 }
 
 struct LImagePickerResourcesModel {
+    
+    /** 媒体资源 */
+    var media: LImagePickerMediaProtocol
+    /** 媒体类型 */
+    var type: LImagePickerMediaType
+    /** 是否选中 */
+    var isSelect: Bool
+    /** 选中序号 */
+    var selectIndex: Int
+    
+    init(media: LImagePickerMediaProtocol, type: LImagePickerMediaType, isSelect: Bool, selectIndex: Int) {
+        self.media = media
+        self.type = type
+        self.isSelect = isSelect
+        self.selectIndex = selectIndex
+    }
+    
     
 }
 

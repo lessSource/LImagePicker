@@ -118,7 +118,15 @@ extension ModelAnimationDelegate {
     // 消失动画
     fileprivate func dismissViewAnimation(transitionContext: UIViewControllerContextTransitioning) {
         // 获取一系列view
-        guard let formVC = transitionContext.viewController(forKey: .from) as? LImageShowViewController, let cell = formVC.collectionView?.visibleCells.first as? LImageShowCollectionViewCell,let image = cell.currentImage.image ,let window = UIApplication.shared.delegate?.window,let _ = contentImage else {
+        var viewController: UIViewController?
+        
+        if let navVC = transitionContext.viewController(forKey: .from) as? LImagePickerController, navVC.viewControllers.count > 0 {
+            viewController = navVC.viewControllers[0]
+        }else {
+            viewController = transitionContext.viewController(forKey: .from)
+        }
+        
+        guard let formVC = viewController as? LImageShowViewController, let cell = formVC.collectionView?.visibleCells.first as? LImageShowCollectionViewCell,let image = cell.currentImage.image ,let toView = transitionContext.viewController(forKey: .to)?.view, let _ = contentImage else {
             dismissViewDefaultAnimation(transitionContext: transitionContext)
             return
         }
@@ -166,7 +174,7 @@ extension ModelAnimationDelegate {
         animateImageView.contentMode = .scaleAspectFill
         animateImageView.clipsToBounds = true
         containerView.addSubview(animateImageView)
-        let endFrame: CGRect = endView!.convert(endView!.bounds, to: window)
+        let endFrame: CGRect = endView!.convert(endView!.bounds, to: toView)
 
         UIView.animate(withDuration: animatTime, animations: {
             animateImageView.frame = endFrame
