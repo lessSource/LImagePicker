@@ -15,16 +15,20 @@ class LPhotoPickerController: UIViewController {
     
     fileprivate var delegate: ModelAnimationDelegate?
 
+    fileprivate lazy var navView: LImagePickerNavView = {
+        let view = LImagePickerNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
+        view.backgroundColor = UIColor.lBackGround
+        return view
+    }()
     
     fileprivate lazy var collectionView: UICollectionView = {
-        
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 1
         flowLayout.minimumInteritemSpacing = 1
         flowLayout.itemSize = CGSize(width: (LConstant.screenWidth - 13)/4, height: (LConstant.screenWidth - 13)/4)
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         
-        let collection = UICollectionView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.screenHeight), collectionViewLayout: flowLayout)
+        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = UIColor.lBackGround
@@ -36,16 +40,13 @@ class LPhotoPickerController: UIViewController {
         // Do any additional setup after loading the view.
         collectionView.register(LPhotoPickerViewCell.self, forCellWithReuseIdentifier: LPhotoPickerViewCell.l_identifire)
         view.addSubview(collectionView)
+        view.addSubview(navView)
         
         fetchAssetModels()
     }
     
     deinit {
         print(self, "++++++释放")
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        dismiss(animated: true, completion: nil)
     }
     
 }

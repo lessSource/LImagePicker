@@ -18,10 +18,23 @@ extension LImagePickerViewDelegate {
 }
 
 public class LImagePickerController: UINavigationController {
+    /** 是否适配黑暗模式 */
+    public var isDarkMode: Bool = true {
+        didSet {
+            if #available(iOS 13.0, *), !isDarkMode {
+                self.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+            }
+        }
+    }
+    
+    
     // 选择视频图片代理
     fileprivate weak var imageDelegate: LImagePickerViewDelegate?
     /** 最多可选数量，默认9 */
     fileprivate(set) var maxSelectCount: Int = 9
+    
+    
+    
 
     /** 选择图片 */
     public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerViewDelegate?) {
@@ -72,13 +85,25 @@ public class LImagePickerController: UINavigationController {
     }
     
     public override var childForStatusBarStyle: UIViewController? {
-        return self.visibleViewController
+        return self.topViewController
+    }
+    
+    public override var childForStatusBarHidden: UIViewController? {
+        return self.topViewController
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    public override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     deinit {

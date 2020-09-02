@@ -73,6 +73,8 @@
 		2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */; };
 		2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D324FA329200761046 /* LCameraPickerView.swift */; };
 		2AAF62D624FCA5AD00761046 /* LPhotoPickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D524FCA5AD00761046 /* LPhotoPickerViewCell.swift */; };
+		2AAF62E224FF527B00761046 /* LAlbumPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62E124FF527B00761046 /* LAlbumPickerCell.swift */; };
+		2AAF62E424FFDB0E00761046 /* LImagePickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62E324FFDB0D00761046 /* LImagePickerNavView.swift */; };
 		2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2124626C87008D5179 /* AppDelegate.swift */; };
 		2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2324626C87008D5179 /* SceneDelegate.swift */; };
 		2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2524626C87008D5179 /* ViewController.swift */; };
@@ -324,6 +326,8 @@
 		2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerConfiguration.swift; sourceTree = "<group>"; };
 		2AAF62D324FA329200761046 /* LCameraPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCameraPickerView.swift; sourceTree = "<group>"; };
 		2AAF62D524FCA5AD00761046 /* LPhotoPickerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotoPickerViewCell.swift; sourceTree = "<group>"; };
+		2AAF62E124FF527B00761046 /* LAlbumPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlbumPickerCell.swift; sourceTree = "<group>"; };
+		2AAF62E324FFDB0D00761046 /* LImagePickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavView.swift; sourceTree = "<group>"; };
 		2ACD8224246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2ACD8225246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2AEE0D1E24626C87008D5179 /* LImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -639,9 +643,11 @@
 				2A2AEDC424F8E21000DF26EA /* LImagePickerColorExtensions.swift */,
 				2A2AEDBC24F8D8AD00DF26EA /* LImagePickerAboutApp.swift */,
 				2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */,
+				2AAF62E324FFDB0D00761046 /* LImagePickerNavView.swift */,
 				2A2AEDB624F8AB8200DF26EA /* LPhotoPickerController.swift */,
 				2AAF62D524FCA5AD00761046 /* LPhotoPickerViewCell.swift */,
 				2A2AEDC224F8DFD700DF26EA /* LAlbumPickerController.swift */,
+				2AAF62E124FF527B00761046 /* LAlbumPickerCell.swift */,
 				2A2AEDC624F8E52500DF26EA /* LImageShowViewController.swift */,
 				2A2AEDCC24F8F23400DF26EA /* LImageShowCollectionViewCell.swift */,
 				2A2AEDCA24F8E9E300DF26EA /* LCameraPickerViewController.swift */,
@@ -1567,11 +1573,13 @@
 				2A2AEDB724F8AB8200DF26EA /* LPhotoPickerController.swift in Sources */,
 				2A2AEDCB24F8E9E300DF26EA /* LCameraPickerViewController.swift in Sources */,
 				2A2AEDBB24F8B08700DF26EA /* LImagePickerViewExtensions.swift in Sources */,
+				2AAF62E224FF527B00761046 /* LAlbumPickerCell.swift in Sources */,
 				2A2AEDB324F89B8500DF26EA /* LImagePickerController.swift in Sources */,
 				2AAF62D624FCA5AD00761046 /* LPhotoPickerViewCell.swift in Sources */,
 				2A2AEDC324F8DFD700DF26EA /* LAlbumPickerController.swift in Sources */,
 				2A2AEDC524F8E21000DF26EA /* LImagePickerColorExtensions.swift in Sources */,
 				2A2AEDC124F8D9F300DF26EA /* LImagePickerAboutExtensions.swift in Sources */,
+				2AAF62E424FFDB0E00761046 /* LImagePickerNavView.swift in Sources */,
 				2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */,
 				2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */,
 			);

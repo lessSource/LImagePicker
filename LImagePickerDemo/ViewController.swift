@@ -85,6 +85,7 @@ extension ViewController {
     // 图库
     func galleryButtonClick() {
         let imagePicker = LImagePickerController(withMaxImage: 10, delegate: nil)
+        imagePicker.isDarkMode = false
         present(imagePicker, animated: true, completion: nil)
     }
     

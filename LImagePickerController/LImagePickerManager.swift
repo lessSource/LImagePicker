@@ -76,6 +76,24 @@ extension LImagePickerManager {
 
 extension LImagePickerManager {
     
+    // 获取封面图
+    @discardableResult
+    func getPostImageWithAlbumModel(model: LAlbumPickerModel, completion: @escaping((UIImage) -> ())) -> PHImageRequestID {
+        
+        guard let asset = model.asset else {
+            return -1
+        }
+        
+        return getPhotoWithAsset(asset, photoWidth: 80, completion: { (image, info, isfof) in
+            completion(image)
+        }, progressHandler: { (dous, error, objc, info) in
+            
+        }, networkAccessAllowed: true)
+        
+    }
+    
+    
+    
     // 获取相册
     func getAlbumResources(_ mediaType: PHAssetMediaType = .unknown, duration: Int = Int.max, complete: @escaping (_ dataArray: [LAlbumPickerModel]) -> ()) {
         
@@ -331,23 +349,32 @@ extension LImagePickerManager {
     
     
     // 获取一组图片的大小
-    fileprivate func getPhotosBytesWith(assetArray: [PHAsset], completion: @escaping ((String) -> ())) {
+    fileprivate func getPhotosBytesWith(assetArray: [LImagePickerResourcesModel], completion: @escaping ((String) -> ())) {
         if assetArray.count == 0 {
             completion("0B")
             return
         }
+        
         var dataLength: Int = 0
-        for asset in assetArray {
+        for resourcesModel in assetArray {
+            
+            guard let asset = resourcesModel.media as? PHAsset else {
+                continue
+            }
+            
             let options = PHImageRequestOptions()
             options.resizeMode = .fast
             options.isNetworkAccessAllowed = true
             
-//            options.version = .original
+            if resourcesModel.type == .photoGif {
+                options.version = .original
+            }
+            
             PHImageManager.default().requestImageData(for: asset, options: options) { (imageData, dataUIT, orientation, info) in
                 if let data = imageData {
                     dataLength += data.count
                     
-                    if asset == assetArray.last {
+                    if asset == assetArray.last?.media as? PHAsset {
                         let bytes = self.getBytesFromData(length: Double(dataLength))
                         completion(bytes)
                     }
