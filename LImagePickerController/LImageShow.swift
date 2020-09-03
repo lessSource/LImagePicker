@@ -107,7 +107,7 @@ extension ModelAnimationDelegate {
         guard let toView = transitionContext.view(forKey: .to) else { return }
         let containerView = transitionContext.containerView
         containerView.addSubview(toView)
-        toView.transform = CGAffineTransform(translationX: toView.l_width, y: 0)
+        toView.transform = CGAffineTransform(translationX: 0, y: toView.l_height)
         UIView.animate(withDuration: animatTime, animations: {
             toView.transform = CGAffineTransform(translationX: 0, y: 0)
         }) { _ in
@@ -192,7 +192,7 @@ extension ModelAnimationDelegate {
         }
         fromeView.transform = CGAffineTransform(translationX: 0, y: 0)
         UIView.animate(withDuration: animatTime, animations: {
-            fromeView.transform = CGAffineTransform(translationX: fromeView.l_width, y: 0)
+            fromeView.transform = CGAffineTransform(translationX: 0, y: fromeView.l_height)
         }) { _ in
             fromeView.transform = CGAffineTransform(translationX: 0, y: 0)
             transitionContext.completeTransition(true)

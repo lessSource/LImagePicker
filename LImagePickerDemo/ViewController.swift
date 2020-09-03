@@ -99,7 +99,7 @@ extension ViewController {
     func contentImageClick() {
         delegate = ModelAnimationDelegate(contentImage: contentImage, superView: view)
         
-        let showImageVC = LImagePickerController(viewController: self, delegate: nil)
+        let showImageVC = LImagePickerController(configuration: LImagePickerConfiguration(currentIndex: 0, dataArray: [contentImage.image!]))
         showImageVC.transitioningDelegate = delegate
         showImageVC.modalTransitionStyle = .crossDissolve
         present(showImageVC, animated: true, completion: nil)

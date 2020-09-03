@@ -77,7 +77,7 @@ extension LImageShowViewController {
 extension LImageShowViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return configuration.dataArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -86,6 +86,12 @@ extension LImageShowViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LImageShowCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LImageShowCollectionViewCell.l_identifire, for: indexPath) as! LImageShowCollectionViewCell
+        
+        if let asset = configuration.dataArray[indexPath.section] as? PHAsset  {
+            cell.getPhotoAsset(asset: asset)
+        }else if let image = configuration.dataArray[indexPath.section] as? UIImage {
+            cell.getPhotoImage(image: image)
+        }
         
         return cell
     }

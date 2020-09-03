@@ -17,7 +17,7 @@ enum LImagePickerMediaType {
     case audio
 }
 
-protocol LImagePickerMediaProtocol { }
+public protocol LImagePickerMediaProtocol { }
 
 extension String: LImagePickerMediaProtocol { }
 
@@ -25,13 +25,16 @@ extension PHAsset: LImagePickerMediaProtocol { }
 
 extension UIImage: LImagePickerMediaProtocol { }
 
-struct LImagePickerConfiguration {
+public struct LImagePickerConfiguration {
     
     /** 当前数据 */
     var currentIndex: Int
+    /** 数据源 */
+    var dataArray: [LImagePickerMediaProtocol]
     
-    init(currentIndex: Int = 0) {
+    public init(currentIndex: Int = 0, dataArray: Array<LImagePickerMediaProtocol> = [LImagePickerMediaProtocol]()) {
         self.currentIndex = currentIndex
+        self.dataArray = dataArray
     }
     
 }

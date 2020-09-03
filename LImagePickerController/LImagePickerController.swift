@@ -52,10 +52,11 @@ public class LImagePickerController: UINavigationController {
         
     }
     /** 显示大图 */
-    public convenience init(viewController: UIViewController,delegate: LImagePickerViewDelegate?) {
-        let imageShowVC = LImageShowViewController(configuration: LImagePickerConfiguration())
+    public convenience init(configuration: LImagePickerConfiguration) {
+        let imageShowVC = LImageShowViewController(configuration: configuration)
         self.init(rootViewController: imageShowVC)
     }
+
     
     /** 拍照 */
     public convenience init(ddd row:Int, delegate: LImagePickerController?) {
@@ -83,11 +84,11 @@ public class LImagePickerController: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override var childForStatusBarStyle: UIViewController? {
         return self.topViewController
     }
-    
+
     public override var childForStatusBarHidden: UIViewController? {
         return self.topViewController
     }
@@ -101,11 +102,11 @@ public class LImagePickerController: UINavigationController {
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     public override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+
     deinit {
         print(self, "++++++释放")
     }

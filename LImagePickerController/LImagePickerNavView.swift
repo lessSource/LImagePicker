@@ -10,6 +10,23 @@ import UIKit
 
 class LImagePickerNavView: UIView {
     
+    /** 标题 */
+    public var nameTitle: String = "" {
+        didSet {
+            nameLabel.text = nameTitle
+        }
+    }
+    
+    /** 是否隐藏返回键 */
+    public var isBackHidden: Bool = true {
+        didSet {
+            leftButton.isHidden = isHidden
+        }
+    }
+    
+    /** 背景色 */
+//    public var back
+    
     fileprivate lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "标题"
@@ -26,6 +43,15 @@ class LImagePickerNavView: UIView {
         return button
     }()
     
+    fileprivate lazy var leftButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("返回", for: .normal)
+        button.setTitleColor(UIColor.lLabelColor, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.isHidden = true
+        return button
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,6 +65,7 @@ class LImagePickerNavView: UIView {
     fileprivate func initView() {
         addSubview(nameLabel)
         addSubview(cancleButton)
+        addSubview(leftButton)
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -49,8 +76,17 @@ class LImagePickerNavView: UIView {
         cancleButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         cancleButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15).isActive = true
         cancleButton.addTarget(self, action: #selector(cancleButtonClick), for: .touchUpInside)
-
+        
+        leftButton.translatesAutoresizingMaskIntoConstraints = false
+        leftButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
+        leftButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 15).isActive = true
+        leftButton.addTarget(self, action: #selector(leftButtonClick), for: .touchUpInside)
     }
+    
+}
+
+extension LImagePickerNavView {
+    
     
 }
 
@@ -60,6 +96,10 @@ extension LImagePickerNavView {
     
     fileprivate func cancleButtonClick() {
         getControllerFromView()?.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func leftButtonClick() {
+        getControllerFromView()?.navigationController?.popViewController(animated: true)
     }
     
 }

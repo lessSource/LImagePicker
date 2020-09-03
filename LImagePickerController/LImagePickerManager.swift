@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import MobileCoreServices
 
 final class LImagePickerManager {
     
@@ -213,6 +214,7 @@ extension LImagePickerManager {
     
     
     // 获取图片
+    @discardableResult
     func getPhotoWithAsset(_ asset: PHAsset, photoWidth: CGFloat, completion: @escaping (UIImage, Dictionary<AnyHashable, Any>, Bool) -> (), progressHandler: @escaping PHAssetImageProgressHandler, networkAccessAllowed: Bool) -> PHImageRequestID {
         var imageSize: CGSize = .zero
         
@@ -399,4 +401,252 @@ extension LImagePickerManager {
         return bytes
     }
     
+}
+
+
+extension LImagePickerManager {
+    
+    // 保存图片
+    fileprivate func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
+        var localIdentifier = ""
+        
+        PHPhotoLibrary.shared().performChanges({
+            let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
+            localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
+            reuqest.location = location
+            reuqest.creationDate = Date()
+        }) { (success, error) in
+            
+            DispatchQueue.main.async {
+                if success {
+                    self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
+                }else {
+                    // 保存图片出错
+                }
+            }
+            
+        }
+        
+    }
+    
+    fileprivate func savePhotoWithImage(image: UIImage, meta: Dictionary<String, String>, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
+        
+        guard let imageData: CFData = image.jpegData(compressionQuality: 1.0) as CFData? else {
+            return
+        }
+        
+        
+        let source = CGImageSourceCreateWithData(imageData, nil)
+        let formater = DateFormatter()
+        formater.dateFormat = "yyyy-MM-dd-HH:mm:ss-SSS"
+        let urlStr = formater.string(from: Date())
+        let path = "\(NSTemporaryDirectory()).image-\(urlStr).jpg"
+        let temURL = URL(fileURLWithPath: path)
+        
+        guard let destination = CGImageDestinationCreateWithURL(temURL as CFURL, kUTTypeJPEG, 1, nil), let source0 = source else {
+            return
+        }
+        CGImageDestinationAddImageFromSource(destination, source0, 0, meta as CFDictionary)
+        CGImageDestinationFinalize(destination)
+//        CFreleass
+        
+        var localIdentifier = ""
+        PHPhotoLibrary.shared().performChanges({
+            let request = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: temURL)
+            localIdentifier = request?.placeholderForCreatedAsset?.localIdentifier ?? ""
+            request?.location = location
+            request?.creationDate = Date()
+        }) { (success, error) in
+            try? FileManager.default.removeItem(atPath: path)
+
+            DispatchQueue.main.async {
+                if success {
+                    self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
+                }else {
+                    // 保存图片出错
+                }
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    
+    // 导出视频
+    fileprivate func getVideoOutputPathWithAsset(asset: PHAsset, presetName: String) {
+        
+        let options = PHVideoRequestOptions()
+        options.deliveryMode = .automatic
+        options.isNetworkAccessAllowed = true
+        
+        PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { (avasset, audioMix, info) in
+            guard let avAsset = avasset as? AVURLAsset else {
+                return
+            }
+            self.startExportVideoWithAsset(videoAsset: avAsset, presetName: presetName)
+        }
+        
+    }
+    
+    
+    fileprivate func startExportVideoWithAsset(videoAsset: AVURLAsset, presetName: String) {
+        
+        guard let exportSession = AVAssetExportSession(asset: videoAsset, presetName: presetName) else {
+            let errorMessage = "当前设备不支持该预设: \(presetName)"
+            return
+            
+        }
+        
+        let formater = DateFormatter()
+        formater.dateFormat = "yyyy-MM-dd-HH:mm:ss-SSS"
+        let dateStr = formater.string(from: Date())
+        var outputPath = NSHomeDirectory() + "/tem/video-\(dateStr).mp4"
+        
+        
+        exportSession.shouldOptimizeForNetworkUse = true
+        
+        let supportedTypeArray = exportSession.supportedFileTypes
+        if supportedTypeArray.contains(.mp4) {
+            exportSession.outputFileType = .mp4
+        }else if supportedTypeArray.count == 0 {
+            // 失败
+            return
+        }else {
+            exportSession.outputFileType = supportedTypeArray.first
+//            if videoAsset.url && videoAsset.url.lastPathComponent {
+//
+//            }
+            // 替换URL
+            
+            
+        }
+        exportSession.outputURL = URL(fileURLWithPath: outputPath)
+        //
+        let filePath = "\(NSHomeDirectory())/tmp"
+
+        if !FileManager.default.fileExists(atPath: filePath) {
+            
+            do {
+                try FileManager.default.createDirectory(atPath: filePath, withIntermediateDirectories: true, attributes: nil)
+
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+        }
+        
+        // 修改视频转向
+        exportSession.exportAsynchronously {
+            DispatchQueue.main.async {
+                switch exportSession.status {
+                case .unknown:
+                    print("unknown")
+                case .waiting:
+                    print("waiting")
+                case .exporting:
+                    print("exporting")
+                case .completed:
+                    print("completed")
+                    // 成功
+                case .failed:
+                    print("failed")
+                    // 视频导出失败
+                case .cancelled:
+                    print("cancelled")
+                    // 导出任务失败
+                default: break
+                }
+            }
+        }
+        
+    }
+    
+    fileprivate func fetchAssetByIocalIdentifier(localIdentifier: String, retryCount: Int, completion: @escaping ((PHAsset, Error?) -> ())) {
+        
+        let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject
+        if asset != nil || retryCount <= 0 {
+            completion(asset!, nil)
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: retryCount - 1, completion: completion)
+        }
+        
+    }
+    
+    
+    // 获取优化后的视频转向信息
+    fileprivate func fixedCompositionWithAsset(videoAsset: AVAsset) -> AVMutableVideoComposition {
+        
+        let videoComposition = AVMutableVideoComposition()
+        
+        let degrees = degressFormVideoFileWithAsset(asset: videoAsset)
+        if degrees != 0 {
+            var translateToCenter: CGAffineTransform = CGAffineTransform()
+            var mixedTransform: CGAffineTransform = CGAffineTransform()
+            videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
+            
+            let tracks = videoAsset.tracks(withMediaType: .video)
+            let videoTrack = tracks[0]
+            
+            let roateInstruction = AVMutableVideoCompositionInstruction()
+            roateInstruction.timeRange = CMTimeRange(start: .zero, duration: videoAsset.duration)
+            let roateLayerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
+            
+            if degrees == 90 {
+                // 顺时针旋转90度
+                translateToCenter = CGAffineTransform(scaleX: videoTrack.naturalSize.height, y: 0.0)
+                mixedTransform = translateToCenter.rotated(by: CGFloat.pi/2)
+                videoComposition.renderSize = CGSize(width: videoTrack.naturalSize.height, height: videoTrack.naturalSize.width)
+                roateLayerInstruction.setTransform(mixedTransform, at: .zero)
+            }else if (degrees == 180) {
+                // 顺时针旋转180°
+                translateToCenter = CGAffineTransform(scaleX: videoTrack.naturalSize.width, y: videoTrack.naturalSize.height)
+                mixedTransform = translateToCenter.rotated(by: CGFloat.pi)
+                videoComposition.renderSize = CGSize(width: videoTrack.naturalSize.width, height: videoTrack.naturalSize.height)
+                roateLayerInstruction.setTransform(mixedTransform, at: .zero)
+                
+            }else if (degrees == 270) {
+                // 顺时针旋转270°
+                translateToCenter = CGAffineTransform(scaleX: 0.0, y: videoTrack.naturalSize.width)
+                mixedTransform = translateToCenter.rotated(by: CGFloat.pi/2 * 3.0)
+                videoComposition.renderSize = CGSize(width: videoTrack.naturalSize.height, height: videoTrack.naturalSize.width)
+                roateLayerInstruction.setTransform(mixedTransform, at: .zero)
+            }
+            
+            roateInstruction.layerInstructions = [roateLayerInstruction]
+            videoComposition.instructions = [roateInstruction]
+        }
+        
+        return videoComposition
+    }
+    
+    // 获取视频角度
+    fileprivate func degressFormVideoFileWithAsset(asset: AVAsset) -> Int {
+        
+        var degress: Int = 0
+        let tracks = asset.tracks(withMediaType: .video)
+        if tracks.count > 0 {
+            let videoTrack = tracks[0]
+            let transform = videoTrack.preferredTransform
+            if transform.a == 0.0 && transform.b == 1.0 && transform.c == -1.0 && transform.d == 0.0 {
+                // Portrait
+                degress = 90
+            }else if transform.a == 0.0 && transform.b == -1.0 && transform.c == 1.0 && transform.d == 0.0 {
+                // PortraitUpsideDown
+                degress = 270
+            }else if transform.a == 1.0 && transform.b == 0.0 && transform.c == 0.0 && transform.d == 1.0 {
+                // LandscapeRight
+                degress = 0
+            }else if transform.a == -1.0 && transform.b == 0.0 && transform.c == 0.0 && transform.d == -1.0 {
+                // LandscapeLeft
+                degress = 180
+            }
+        }
+        
+        return degress
+    }
 }

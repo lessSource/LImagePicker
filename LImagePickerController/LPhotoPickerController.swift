@@ -11,6 +11,8 @@ import Photos
 
 class LPhotoPickerController: UIViewController {
 
+    public var albumMode: LAlbumPickerModel = LAlbumPickerModel()
+    
     fileprivate var dataArray: Array = [PHAsset]()
     
     fileprivate var delegate: ModelAnimationDelegate?
@@ -18,6 +20,7 @@ class LPhotoPickerController: UIViewController {
     fileprivate lazy var navView: LImagePickerNavView = {
         let view = LImagePickerNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
         view.backgroundColor = UIColor.lBackGround
+        view.isBackHidden = false
         return view
     }()
     
@@ -59,11 +62,9 @@ extension LPhotoPickerController {
             assetsFetchResult.enumerateObjects { (mediaAsset, indeo, stop) in
                 self.dataArray.append(mediaAsset)
             }
-            
             self.collectionView.reloadData()
-//            self.collectionView.scrollToItem(at: IndexPath(item: self.dataArray.count, section: 0), at: .bottom, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(item: self.dataArray.count, section: 0), at: .bottom, animated: false)
         }
-        
     }
     
 }
@@ -93,11 +94,9 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         }
         
         
-        delegate = ModelAnimationDelegate(contentImage: cell.imageView, superView: cell)
+        delegate = ModelAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
 
-        
-        let showImageVC = LImageShowViewController(configuration: LImagePickerConfiguration())
-//        showImageVC.t
+        let showImageVC = LImageShowViewController(configuration: LImagePickerConfiguration(dataArray: [dataArray[indexPath.item], dataArray[indexPath.item + 1]]))
         showImageVC.transitioningDelegate = delegate
         showImageVC.modalPresentationStyle = .custom
         showImageVC.modalTransitionStyle = .crossDissolve
@@ -107,3 +106,49 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
     
 
 }
+
+
+extension LPhotoPickerController {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        completeButtonClick()
+    }
+    
+    fileprivate func completeButtonClick() {
+//        LImagePickerManager.shared.getPhotoWithAsset(<#T##asset: PHAsset##PHAsset#>, photoWidth: <#T##CGFloat#>, completion: <#T##(UIImage, Dictionary<AnyHashable, Any>, Bool) -> ()#>, progressHandler: <#T##PHAssetImageProgressHandler##PHAssetImageProgressHandler##(Double, Error?, UnsafeMutablePointer<ObjCBool>, [AnyHashable : Any]?) -> Void#>, networkAccessAllowed: <#T##Bool#>)
+        
+        let queue = DispatchQueue.global()
+        let group = DispatchGroup()
+        
+        var array: Array = [UIImage]()
+        
+        queue.async(group: group) {
+            
+            for i in 0..<20 {
+                LImagePickerManager.shared.getPhotoWithAsset(self.dataArray[i], photoWidth: LConstant.screenHeight, completion: { (image, info, isDegraded) in
+                    array.append(image)
+                    print(Thread.current)
+                    
+                }, progressHandler: { (progress, error, objc, info) in
+                    print(Thread.current)
+                }, networkAccessAllowed: true)
+            }
+        }
+        
+        // 超期时间
+        switch group.wait(timeout: DispatchTime.now() + 15) {
+        case .success:
+            print("success")
+            // 任务执行完成
+        case .timedOut:
+            print("timedOut")
+            // 任务超时
+            
+        }
+        
+        
+    }
+    
+    
+}
+

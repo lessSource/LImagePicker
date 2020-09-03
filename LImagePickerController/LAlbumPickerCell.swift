@@ -32,6 +32,19 @@ class LAlbumPickerCell: UITableViewCell {
         return label
     }()
     
+    fileprivate lazy var numberLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor(red: 0.12, green: 0.73, blue: 0.13, alpha: 1.00)
+        label.textAlignment = .right
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.layer.cornerRadius = 12
+        label.clipsToBounds = true
+        label.textAlignment = .center
+        label.text = "99"
+        return label
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -45,7 +58,8 @@ class LAlbumPickerCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .none
+        selectionStyle = .none
+        accessoryType = .disclosureIndicator
         initView()
     }
     
@@ -57,6 +71,7 @@ class LAlbumPickerCell: UITableViewCell {
         contentView.addSubview(coverImage)
         contentView.addSubview(lineView)
         contentView.addSubview(nameLabel)
+        contentView.addSubview(numberLabel)
         
         coverImage.translatesAutoresizingMaskIntoConstraints = false
         coverImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
@@ -65,7 +80,7 @@ class LAlbumPickerCell: UITableViewCell {
         coverImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         
         lineView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.topAnchor.constraint(equalTo: coverImage.bottomAnchor).isActive = true
+        lineView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         lineView.leftAnchor.constraint(equalTo: coverImage.rightAnchor).isActive = true
         lineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         lineView.widthAnchor.constraint(equalToConstant: LConstant.screenWidth - 80).isActive = true
@@ -74,6 +89,13 @@ class LAlbumPickerCell: UITableViewCell {
         nameLabel.centerYAnchor.constraint(equalTo: coverImage.centerYAnchor).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: coverImage.rightAnchor, constant: 10).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -30).isActive = true
+        
+        numberLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberLabel.centerYAnchor.constraint(equalTo: coverImage.centerYAnchor).isActive = true
+        numberLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
+        numberLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        numberLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 24).isActive = true
+        
     }
     
     public func photoAsset(albumModel: LAlbumPickerModel) {

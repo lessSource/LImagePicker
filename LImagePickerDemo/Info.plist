@@ -12,12 +12,6 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>ImitationShaking需要您的同意，才能获取您的相机访问权限</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ImitationShaking需要您的同意，才能获取您的相册访问权限</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>ImitationShaking需要您的同意，才能获取您的麦克风访问权限</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,6 +20,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>ImitationShaking需要您的同意，才能获取您的相机访问权限</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ImitationShaking需要您的同意，才能获取您的麦克风访问权限</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ImitationShaking需要您的同意，才能获取您的相册访问权限</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -53,6 +53,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

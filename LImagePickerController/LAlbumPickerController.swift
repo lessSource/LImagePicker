@@ -56,11 +56,6 @@ class LAlbumPickerController: UIViewController {
     deinit {
         print(self, "++++++释放")
     }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     
 }
 
@@ -75,11 +70,5 @@ extension LAlbumPickerController: UITableViewDelegate, UITableViewDataSource {
         cell.photoAsset(albumModel: dataArray[indexPath.row])
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("123456")
-        dismiss(animated: true, completion: nil)
-    }
-    
     
 }

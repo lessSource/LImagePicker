@@ -11,11 +11,14 @@ import Photos
 
 class LImageShowCollectionViewCell: UICollectionViewCell {
     
-    fileprivate var representedAssetIdentifier: String = ""
+//    fileprivate var representedAssetIdentifier: String = ""
     
-    fileprivate var imageRequestID0: PHImageRequestID = 0
+    fileprivate var imageRequestID: PHImageRequestID?
     
-    fileprivate var bigImageRequestID: PHImageRequestID?
+    fileprivate var asset: PHAsset?
+
+//
+//    fileprivate var bigImageRequestID: PHImageRequestID?
     
     public lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -58,6 +61,38 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
     }
     
+    public func getPhotoImage(image: UIImage) {
+        currentImage.image = image
+        
+    }
+    
+    public func getPhotoAsset(asset: PHAsset) {
+        self.asset = asset
+        if let imageRequest = self.imageRequestID {
+            PHImageManager.default().cancelImageRequest(imageRequest)
+        }
+        
+        self.imageRequestID = LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: LConstant.screenHeight, completion: { (image, info, isDegraded) in
+            
+            if self.asset != asset { return }
+            self.currentImage.image = image
+            
+            
+            
+        }, progressHandler: { (progress, error, objc, info) in
+            
+            if self.asset != asset { return }
+            if progress >= 1.0 {
+                self.imageRequestID = 0
+            }
+            
+        }, networkAccessAllowed: true)
+        
+        
+        
+    }
+    
+    
 }
 
 extension LImageShowCollectionViewCell {
@@ -73,6 +108,10 @@ extension LImageShowCollectionViewCell {
         doubleGesture.numberOfTapsRequired = 2
         currentImage.addGestureRecognizer(doubleGesture)
         tapGesture.require(toFail: doubleGesture)
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureClick(_ :)))
+        swipeGesture.direction = [.up, .down]
+        currentImage.addGestureRecognizer(swipeGesture)
         
     }
     
@@ -91,13 +130,11 @@ extension LImageShowCollectionViewCell {
     
     // 点击
     fileprivate func tapAction() {
-        
         getControllerFromView()?.dismiss(animated: true, completion: nil)
     }
     
     // 长按
     fileprivate func longGetstureAction(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        
     }
     
     // 双击
@@ -113,4 +150,14 @@ extension LImageShowCollectionViewCell {
         }
     }
     
+    // 上下滑动
+    fileprivate func swipeGestureClick(_ gestureRecognizer: UISwipeGestureRecognizer) {
+        
+        switch gestureRecognizer.direction {
+        case [.up, .down]:
+            print("up, down")
+        default: break
+        }
+        
+    }
 }
