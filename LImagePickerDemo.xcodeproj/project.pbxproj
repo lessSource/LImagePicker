@@ -75,6 +75,7 @@
 		2AAF62D624FCA5AD00761046 /* LPhotoPickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D524FCA5AD00761046 /* LPhotoPickerViewCell.swift */; };
 		2AAF62E224FF527B00761046 /* LAlbumPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62E124FF527B00761046 /* LAlbumPickerCell.swift */; };
 		2AAF62E424FFDB0E00761046 /* LImagePickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62E324FFDB0D00761046 /* LImagePickerNavView.swift */; };
+		2AAF63302504EF5B00761046 /* LProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF632F2504EF5B00761046 /* LProgressView.swift */; };
 		2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2124626C87008D5179 /* AppDelegate.swift */; };
 		2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2324626C87008D5179 /* SceneDelegate.swift */; };
 		2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2524626C87008D5179 /* ViewController.swift */; };
@@ -328,6 +329,7 @@
 		2AAF62D524FCA5AD00761046 /* LPhotoPickerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotoPickerViewCell.swift; sourceTree = "<group>"; };
 		2AAF62E124FF527B00761046 /* LAlbumPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlbumPickerCell.swift; sourceTree = "<group>"; };
 		2AAF62E324FFDB0D00761046 /* LImagePickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavView.swift; sourceTree = "<group>"; };
+		2AAF632F2504EF5B00761046 /* LProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LProgressView.swift; sourceTree = "<group>"; };
 		2ACD8224246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		2ACD8225246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2AEE0D1E24626C87008D5179 /* LImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -652,8 +654,9 @@
 				2A2AEDCC24F8F23400DF26EA /* LImageShowCollectionViewCell.swift */,
 				2A2AEDCA24F8E9E300DF26EA /* LCameraPickerViewController.swift */,
 				2AAF62D324FA329200761046 /* LCameraPickerView.swift */,
-				2A2AED9524F89A3400DF26EA /* LImagePickerController.h */,
 				2A2AEDC824F8E66800DF26EA /* LImageShow.swift */,
+				2AAF632F2504EF5B00761046 /* LProgressView.swift */,
+				2A2AED9524F89A3400DF26EA /* LImagePickerController.h */,
 				2A2AED9624F89A3400DF26EA /* Info.plist */,
 				2A2AEDBE24F8D97A00DF26EA /* LImagePickerController.bundle */,
 			);
@@ -1582,6 +1585,7 @@
 				2AAF62E424FFDB0E00761046 /* LImagePickerNavView.swift in Sources */,
 				2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */,
 				2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */,
+				2AAF63302504EF5B00761046 /* LProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,10 +46,51 @@ class LPhotoPickerController: UIViewController {
         view.addSubview(navView)
         
         fetchAssetModels()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeStatusBarOrientationNotification(_ :)), name: UIApplication.didChangeStatusBarOrientationNotification, object: nil)
+        
     }
     
     deinit {
         print(self, "++++++释放")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+
+    
+}
+
+@objc
+extension LPhotoPickerController {
+    
+    fileprivate func didChangeStatusBarOrientationNotification(_ orientationNotification: Notification) {
+        let deviceOrientation = UIDevice.current.orientation
+        
+
+        navView.frame = CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar)
+        collectionView.frame = CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar)
+        
+        
+        switch deviceOrientation {
+        case .faceUp:
+            print("屏幕超上平躺")
+        case .faceDown:
+            print("屏幕超下平躺")
+        case .unknown:
+            print("未知方向")
+        case .landscapeLeft:
+            print("屏幕向左横置")
+        case .landscapeRight:
+            print("屏幕向右横置")
+        case .portrait:
+            print("屏幕直立")
+        case .portraitUpsideDown:
+            print("屏幕直立，上下颠倒")
+        default:
+            print("无法识别")
+        }
+        
+        print(UIDevice.current.orientation)
     }
     
 }
@@ -96,7 +137,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
         
         delegate = ModelAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
 
-        let showImageVC = LImageShowViewController(configuration: LImagePickerConfiguration(dataArray: [dataArray[indexPath.item], dataArray[indexPath.item + 1]]))
+        let showImageVC = LImageShowViewController(configuration: LImagePickerConfiguration(currentIndex: indexPath.item, dataArray: dataArray))
         showImageVC.transitioningDelegate = delegate
         showImageVC.modalPresentationStyle = .custom
         showImageVC.modalTransitionStyle = .crossDissolve
@@ -126,6 +167,8 @@ extension LPhotoPickerController {
             
             for i in 0..<20 {
                 LImagePickerManager.shared.getPhotoWithAsset(self.dataArray[i], photoWidth: LConstant.screenHeight, completion: { (image, info, isDegraded) in
+                    guard let `image` = image else { return }
+                    
                     array.append(image)
                     print(Thread.current)
                     

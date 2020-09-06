@@ -32,6 +32,7 @@ class LImageShowViewController: UICollectionViewController {
         layout.scrollDirection = .horizontal
         self.init(collectionViewLayout: layout)
         self.configuration = configuration
+        self.currentIndex = configuration.currentIndex
     }
     
     
@@ -107,6 +108,9 @@ extension LImageShowViewController {
         }
     }
     
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        currentIndex = Int(scrollView.contentOffset.x / scrollView.l_width)
+    }
     
     
 }
