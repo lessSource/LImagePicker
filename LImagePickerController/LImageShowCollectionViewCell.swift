@@ -22,14 +22,32 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
     
     public lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.frame = contentView.bounds
-        scrollView.l_width -= 20
+//        scrollView.frame = contentView.bounds
+//        scrollView.l_width -= 20
+        scrollView.bouncesZoom = true
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 3
+        scrollView.isMultipleTouchEnabled = true
+        scrollView.scrollsToTop = false
+        scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        scrollView.delaysContentTouches = true
+        scrollView.alwaysBounceVertical = false
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         scrollView.delegate = self
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
+    }()
+    
+    fileprivate lazy var imageContainerView: UIView = {
+        let imageView = UIView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
     }()
     
     public lazy var currentImage: UIImageView = {
@@ -48,7 +66,8 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
     
     fileprivate func initView() {
         contentView.addSubview(scrollView)
-        scrollView.addSubview(currentImage)
+        scrollView.addSubview(imageContainerView)
+        imageContainerView.addSubview(currentImage)
         
         _addGestureRecognizer()
     }
@@ -59,6 +78,7 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        scrollView.frame = CGRect(x: 0, y: 0, width: l_width - 20, height: l_height)
     }
     
     public func getPhotoImage(image: UIImage) {
@@ -81,6 +101,8 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
                 self.imageRequestID = 0
             }
             
+            self.resizeSubviews()
+            
         }, progressHandler: { (progress, error, objc, info) in
             if self.asset != asset { return }
             
@@ -94,6 +116,37 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
         
     }
     
+    fileprivate func resizeSubviews() {
+        imageContainerView.frame.origin = .zero
+        imageContainerView.l_width = scrollView.l_width
+        
+        guard let image = currentImage.image else {
+            return
+        }
+        
+        if image.size.height / image.size.width > l_height / l_width {
+            imageContainerView.l_height = floor(image.size.height / (image.size.width / scrollView.l_width))
+        }else {
+            var height = image.size.height / image.size.width * scrollView.l_width
+            if height < 1 || height.isNaN {
+                height = l_height
+            }
+            height = floor(height)
+            imageContainerView.l_height = height
+            imageContainerView.center.y = l_height / 2
+        }
+        
+        if imageContainerView.l_height > l_height && imageContainerView.l_height - l_height <= 1 {
+            imageContainerView.l_height = l_height
+        }
+        let contentSizeH = max(imageContainerView.l_height, l_height)
+        scrollView.contentSize = CGSize(width: scrollView.l_width, height: contentSizeH)
+        scrollView.scrollRectToVisible(bounds, animated: false)
+        scrollView.alwaysBounceVertical = imageContainerView.l_height <= l_height ? false : true
+        currentImage.frame = imageContainerView.bounds
+        
+        
+    }
     
 }
 
@@ -117,13 +170,36 @@ extension LImageShowCollectionViewCell {
         
     }
     
+    
+    fileprivate func refreshImageContainerViewCenter() {
+        let offsetX = (scrollView.l_width > scrollView.contentSize.width) ? ((scrollView.l_width - scrollView.contentSize.width) * 0.5) : 0.0
+        let offsetY = (scrollView.l_height > scrollView.contentSize.height) ? ((scrollView.l_height - scrollView.contentSize.height) * 0.5) : 0.0
+        imageContainerView.center = CGPoint(x: scrollView.contentSize.width * 0.5 + offsetX, y: scrollView.contentSize.height * 0.5 + offsetY)
+    }
+    
+    fileprivate func refreshScrollViewContentSize() {
+        
+    }
 }
 
 
 extension LImageShowCollectionViewCell: UIScrollViewDelegate {
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return currentImage
+        return imageContainerView
+    }
+    
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.contentInset = .zero
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        refreshImageContainerViewCenter()
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        print("完成")
+        refreshScrollViewContentSize()
     }
 }
 
@@ -141,14 +217,15 @@ extension LImageShowCollectionViewCell {
     
     // 双击
     fileprivate func doubleGestureClick(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        if scrollView.zoomScale > 1 {
-            scrollView.setZoomScale(1, animated: true)
+        if scrollView.zoomScale > scrollView.minimumZoomScale {
+            scrollView.contentInset = .zero
+            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }else {
             let touchPoint = gestureRecognizer.location(in: currentImage)
             let newZoomScale = scrollView.maximumZoomScale
             let sizeX = scrollView.frame.width / newZoomScale
             let sizeY = scrollView.frame.height / newZoomScale
-            scrollView.zoom(to: CGRect(x: touchPoint.x - sizeX / 2, y: touchPoint.y - sizeY / 2, width: sizeY, height: sizeY), animated: true)
+            scrollView.zoom(to: CGRect(x: touchPoint.x - sizeX / 2, y: touchPoint.y - sizeY / 2, width: sizeX, height: sizeY), animated: true)
         }
     }
     

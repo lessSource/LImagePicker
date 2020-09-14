@@ -1,8 +1,8 @@
 //
-//  LEditPhotosViewController.swift
-//  LImageShow
+//  TestViewController.swift
+//  LImagePickerDemo
 //
-//  Created by L j on 2020/6/22.
+//  Created by L j on 2020/9/9.
 //  Copyright © 2020 L. All rights reserved.
 //
 
@@ -61,7 +61,7 @@ enum FilterType {
     
 }
 
-public class LEditPhotosViewController: UIViewController {
+public class TestViewController: UIViewController {
 
     fileprivate lazy var navView: LEditPickerNavView = {
         let navView = LEditPickerNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
@@ -100,14 +100,14 @@ public class LEditPhotosViewController: UIViewController {
             self.view.addSubview(filerBarView)
             
             filerBarView.itemList = self.dataArray
-        }        
+        }
         
     }
 
 
 }
 
-extension LEditPhotosViewController: LShowImageFilterBarDelegate {
+extension TestViewController: LShowImageFilterBarDelegate {
     
     func filterBar(_ filterBar: LShowImageFilterBar, index: Int) {
         self.myView.setupsetupShaderProgram(dataArray[index].filterName)

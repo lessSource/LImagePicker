@@ -46,10 +46,8 @@ class LAlbumPickerController: UIViewController {
         
         LImagePickerManager.shared.getAlbumResources(.image, duration: 100) { (dataArray) in
             self.dataArray = dataArray
-            
             self.tableView.reloadData()
         }
-        
         
     }
     
@@ -69,6 +67,12 @@ extension LAlbumPickerController: UITableViewDelegate, UITableViewDataSource {
         let cell: LAlbumPickerCell = tableView.dequeueReusableCell(withIdentifier: LAlbumPickerCell.l_identifire) as! LAlbumPickerCell
         cell.photoAsset(albumModel: dataArray[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let photoPickerVC = LPhotoPickerController()
+        photoPickerVC.albumModel = dataArray[indexPath.row]
+        navigationController?.pushViewController(photoPickerVC, animated: true)
     }
     
 }

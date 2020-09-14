@@ -82,50 +82,11 @@ extension LPhotoPickerViewCell {
         
         // 用户选中了图片，提前获取一下大图
         if true {
-            
+            requestBigImage()
         }else {
-            
-            
+            cancelBigImageRequest()
         }
         self.setNeedsLayout()
-        
-    }
-    
-    
-    
-    public func photoAsset(asset: PHAsset) {
-        representedAssetIdentifier = asset.localIdentifier
-        
-        let imageRequestID = LImagePickerManager.shared.getPhotoWithAsset(asset, photoWidth: 150, completion: { (image, info, isDegraded) in
-            
-            if self.representedAssetIdentifier == asset.localIdentifier {
-                self.imageView.image = image
-                self.setNeedsLayout()
-            }else {
-                
-                PHImageManager.default().cancelImageRequest(self.imageRequestID)
-            }
-            
-            if !isDegraded {
-                self.imageRequestID = 0
-            }
-            
-        }, progressHandler: { (do, error, objc, info) in
-            
-        }, networkAccessAllowed: false)
-        
-        if self.imageRequestID != imageRequestID {
-            PHImageManager.default().cancelImageRequest(self.imageRequestID)
-        }
-        self.imageRequestID = imageRequestID
-        
-        if true {
-            // requestBigImage
-        }else {
-            // cancelBitImageReuqest
-        }
-        self.setNeedsLayout()
-        
     }
     
 }

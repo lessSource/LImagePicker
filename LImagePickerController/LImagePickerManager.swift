@@ -186,8 +186,8 @@ extension LImagePickerManager {
     }
     
     
-    // 获取相册中资源
-    func getPhotoAlbumResources(_ mediaType: PHAssetMediaType = .unknown, successPHAsset: @escaping (PHFetchResult<PHAsset>) -> ()) {
+    // MARK: - 获取相册/相册数组
+    func getPhotoAlbumResources(_ mediaType: PHAssetMediaType = .unknown, successPHAsset: @escaping (LAlbumPickerModel) -> ()) {
         
         DispatchQueue.global().async {
             var mediaTypePhAsset: PHFetchResult<PHAsset> = PHFetchResult()
@@ -198,38 +198,35 @@ extension LImagePickerManager {
                 mediaTypePhAsset = PHAsset.fetchAssets(with: allPhotosOptions)
             }else {
                 allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
-                //                allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-                
                 let smartAlbums = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
                 smartAlbums.enumerateObjects { (collection, row, objc) in
-                    
-                    print(objc)
-                    
-                    if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
+                    if collection.estimatedAssetCount <= 0 { return }
+                    if self.isCameraRollAlbm(metadata: collection) {
                         mediaTypePhAsset = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
-                        
-                        let _ = self.isCameraRollAlbm(metadata: collection)
-                        
                         DispatchQueue.main.async {
-                            successPHAsset(mediaTypePhAsset)
+                            let albumModel = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: mediaTypePhAsset.lastObject, fetchResult: mediaTypePhAsset, selectCount: 0)
+                            successPHAsset(albumModel)
                         }
                         
                     }
-                    
-                    
-                    //                    let dd = UnsafeMutablePointer<OBJC>
-                    
                 }
-                
-                mediaTypePhAsset = PHAsset.fetchAssets(with: mediaType, options: allPhotosOptions)
             }
-            
-            
-            //            DispatchQueue.main.async {
-            //                successPHAsset(mediaTypePhAsset)
-            //            }
+        }
+    }
+    
+    // MARK: - 获取照片数组
+    func getAssetsFromFetchResult(_ result: PHFetchResult<PHAsset>?, completion: (([LImagePickerResourcesModel]) -> ())) {
+        guard let `result` = result else {
+            completion([])
+            return
         }
         
+        var resourcesModelArr: Array = [LImagePickerResourcesModel]()
+        result.enumerateObjects { (asset, idx, objc) in
+            let resourceModel = LImagePickerResourcesModel(media: asset, type: .photo, isSelect: false, selectIndex: 0)
+            resourcesModelArr.append(resourceModel)
+        }
+        completion(resourcesModelArr)
     }
     
     fileprivate func isCameraRollAlbm(metadata: PHAssetCollection) -> Bool {

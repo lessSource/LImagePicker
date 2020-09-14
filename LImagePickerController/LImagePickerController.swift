@@ -26,7 +26,7 @@ public class LImagePickerController: UINavigationController {
             }
         }
     }
-    
+
     
     // 选择视频图片代理
     fileprivate weak var imageDelegate: LImagePickerViewDelegate?
@@ -86,26 +86,26 @@ public class LImagePickerController: UINavigationController {
     }
 
     public override var childForStatusBarStyle: UIViewController? {
-        return self.topViewController
+        return self.visibleViewController
     }
 
-    public override var childForStatusBarHidden: UIViewController? {
-        return self.topViewController
-    }
+//    public override var childForStatusBarHidden: UIViewController? {
+//        return self.topViewController
+//    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
-    public override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//
+//    public override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
+//
+//    public override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
 
     deinit {
         print(self, "++++++释放")

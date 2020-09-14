@@ -9,7 +9,7 @@
 import UIKit
 //import LImagePicker
 //import Photos
-//import LImageShow
+import LImageShow
 //import LPublicImageParameter
 //import Kingfisher
 import LImagePickerController
@@ -30,7 +30,7 @@ class TestClass {
 
 class ViewController: UIViewController {
     
-    fileprivate var delegate: ModelAnimationDelegate?
+//    fileprivate var delegate: ModelAnimationDelegate?
     
     fileprivate lazy var contentImage: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 100, y: 300, width: 200, height: 200))
@@ -67,13 +67,15 @@ class ViewController: UIViewController {
         contentImage.image = UIImage(named: "123456")
         contentImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(contentImageClick)))
         
-        
+//        let
         
     }
     
     
     
-    
+    func calculateStructSize(_ size: Int) -> Int {
+        return 1
+    }
     
     
 }
@@ -85,7 +87,7 @@ extension ViewController {
     // 图库
     func galleryButtonClick() {
         let imagePicker = LImagePickerController(withMaxImage: 10, delegate: nil)
-        imagePicker.isDarkMode = false
+//        imagePicker.isDarkMode = false
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -97,13 +99,22 @@ extension ViewController {
     
     // 查看大图
     func contentImageClick() {
-        delegate = ModelAnimationDelegate(contentImage: contentImage, superView: view)
-        
-        let showImageVC = LImagePickerController(configuration: LImagePickerConfiguration(currentIndex: 0, dataArray: [contentImage.image!]))
-        showImageVC.transitioningDelegate = delegate
-        showImageVC.modalTransitionStyle = .crossDissolve
-        present(showImageVC, animated: true, completion: nil)
-        
+//        delegate = ModelAnimationDelegate(contentImage: contentImage, superView: view)
+//
+//        let showImageVC = LImagePickerController(configuration: LImagePickerConfiguration(currentIndex: 0, dataArray: [contentImage.image!]))
+//        showImageVC.transitioningDelegate = delegate
+//        showImageVC.modalTransitionStyle = .crossDissolve
+//        present(showImageVC, animated: true, completion: nil)
+        let editPhotosVC = TestViewController()
+//        editPhotosVC.contentImage = contentImage
+//        editPhotosVC.c
+//        pushAndHideTabbar(editPhotosVC)
+//        navigationController?.present(editPhotosVC, animated: true, completion: nil)
+        editPhotosVC.modalPresentationStyle = .custom
+
+        editPhotosVC.contentImage = contentImage.image
+        present(editPhotosVC, animated: true, completion: nil)
+
     }
     
 }

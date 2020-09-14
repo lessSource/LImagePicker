@@ -11,7 +11,7 @@ import Photos
 
 class LPhotoPickerController: UIViewController {
 
-    public var albumMode: LAlbumPickerModel = LAlbumPickerModel()
+    public var albumModel: LAlbumPickerModel?
     
     fileprivate var dataArray: Array = [PHAsset]()
     
@@ -24,17 +24,24 @@ class LPhotoPickerController: UIViewController {
         return view
     }()
     
+    fileprivate lazy var bottomView: LImagePickerBottomView = {
+        let bottomView = LImagePickerBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
+        bottomView.backgroundColor = UIColor.lBackGround
+        return bottomView
+    }()
+    
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumLineSpacing = 1
-        flowLayout.minimumInteritemSpacing = 1
-        flowLayout.itemSize = CGSize(width: (LConstant.screenWidth - 13)/4, height: (LConstant.screenWidth - 13)/4)
+        flowLayout.minimumLineSpacing = 2
+        flowLayout.minimumInteritemSpacing = 2
+        flowLayout.itemSize = CGSize(width: (LConstant.screenWidth - 16)/4, height: (LConstant.screenWidth - 13)/4)
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         
-        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar), collectionViewLayout: flowLayout)
+        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = UIColor.lBackGround
+        collection.showsVerticalScrollIndicator = false
         return collection
     }()
     
@@ -44,6 +51,7 @@ class LPhotoPickerController: UIViewController {
         collectionView.register(LPhotoPickerViewCell.self, forCellWithReuseIdentifier: LPhotoPickerViewCell.l_identifire)
         view.addSubview(collectionView)
         view.addSubview(navView)
+        view.addSubview(bottomView)
         
         fetchAssetModels()
         
@@ -98,13 +106,18 @@ extension LPhotoPickerController {
 extension LPhotoPickerController {
     
     func fetchAssetModels() {
-        LImagePickerManager.shared.getPhotoAlbumResources(.image) { (assetsFetchResult) in
-            
-            assetsFetchResult.enumerateObjects { (mediaAsset, indeo, stop) in
-                self.dataArray.append(mediaAsset)
+        if let albumModel = albumModel {
+            LImagePickerManager.shared.getAssetsFromFetchResult(albumModel.fetchResult) { (array) in
+                dataArray = array.compactMap { $0.media as? PHAsset }
             }
-            self.collectionView.reloadData()
-            self.collectionView.scrollToItem(at: IndexPath(item: self.dataArray.count, section: 0), at: .bottom, animated: false)
+        }else {
+            LImagePickerManager.shared.getPhotoAlbumResources(.image) { (albumModel) in
+                albumModel.fetchResult?.enumerateObjects { (mediaAsset, indeo, stop) in
+                    self.dataArray.append(mediaAsset)
+                }
+                self.collectionView.reloadData()
+                self.collectionView.scrollToItem(at: IndexPath(item: self.dataArray.count, section: 0), at: .bottom, animated: false)
+            }
         }
     }
     
@@ -124,7 +137,7 @@ extension LPhotoPickerController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LPhotoPickerViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotoPickerViewCell.l_identifire, for: indexPath) as! LPhotoPickerViewCell
         cell.backgroundColor = UIColor.red
-        cell.photoAsset(asset: dataArray[indexPath.item])
+        cell.asset = dataArray[indexPath.item]
         return cell
     }
     
