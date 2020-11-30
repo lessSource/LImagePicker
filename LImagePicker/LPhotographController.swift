@@ -14,14 +14,8 @@ class LPhotographController: UIViewController {
 
     fileprivate var dataArray: Array = [LPhotographModel]()
     
-    
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumLineSpacing = 1
-        flowLayout.minimumInteritemSpacing = 1
-        flowLayout.itemSize = CGSize(width: (LConstant.screenWidth - 13)/4, height: (LConstant.screenWidth - 13)/4)
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        
         let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
@@ -29,7 +23,6 @@ class LPhotographController: UIViewController {
         collection.showsVerticalScrollIndicator = false
         return collection
     }()
-    
     
     deinit {
         print(self, "++++++释放")
@@ -40,42 +33,76 @@ class LPhotographController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        initView()
+        initData()
     }
     
-    
-    // MARK: - initView
     // MARK: - initView
     fileprivate func initView() {
-        collectionView.register(LPhotographGifCell.self, forCellWithReuseIdentifier: LPhotographGifCell.layerClass)
-        
-        collectionView.register(LPhotoPickerViewCell.self, forCellWithReuseIdentifier: LPhotoPickerViewCell.l_identifire)
-        if let navPicker = imageNavPicker, (navPicker.maxSelectCount > 1 || (navPicker.maxSelectCount == 1 && navPicker.showSelectBtn == true))  {
-            view.addSubview(bottomView)
-            collectionView.frame = CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight)
-        }else {
-            collectionView.frame = CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar)
-        }
+        collectionView.register(LPhotographGifCell.self, forCellWithReuseIdentifier: LPhotographGifCell.l_identifire)
+        collectionView.register(LPhotographImageCell.self, forCellWithReuseIdentifier: LPhotographImageCell.l_identifire)
+        collectionView.register(LPhotographVideoCell.self, forCellWithReuseIdentifier: LPhotographVideoCell.l_identifire)
+        collectionView.register(LPhotographLivePhotoCell.self, forCellWithReuseIdentifier: LPhotographLivePhotoCell.l_identifire)
         view.addSubview(collectionView)
-        view.addSubview(photoAlbumView)
-        view.addSubview(navView)
-        photoAlbumView.didSelectClosure = { [weak self] albumModel in
-            self?.albumModel = albumModel
-            self?.initData()
+    }
+    
+    // MARK: - initData
+    fileprivate func initData() {
+        if let albumModel = albumModel {
+            LImagePickerManger.shared.getAssetsFromFetchResult(albumModel.fetchResult) { [weak self] (array) in
+                guard let `self` = self else { return }
+                self.dataArray = array
+                self.collectionView.reloadData()
+            }
+        }else {
+            LImagePickerManger.shared.getPhotoAlbumResources(.image) { [weak self] (albumModel) in
+                guard let `self` = self else { return }
+                self.albumModel = albumModel
+                self.initData()
+            }
         }
-        
     }
     
     
 }
 
-extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return dataArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        switch dataArray[indexPath.row].type {
+        case .livePhoto:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographLivePhotoCell.l_identifire, for: indexPath) as! LPhotographLivePhotoCell
+            return cell
+        case .photoGif:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographGifCell.l_identifire, for: indexPath) as! LPhotographGifCell
+            return cell
+        case .video:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographGifCell.l_identifire, for: indexPath) as! LPhotographGifCell
+            return cell
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographImageCell.l_identifire, for: indexPath) as! LPhotographImageCell
+            cell.loadingResourcesModel(dataArray[indexPath.row])
+            return cell
+        }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: (LConstant.screenWidth - 13)/4, height: (LConstant.screenWidth - 13)/4)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    }
     
 }

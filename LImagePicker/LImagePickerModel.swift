@@ -21,8 +21,6 @@ enum LImagePickerMediaType {
     case photoGif
     /** 视频 */
     case video
-    /** 音频 */
-    case audio
 }
 
 // 相册模型
