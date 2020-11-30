@@ -19,7 +19,6 @@ class LImageShowViewController: UICollectionViewController {
     /** 当前序号 */
     fileprivate(set) var currentIndex: Int = 0
     
-    
     fileprivate override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
     }

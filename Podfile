@@ -24,6 +24,7 @@ target 'LImagePickerDemo' do
 
   # Pods for LImagePickerDemo
   pod 'FHHFPSIndicator'
+  pod 'WCDB.swift'
 
 
   target 'LImagePickerDemoUITests' do

@@ -9,80 +9,12 @@
 /* Begin PBXBuildFile section */
 		098E3A6AA59062F2C212B5F4 /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */; };
 		1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */; };
-		2A271AFA24B33BAC009239EA /* LImageCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */; };
-		2A271AFD24B36CC2009239EA /* LImageCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AFC24B36CC2009239EA /* LImageCameraView.swift */; };
-		2A271AFF24B4224E009239EA /* LImageCameraOperationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */; };
-		2A271B0124B4B1C9009239EA /* LImageCameraTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */; };
-		2A271B0324B4C7E7009239EA /* LImageCameraPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */; };
-		2A2AECBF24E1712700DF26EA /* SplitScreen9.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECBE24E1712700DF26EA /* SplitScreen9.fsh */; };
-		2A2AECC124E1713900DF26EA /* SplitScreen9.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECC024E1713900DF26EA /* SplitScreen9.vsh */; };
-		2A2AECC724E1766500DF26EA /* UpsideDown.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECC624E1766500DF26EA /* UpsideDown.fsh */; };
-		2A2AECC924E1766D00DF26EA /* UpsideDown.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECC824E1766D00DF26EA /* UpsideDown.vsh */; };
-		2A2AECCB24E1767C00DF26EA /* Mosaic1.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECCA24E1767C00DF26EA /* Mosaic1.fsh */; };
-		2A2AECCD24E1768400DF26EA /* Mosaic1.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECCC24E1768400DF26EA /* Mosaic1.vsh */; };
-		2A2AECCF24E1768E00DF26EA /* Mosaic2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECCE24E1768E00DF26EA /* Mosaic2.fsh */; };
-		2A2AECD124E1769500DF26EA /* Mosaic2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECD024E1769500DF26EA /* Mosaic2.vsh */; };
-		2A2AECD324E176A000DF26EA /* Mosaic3.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECD224E176A000DF26EA /* Mosaic3.fsh */; };
-		2A2AECD524E176A600DF26EA /* Mosaic3.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECD424E176A600DF26EA /* Mosaic3.vsh */; };
-		2A2AECDB24E4127F00DF26EA /* Zoom.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECDA24E4127F00DF26EA /* Zoom.fsh */; };
-		2A2AECDD24E4128B00DF26EA /* Zoom.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECDC24E4128B00DF26EA /* Zoom.vsh */; };
-		2A2AECDF24E412AB00DF26EA /* Outside.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECDE24E412AB00DF26EA /* Outside.fsh */; };
-		2A2AECE124E412B600DF26EA /* Outside.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE024E412B600DF26EA /* Outside.vsh */; };
-		2A2AECE324E41E6F00DF26EA /* Jitter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE224E41E6F00DF26EA /* Jitter.fsh */; };
-		2A2AECE524E41E7700DF26EA /* Jitter.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE424E41E7700DF26EA /* Jitter.vsh */; };
-		2A2AECE724E41E8500DF26EA /* FlashWhite.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE624E41E8500DF26EA /* FlashWhite.fsh */; };
-		2A2AECE924E41E8D00DF26EA /* FlashWhite.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECE824E41E8D00DF26EA /* FlashWhite.vsh */; };
-		2A2AECEC24E41ECC00DF26EA /* Illusion.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECEB24E41ECC00DF26EA /* Illusion.fsh */; };
-		2A2AECEE24E41ED600DF26EA /* Illusion.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECED24E41ED600DF26EA /* Illusion.vsh */; };
-		2A2AECF124E4291500DF26EA /* Burr.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECF024E4291500DF26EA /* Burr.fsh */; };
-		2A2AECF324E4291D00DF26EA /* Burr.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AECF224E4291D00DF26EA /* Burr.vsh */; };
-		2A2AED9C24F89A3400DF26EA /* LImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */; };
-		2A2AEDA324F89A3400DF26EA /* LImagePickerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDA224F89A3400DF26EA /* LImagePickerControllerTests.swift */; };
-		2A2AEDA524F89A3400DF26EA /* LImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2AED9524F89A3400DF26EA /* LImagePickerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A2AEDA824F89A3400DF26EA /* LImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */; };
-		2A2AEDA924F89A3400DF26EA /* LImagePickerController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2A2AEDB324F89B8500DF26EA /* LImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB224F89B8500DF26EA /* LImagePickerController.swift */; };
-		2A2AEDB524F8A3D600DF26EA /* LImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB424F8A3D600DF26EA /* LImagePickerManager.swift */; };
-		2A2AEDB724F8AB8200DF26EA /* LPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB624F8AB8200DF26EA /* LPhotoPickerController.swift */; };
-		2A2AEDB924F8AD0700DF26EA /* LImagePickerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDB824F8AD0700DF26EA /* LImagePickerPromptView.swift */; };
-		2A2AEDBB24F8B08700DF26EA /* LImagePickerViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDBA24F8B08700DF26EA /* LImagePickerViewExtensions.swift */; };
-		2A2AEDBD24F8D8AD00DF26EA /* LImagePickerAboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDBC24F8D8AD00DF26EA /* LImagePickerAboutApp.swift */; };
-		2A2AEDBF24F8D97A00DF26EA /* LImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A2AEDBE24F8D97A00DF26EA /* LImagePickerController.bundle */; };
-		2A2AEDC124F8D9F300DF26EA /* LImagePickerAboutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC024F8D9F300DF26EA /* LImagePickerAboutExtensions.swift */; };
-		2A2AEDC324F8DFD700DF26EA /* LAlbumPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC224F8DFD700DF26EA /* LAlbumPickerController.swift */; };
-		2A2AEDC524F8E21000DF26EA /* LImagePickerColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC424F8E21000DF26EA /* LImagePickerColorExtensions.swift */; };
-		2A2AEDC724F8E52500DF26EA /* LImageShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC624F8E52500DF26EA /* LImageShowViewController.swift */; };
-		2A2AEDC924F8E66800DF26EA /* LImageShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDC824F8E66800DF26EA /* LImageShow.swift */; };
-		2A2AEDCB24F8E9E300DF26EA /* LCameraPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDCA24F8E9E300DF26EA /* LCameraPickerViewController.swift */; };
-		2A2AEDCD24F8F23400DF26EA /* LImageShowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2AEDCC24F8F23400DF26EA /* LImageShowCollectionViewCell.swift */; };
-		2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5424A1F0C900D14A6A /* LPromptView.swift */; };
-		2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E1E5624A1FBF100D14A6A /* LPublicImageParameter.bundle */; };
-		2A47713A25060F7100F9B839 /* LImagePickerBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A47713925060F7100F9B839 /* LImagePickerBottomView.swift */; };
 		2A47714F2508626000F9B839 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A47714E2508626000F9B839 /* TestViewController.swift */; };
 		2A477151250862AE00F9B839 /* LEditPickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A477150250862AE00F9B839 /* LEditPickerNavView.swift */; };
 		2A477155250862C700F9B839 /* 111ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A477154250862C700F9B839 /* 111ViewController.m */; };
 		2A477157250862D300F9B839 /* Filter in Resources */ = {isa = PBXBuildFile; fileRef = 2A477156250862D300F9B839 /* Filter */; };
 		2A47715A2508631B00F9B839 /* LShowImageFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4771582508631B00F9B839 /* LShowImageFilterCell.swift */; };
 		2A47715B2508631B00F9B839 /* LShowImageFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4771592508631B00F9B839 /* LShowImageFilterBar.swift */; };
-		2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7DE524DC11B3008709E3 /* Normal.vsh */; };
-		2A6A7DE824DC11B3008709E3 /* Normal.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7DE624DC11B3008709E3 /* Normal.fsh */; };
-		2A6A7E7D24DFC315008709E3 /* FilterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A6A7E7B24DFC315008709E3 /* FilterView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A6A7E7E24DFC315008709E3 /* FilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A7E7C24DFC315008709E3 /* FilterView.m */; };
-		2A6A7E8824DFF6C3008709E3 /* Gray.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8724DFF6C3008709E3 /* Gray.fsh */; };
-		2A6A7E8A24DFF6D2008709E3 /* Gray.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8924DFF6D2008709E3 /* Gray.vsh */; };
-		2A6A7E8D24E00222008709E3 /* SplitScreen2.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8C24E00222008709E3 /* SplitScreen2.fsh */; };
-		2A6A7E8F24E0022E008709E3 /* SplitScreen2.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2A6A7E8E24E0022E008709E3 /* SplitScreen2.vsh */; };
-		2A6A7E9124E00776008709E3 /* LShowImageFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A7E9024E00776008709E3 /* LShowImageFilterBar.swift */; };
-		2A6A7E9324E00785008709E3 /* LShowImageFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6A7E9224E00785008709E3 /* LShowImageFilterCell.swift */; };
-		2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75811F24A105CC00592990 /* LShowVideoPlayViewController.swift */; };
-		2A75812224A106E000592990 /* LEditPickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812124A106E000592990 /* LEditPickerNavView.swift */; };
-		2A75812424A1071C00592990 /* LEditPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A75812324A1071C00592990 /* LEditPhotosViewController.swift */; };
-		2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D124FA2B5600761046 /* LImagePickerConfiguration.swift */; };
-		2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D324FA329200761046 /* LCameraPickerView.swift */; };
-		2AAF62D624FCA5AD00761046 /* LPhotoPickerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62D524FCA5AD00761046 /* LPhotoPickerViewCell.swift */; };
-		2AAF62E224FF527B00761046 /* LAlbumPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62E124FF527B00761046 /* LAlbumPickerCell.swift */; };
-		2AAF62E424FFDB0E00761046 /* LImagePickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF62E324FFDB0D00761046 /* LImagePickerNavView.swift */; };
-		2AAF63302504EF5B00761046 /* LProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF632F2504EF5B00761046 /* LProgressView.swift */; };
 		2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2124626C87008D5179 /* AppDelegate.swift */; };
 		2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2324626C87008D5179 /* SceneDelegate.swift */; };
 		2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2524626C87008D5179 /* ViewController.swift */; };
@@ -96,66 +28,53 @@
 		2AEE0D5D24626D16008D5179 /* LImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AEE0D4D24626D15008D5179 /* LImagePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2AEE0D6024626D16008D5179 /* LImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEE0D4B24626D15008D5179 /* LImagePicker.framework */; };
 		2AEE0D6124626D16008D5179 /* LImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEE0D4B24626D15008D5179 /* LImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2AEE0D8C24626E57008D5179 /* LImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8724626E57008D5179 /* LImagePickerController.swift */; };
-		2AEE0D8D24626E57008D5179 /* LAlbumPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8824626E57008D5179 /* LAlbumPickerController.swift */; };
 		2AEE0D8E24626E57008D5179 /* LImagePicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8924626E57008D5179 /* LImagePicker.bundle */; };
-		2AEE0D8F24626E57008D5179 /* LImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */; };
-		2AEE0D9024626E57008D5179 /* LPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8B24626E57008D5179 /* LPhotoPickerController.swift */; };
-		2AEE0DA62462710C008D5179 /* LImageNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D972462710C008D5179 /* LImageNavView.swift */; };
-		2AEE0DA72462710C008D5179 /* LAlbumPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D982462710C008D5179 /* LAlbumPickerTableViewCell.swift */; };
-		2AEE0DA82462710C008D5179 /* LImageTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D992462710C008D5179 /* LImageTabBarView.swift */; };
-		2AEE0DA92462710C008D5179 /* LImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D9A2462710C008D5179 /* LImagePickerCell.swift */; };
-		2AEEED85249BAF850009AAE1 /* LPublicImageParameter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEED7C249BAF850009AAE1 /* LPublicImageParameter.framework */; };
-		2AEEED8C249BAF850009AAE1 /* LPublicImageParameterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEED8B249BAF850009AAE1 /* LPublicImageParameterTests.swift */; };
-		2AEEED8E249BAF850009AAE1 /* LPublicImageParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AEEED7E249BAF850009AAE1 /* LPublicImageParameter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AEEED91249BAF850009AAE1 /* LPublicImageParameter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEED7C249BAF850009AAE1 /* LPublicImageParameter.framework */; };
-		2AEEED92249BAF850009AAE1 /* LPublicImageParameter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEED7C249BAF850009AAE1 /* LPublicImageParameter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2AEEED9A249BAFE40009AAE1 /* LAlbumPickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEED99249BAFE40009AAE1 /* LAlbumPickerModel.swift */; };
-		2AEEED9C249BB32A0009AAE1 /* LAboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEED9B249BB32A0009AAE1 /* LAboutApp.swift */; };
-		2AEEEDBE249C91E60009AAE1 /* LImageCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEEDB5249C91E60009AAE1 /* LImageCamera.framework */; };
-		2AEEEDC5249C91E60009AAE1 /* LImageCameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDC4249C91E60009AAE1 /* LImageCameraTests.swift */; };
-		2AEEEDC7249C91E60009AAE1 /* LImageCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AEEEDB7249C91E60009AAE1 /* LImageCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AEEEDCA249C91E60009AAE1 /* LImageCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEEDB5249C91E60009AAE1 /* LImageCamera.framework */; };
-		2AEEEDCB249C91E60009AAE1 /* LImageCamera.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEEDB5249C91E60009AAE1 /* LImageCamera.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2AEEEDE0249C92160009AAE1 /* LImageShow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEEDD7249C92160009AAE1 /* LImageShow.framework */; };
-		2AEEEDE7249C92160009AAE1 /* LImageShowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDE6249C92160009AAE1 /* LImageShowTests.swift */; };
-		2AEEEDE9249C92160009AAE1 /* LImageShow.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AEEEDD9249C92160009AAE1 /* LImageShow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AEEEDEC249C92160009AAE1 /* LImageShow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEEDD7249C92160009AAE1 /* LImageShow.framework */; };
-		2AEEEDED249C92160009AAE1 /* LImageShow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEEEDD7249C92160009AAE1 /* LImageShow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2AEEEDF5249C92E20009AAE1 /* LImageShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDF4249C92E20009AAE1 /* LImageShow.swift */; };
-		2AEEEDF7249C940C0009AAE1 /* LShowImageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDF6249C940C0009AAE1 /* LShowImageConfiguration.swift */; };
-		2AEEEDF9249C958F0009AAE1 /* LShowImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDF8249C958F0009AAE1 /* LShowImageViewController.swift */; };
-		2AEEEDFB249C95CC0009AAE1 /* LShowImageVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDFA249C95CC0009AAE1 /* LShowImageVCDelegate.swift */; };
-		2AEEEDFD249C96630009AAE1 /* LShowImageNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDFC249C96630009AAE1 /* LShowImageNavView.swift */; };
-		2AEEEDFF249CE1D80009AAE1 /* LShowImageTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEDFE249CE1D80009AAE1 /* LShowImageTabBarView.swift */; };
-		2AEEEE01249CE2650009AAE1 /* LShowImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEE00249CE2650009AAE1 /* LShowImageCollectionViewCell.swift */; };
-		2AEEEE03249CE6110009AAE1 /* LGifImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEEEE02249CE6110009AAE1 /* LGifImage.swift */; };
 		4ACEB85AAA49E5A82D5EECBA /* Pods_LImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC2D23AF78BF62EC9A0FA0B /* Pods_LImagePicker.framework */; };
+		CA9367C725121EDE00324C50 /* ModelTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9367C625121EDE00324C50 /* ModelTable.swift */; };
+		CACA0E8E25749DC20008F7BE /* LImagePickerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */; };
+		CACA0E9325749DF70008F7BE /* LImagePickerContrller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E9225749DF70008F7BE /* LImagePickerContrller.swift */; };
+		CACA0E9825749E3D0008F7BE /* LPhotographController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E9725749E3D0008F7BE /* LPhotographController.swift */; };
+		CACA0E9D25749E7F0008F7BE /* LPhotographCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E9C25749E7F0008F7BE /* LPhotographCollectionViewCell.swift */; };
+		CACA0EA225749EBA0008F7BE /* LPhotographImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EA125749EBA0008F7BE /* LPhotographImageCell.swift */; };
+		CACA0EA725749EC90008F7BE /* LPhotographVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EA625749EC90008F7BE /* LPhotographVideoCell.swift */; };
+		CACA0EAC25749ED30008F7BE /* LPhotographGifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EAB25749ED30008F7BE /* LPhotographGifCell.swift */; };
+		CACA0EB125749EDE0008F7BE /* LPhotographLivePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EB025749EDE0008F7BE /* LPhotographLivePhotoCell.swift */; };
+		CACA0EB625749EEC0008F7BE /* LPhotoAlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EB525749EEC0008F7BE /* LPhotoAlbumController.swift */; };
+		CACA0EBB25749EFD0008F7BE /* LPhotoAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EBA25749EFD0008F7BE /* LPhotoAlbumView.swift */; };
+		CACA0EC025749F0B0008F7BE /* LPhotoAlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EBF25749F0B0008F7BE /* LPhotoAlbumTableViewCell.swift */; };
+		CACA0EC525749F1D0008F7BE /* LPreviewImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EC425749F1D0008F7BE /* LPreviewImageController.swift */; };
+		CACA0ECA25749F300008F7BE /* LPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EC925749F300008F7BE /* LPreviewCollectionViewCell.swift */; };
+		CACA0ECF25749F3C0008F7BE /* LPreviewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0ECE25749F3C0008F7BE /* LPreviewImageCell.swift */; };
+		CACA0ED425749F470008F7BE /* LPreviewVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0ED325749F470008F7BE /* LPreviewVideoCell.swift */; };
+		CACA0ED925749F4F0008F7BE /* LPreviewGifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0ED825749F4F0008F7BE /* LPreviewGifCell.swift */; };
+		CACA0EDE25749F590008F7BE /* LPreviewLivePhoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EDD25749F590008F7BE /* LPreviewLivePhoteCell.swift */; };
+		CACA0EE325749F680008F7BE /* LPreviewVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EE225749F680008F7BE /* LPreviewVideoController.swift */; };
+		CACA0EE825749F730008F7BE /* LImageCroppingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EE725749F730008F7BE /* LImageCroppingView.swift */; };
+		CACA0EED25749F840008F7BE /* LTakingPicturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EEC25749F840008F7BE /* LTakingPicturesController.swift */; };
+		CACA0EF225749F8E0008F7BE /* LTakingPicturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EF125749F8E0008F7BE /* LTakingPicturesView.swift */; };
+		CACA0EF725749F9A0008F7BE /* LEditPicturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EF625749F9A0008F7BE /* LEditPicturesController.swift */; };
+		CACA0EFC25749FCD0008F7BE /* LPreviewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0EFB25749FCD0008F7BE /* LPreviewAnimation.swift */; };
+		CACA0F0125749FD40008F7BE /* LImagePcikerDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F0025749FD40008F7BE /* LImagePcikerDefine.swift */; };
+		CACA0F0625749FDC0008F7BE /* String+LImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F0525749FDC0008F7BE /* String+LImagePicker.swift */; };
+		CACA0F0B25749FE30008F7BE /* UIColor+LImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F0A25749FE30008F7BE /* UIColor+LImagePicker.swift */; };
+		CACA0F1025749FEC0008F7BE /* UIImage+LImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F0F25749FEC0008F7BE /* UIImage+LImagePicker.swift */; };
+		CACA0F1525749FF30008F7BE /* LImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F1425749FF30008F7BE /* LImagePicker+Extension.swift */; };
+		CACA0F1A25749FF90008F7BE /* LImagePickerManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F1925749FF90008F7BE /* LImagePickerManger.swift */; };
+		CACA0F1F25749FFF0008F7BE /* LImagePickerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F1E25749FFF0008F7BE /* LImagePickerOperation.swift */; };
+		CACA0F242574A0060008F7BE /* LImagePickerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F232574A0060008F7BE /* LImagePickerConfiguration.swift */; };
+		CACA0F292574A0170008F7BE /* LProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F282574A0170008F7BE /* LProgressBarView.swift */; };
+		CACA0F2E2574A01D0008F7BE /* LPicturesSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F2D2574A01D0008F7BE /* LPicturesSelectedView.swift */; };
+		CACA0F332574A0240008F7BE /* LImagePickerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F322574A0240008F7BE /* LImagePickerPromptView.swift */; };
+		CACA0F382574A02B0008F7BE /* LImagePickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F372574A02B0008F7BE /* LImagePickerNavView.swift */; };
+		CACA0F3D2574A0320008F7BE /* LImageBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F3C2574A0320008F7BE /* LImageBottomView.swift */; };
+		CACA0F422574A05E0008F7BE /* LImagePickerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F412574A05E0008F7BE /* LImagePickerProtocol.swift */; };
+		CACA0F4A2574A0640008F7BE /* LImageNavProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F492574A0640008F7BE /* LImageNavProtocol.swift */; };
+		CACA0F4F2574A0690008F7BE /* LImageBottomProtocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F4E2574A0690008F7BE /* LImageBottomProtocl.swift */; };
+		CACA0F5A2574BF1B0008F7BE /* LImagePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F592574BF1B0008F7BE /* LImagePickerModel.swift */; };
 		D25CA19329EF42C15E2830EA /* Pods_LImagePicker_LImagePickerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7597E7FDDDF881C524BF756F /* Pods_LImagePicker_LImagePickerTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2A2AED9D24F89A3400DF26EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2A2AED9224F89A3400DF26EA;
-			remoteInfo = LImagePickerController;
-		};
-		2A2AED9F24F89A3400DF26EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEE0D1D24626C87008D5179;
-			remoteInfo = LImagePickerDemo;
-		};
-		2A2AEDA624F89A3400DF26EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2A2AED9224F89A3400DF26EA;
-			remoteInfo = LImagePickerController;
-		};
 		2AEE0D3824626C8B008D5179 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
@@ -184,69 +103,6 @@
 			remoteGlobalIDString = 2AEE0D4A24626D15008D5179;
 			remoteInfo = LImagePicker;
 		};
-		2AEEED86249BAF850009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEEED7B249BAF850009AAE1;
-			remoteInfo = LPublicImageParameter;
-		};
-		2AEEED88249BAF850009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEE0D1D24626C87008D5179;
-			remoteInfo = LImagePickerDemo;
-		};
-		2AEEED8F249BAF850009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEEED7B249BAF850009AAE1;
-			remoteInfo = LPublicImageParameter;
-		};
-		2AEEEDBF249C91E60009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEEEDB4249C91E60009AAE1;
-			remoteInfo = LImageCamera;
-		};
-		2AEEEDC1249C91E60009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEE0D1D24626C87008D5179;
-			remoteInfo = LImagePickerDemo;
-		};
-		2AEEEDC8249C91E60009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEEEDB4249C91E60009AAE1;
-			remoteInfo = LImageCamera;
-		};
-		2AEEEDE1249C92160009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEEEDD6249C92160009AAE1;
-			remoteInfo = LImageShow;
-		};
-		2AEEEDE3249C92160009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEE0D1D24626C87008D5179;
-			remoteInfo = LImagePickerDemo;
-		};
-		2AEEEDEA249C92160009AAE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AEE0D1624626C87008D5179 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2AEEEDD6249C92160009AAE1;
-			remoteInfo = LImageShow;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -256,11 +112,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2AEEEDED249C92160009AAE1 /* LImageShow.framework in Embed Frameworks */,
-				2AEEED92249BAF850009AAE1 /* LPublicImageParameter.framework in Embed Frameworks */,
 				2AEE0D6124626D16008D5179 /* LImagePicker.framework in Embed Frameworks */,
-				2A2AEDA924F89A3400DF26EA /* LImagePickerController.framework in Embed Frameworks */,
-				2AEEEDCB249C91E60009AAE1 /* LImageCamera.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,10 +148,8 @@
 		2A2AECED24E41ED600DF26EA /* Illusion.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Illusion.vsh; sourceTree = "<group>"; };
 		2A2AECF024E4291500DF26EA /* Burr.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Burr.fsh; sourceTree = "<group>"; };
 		2A2AECF224E4291D00DF26EA /* Burr.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Burr.vsh; sourceTree = "<group>"; };
-		2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LImagePickerController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A2AED9524F89A3400DF26EA /* LImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LImagePickerController.h; sourceTree = "<group>"; };
 		2A2AED9624F89A3400DF26EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2A2AED9B24F89A3400DF26EA /* LImagePickerControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LImagePickerControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A2AEDA224F89A3400DF26EA /* LImagePickerControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerControllerTests.swift; sourceTree = "<group>"; };
 		2A2AEDA424F89A3400DF26EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A2AEDB224F89B8500DF26EA /* LImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerController.swift; sourceTree = "<group>"; };
@@ -366,33 +216,19 @@
 		2AEE0D5324626D16008D5179 /* LImagePickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LImagePickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEE0D5A24626D16008D5179 /* LImagePickerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerTests.swift; sourceTree = "<group>"; };
 		2AEE0D5C24626D16008D5179 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AEE0D8724626E57008D5179 /* LImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImagePickerController.swift; sourceTree = "<group>"; };
-		2AEE0D8824626E57008D5179 /* LAlbumPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAlbumPickerController.swift; sourceTree = "<group>"; };
 		2AEE0D8924626E57008D5179 /* LImagePicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LImagePicker.bundle; sourceTree = "<group>"; };
-		2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImagePickerManager.swift; sourceTree = "<group>"; };
-		2AEE0D8B24626E57008D5179 /* LPhotoPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LPhotoPickerController.swift; sourceTree = "<group>"; };
-		2AEE0D972462710C008D5179 /* LImageNavView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImageNavView.swift; sourceTree = "<group>"; };
-		2AEE0D982462710C008D5179 /* LAlbumPickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LAlbumPickerTableViewCell.swift; sourceTree = "<group>"; };
-		2AEE0D992462710C008D5179 /* LImageTabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImageTabBarView.swift; sourceTree = "<group>"; };
-		2AEE0D9A2462710C008D5179 /* LImagePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LImagePickerCell.swift; sourceTree = "<group>"; };
-		2AEEED7C249BAF850009AAE1 /* LPublicImageParameter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LPublicImageParameter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEEED7E249BAF850009AAE1 /* LPublicImageParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LPublicImageParameter.h; sourceTree = "<group>"; };
 		2AEEED7F249BAF850009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AEEED84249BAF850009AAE1 /* LPublicImageParameterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LPublicImageParameterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEEED8B249BAF850009AAE1 /* LPublicImageParameterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPublicImageParameterTests.swift; sourceTree = "<group>"; };
 		2AEEED8D249BAF850009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AEEED99249BAFE40009AAE1 /* LAlbumPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlbumPickerModel.swift; sourceTree = "<group>"; };
 		2AEEED9B249BB32A0009AAE1 /* LAboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAboutApp.swift; sourceTree = "<group>"; };
-		2AEEEDB5249C91E60009AAE1 /* LImageCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LImageCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEEEDB7249C91E60009AAE1 /* LImageCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LImageCamera.h; sourceTree = "<group>"; };
 		2AEEEDB8249C91E60009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AEEEDBD249C91E60009AAE1 /* LImageCameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LImageCameraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEEEDC4249C91E60009AAE1 /* LImageCameraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraTests.swift; sourceTree = "<group>"; };
 		2AEEEDC6249C91E60009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AEEEDD7249C92160009AAE1 /* LImageShow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LImageShow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEEEDD9249C92160009AAE1 /* LImageShow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LImageShow.h; sourceTree = "<group>"; };
 		2AEEEDDA249C92160009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AEEEDDF249C92160009AAE1 /* LImageShowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LImageShowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEEEDE6249C92160009AAE1 /* LImageShowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageShowTests.swift; sourceTree = "<group>"; };
 		2AEEEDE8249C92160009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AEEEDF4249C92E20009AAE1 /* LImageShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageShow.swift; sourceTree = "<group>"; };
@@ -411,37 +247,60 @@
 		9EE72F3B60D8ABA4C27E033F /* Pods-LImagePicker-LImagePickerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker-LImagePickerTests.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker-LImagePickerTests/Pods-LImagePicker-LImagePickerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LImagePickerDemo_LImagePickerDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1A9ECADFED227E90A273D9 /* Pods-LImagePickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePickerDemo.release.xcconfig"; path = "Target Support Files/Pods-LImagePickerDemo/Pods-LImagePickerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		CA9367C625121EDE00324C50 /* ModelTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTable.swift; sourceTree = "<group>"; };
+		CACA0E7125749BCB0008F7BE /* LPublicImageParameter copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LPublicImageParameter copy-Info.plist"; path = "/Users/hy.ltd/Desktop/svn/LImagePicker/LPublicImageParameter copy-Info.plist"; sourceTree = "<absolute>"; };
+		CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavigationController.swift; sourceTree = "<group>"; };
+		CACA0E9225749DF70008F7BE /* LImagePickerContrller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerContrller.swift; sourceTree = "<group>"; };
+		CACA0E9725749E3D0008F7BE /* LPhotographController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographController.swift; sourceTree = "<group>"; };
+		CACA0E9C25749E7F0008F7BE /* LPhotographCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographCollectionViewCell.swift; sourceTree = "<group>"; };
+		CACA0EA125749EBA0008F7BE /* LPhotographImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographImageCell.swift; sourceTree = "<group>"; };
+		CACA0EA625749EC90008F7BE /* LPhotographVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographVideoCell.swift; sourceTree = "<group>"; };
+		CACA0EAB25749ED30008F7BE /* LPhotographGifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographGifCell.swift; sourceTree = "<group>"; };
+		CACA0EB025749EDE0008F7BE /* LPhotographLivePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographLivePhotoCell.swift; sourceTree = "<group>"; };
+		CACA0EB525749EEC0008F7BE /* LPhotoAlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotoAlbumController.swift; sourceTree = "<group>"; };
+		CACA0EBA25749EFD0008F7BE /* LPhotoAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotoAlbumView.swift; sourceTree = "<group>"; };
+		CACA0EBF25749F0B0008F7BE /* LPhotoAlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotoAlbumTableViewCell.swift; sourceTree = "<group>"; };
+		CACA0EC425749F1D0008F7BE /* LPreviewImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewImageController.swift; sourceTree = "<group>"; };
+		CACA0EC925749F300008F7BE /* LPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		CACA0ECE25749F3C0008F7BE /* LPreviewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewImageCell.swift; sourceTree = "<group>"; };
+		CACA0ED325749F470008F7BE /* LPreviewVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewVideoCell.swift; sourceTree = "<group>"; };
+		CACA0ED825749F4F0008F7BE /* LPreviewGifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewGifCell.swift; sourceTree = "<group>"; };
+		CACA0EDD25749F590008F7BE /* LPreviewLivePhoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewLivePhoteCell.swift; sourceTree = "<group>"; };
+		CACA0EE225749F680008F7BE /* LPreviewVideoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewVideoController.swift; sourceTree = "<group>"; };
+		CACA0EE725749F730008F7BE /* LImageCroppingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCroppingView.swift; sourceTree = "<group>"; };
+		CACA0EEC25749F840008F7BE /* LTakingPicturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTakingPicturesController.swift; sourceTree = "<group>"; };
+		CACA0EF125749F8E0008F7BE /* LTakingPicturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTakingPicturesView.swift; sourceTree = "<group>"; };
+		CACA0EF625749F9A0008F7BE /* LEditPicturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LEditPicturesController.swift; sourceTree = "<group>"; };
+		CACA0EFB25749FCD0008F7BE /* LPreviewAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewAnimation.swift; sourceTree = "<group>"; };
+		CACA0F0025749FD40008F7BE /* LImagePcikerDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePcikerDefine.swift; sourceTree = "<group>"; };
+		CACA0F0525749FDC0008F7BE /* String+LImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LImagePicker.swift"; sourceTree = "<group>"; };
+		CACA0F0A25749FE30008F7BE /* UIColor+LImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+LImagePicker.swift"; sourceTree = "<group>"; };
+		CACA0F0F25749FEC0008F7BE /* UIImage+LImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+LImagePicker.swift"; sourceTree = "<group>"; };
+		CACA0F1425749FF30008F7BE /* LImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LImagePicker+Extension.swift"; sourceTree = "<group>"; };
+		CACA0F1925749FF90008F7BE /* LImagePickerManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerManger.swift; sourceTree = "<group>"; };
+		CACA0F1E25749FFF0008F7BE /* LImagePickerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerOperation.swift; sourceTree = "<group>"; };
+		CACA0F232574A0060008F7BE /* LImagePickerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerConfiguration.swift; sourceTree = "<group>"; };
+		CACA0F282574A0170008F7BE /* LProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LProgressBarView.swift; sourceTree = "<group>"; };
+		CACA0F2D2574A01D0008F7BE /* LPicturesSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPicturesSelectedView.swift; sourceTree = "<group>"; };
+		CACA0F322574A0240008F7BE /* LImagePickerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerPromptView.swift; sourceTree = "<group>"; };
+		CACA0F372574A02B0008F7BE /* LImagePickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavView.swift; sourceTree = "<group>"; };
+		CACA0F3C2574A0320008F7BE /* LImageBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageBottomView.swift; sourceTree = "<group>"; };
+		CACA0F412574A05E0008F7BE /* LImagePickerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerProtocol.swift; sourceTree = "<group>"; };
+		CACA0F492574A0640008F7BE /* LImageNavProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageNavProtocol.swift; sourceTree = "<group>"; };
+		CACA0F4E2574A0690008F7BE /* LImageBottomProtocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageBottomProtocl.swift; sourceTree = "<group>"; };
+		CACA0F592574BF1B0008F7BE /* LImagePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerModel.swift; sourceTree = "<group>"; };
 		D529DBA0BCAD4D0586A5660B /* Pods-LImagePicker-LImagePickerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker-LImagePickerTests.release.xcconfig"; path = "Target Support Files/Pods-LImagePicker-LImagePickerTests/Pods-LImagePicker-LImagePickerTests.release.xcconfig"; sourceTree = "<group>"; };
 		E593C2F444C760FA6EE885A7 /* Pods-LImagePickerDemo-LImagePickerDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePickerDemo-LImagePickerDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-LImagePickerDemo-LImagePickerDemoUITests/Pods-LImagePickerDemo-LImagePickerDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F10A9830BBAA32545D82EB59 /* Pods-LImagePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.release.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2A2AED9024F89A3400DF26EA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2A2AED9824F89A3400DF26EA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A2AED9C24F89A3400DF26EA /* LImagePickerController.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2AEE0D1B24626C87008D5179 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2AEE0D6024626D16008D5179 /* LImagePicker.framework in Frameworks */,
 				1B9A39CAF97DD30A5B6666C5 /* Pods_LImagePickerDemo.framework in Frameworks */,
-				2AEEEDEC249C92160009AAE1 /* LImageShow.framework in Frameworks */,
-				2AEEEDCA249C91E60009AAE1 /* LImageCamera.framework in Frameworks */,
-				2A2AEDA824F89A3400DF26EA /* LImagePickerController.framework in Frameworks */,
-				2AEEED91249BAF850009AAE1 /* LPublicImageParameter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,51 +326,6 @@
 			files = (
 				2AEE0D5424626D16008D5179 /* LImagePicker.framework in Frameworks */,
 				D25CA19329EF42C15E2830EA /* Pods_LImagePicker_LImagePickerTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEED79249BAF850009AAE1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEED81249BAF850009AAE1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEED85249BAF850009AAE1 /* LPublicImageParameter.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDB2249C91E60009AAE1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDBA249C91E60009AAE1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDBE249C91E60009AAE1 /* LImageCamera.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDD4249C92160009AAE1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDDC249C92160009AAE1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDE0249C92160009AAE1 /* LImageShow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +595,7 @@
 				2AEE0D1F24626C87008D5179 /* Products */,
 				23192FF879ABADA43BE2E2F6 /* Pods */,
 				5C038BAF68630AD9CE8F1587 /* Frameworks */,
+				CACA0E7125749BCB0008F7BE /* LPublicImageParameter copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -791,14 +606,6 @@
 				2AEE0D3724626C8B008D5179 /* LImagePickerDemoUITests.xctest */,
 				2AEE0D4B24626D15008D5179 /* LImagePicker.framework */,
 				2AEE0D5324626D16008D5179 /* LImagePickerTests.xctest */,
-				2AEEED7C249BAF850009AAE1 /* LPublicImageParameter.framework */,
-				2AEEED84249BAF850009AAE1 /* LPublicImageParameterTests.xctest */,
-				2AEEEDB5249C91E60009AAE1 /* LImageCamera.framework */,
-				2AEEEDBD249C91E60009AAE1 /* LImageCameraTests.xctest */,
-				2AEEEDD7249C92160009AAE1 /* LImageShow.framework */,
-				2AEEEDDF249C92160009AAE1 /* LImageShowTests.xctest */,
-				2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */,
-				2A2AED9B24F89A3400DF26EA /* LImagePickerControllerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -822,6 +629,7 @@
 				2A477153250862C700F9B839 /* 111ViewController.h */,
 				2A477154250862C700F9B839 /* 111ViewController.m */,
 				2A477152250862C700F9B839 /* LImagePickerDemo-Bridging-Header.h */,
+				CA9367C625121EDE00324C50 /* ModelTable.swift */,
 			);
 			path = LImagePickerDemo;
 			sourceTree = "<group>";
@@ -838,14 +646,49 @@
 		2AEE0D4C24626D15008D5179 /* LImagePicker */ = {
 			isa = PBXGroup;
 			children = (
-				2AEE0D912462710C008D5179 /* Const */,
-				2AEE0D962462710C008D5179 /* View */,
-				2AEE0D8824626E57008D5179 /* LAlbumPickerController.swift */,
-				2AEE0D8724626E57008D5179 /* LImagePickerController.swift */,
-				2AEE0D8B24626E57008D5179 /* LPhotoPickerController.swift */,
-				2AEE0D4D24626D15008D5179 /* LImagePicker.h */,
 				2AEE0D4E24626D15008D5179 /* Info.plist */,
+				CACA0EF625749F9A0008F7BE /* LEditPicturesController.swift */,
+				CACA0F4E2574A0690008F7BE /* LImageBottomProtocl.swift */,
+				CACA0F3C2574A0320008F7BE /* LImageBottomView.swift */,
+				CACA0EE725749F730008F7BE /* LImageCroppingView.swift */,
+				CACA0F492574A0640008F7BE /* LImageNavProtocol.swift */,
+				CACA0F0025749FD40008F7BE /* LImagePcikerDefine.swift */,
 				2AEE0D8924626E57008D5179 /* LImagePicker.bundle */,
+				2AEE0D4D24626D15008D5179 /* LImagePicker.h */,
+				CACA0F1425749FF30008F7BE /* LImagePicker+Extension.swift */,
+				CACA0F232574A0060008F7BE /* LImagePickerConfiguration.swift */,
+				CACA0E9225749DF70008F7BE /* LImagePickerContrller.swift */,
+				CACA0F1925749FF90008F7BE /* LImagePickerManger.swift */,
+				CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */,
+				CACA0F372574A02B0008F7BE /* LImagePickerNavView.swift */,
+				CACA0F1E25749FFF0008F7BE /* LImagePickerOperation.swift */,
+				CACA0F322574A0240008F7BE /* LImagePickerPromptView.swift */,
+				CACA0F412574A05E0008F7BE /* LImagePickerProtocol.swift */,
+				CACA0EB525749EEC0008F7BE /* LPhotoAlbumController.swift */,
+				CACA0EBF25749F0B0008F7BE /* LPhotoAlbumTableViewCell.swift */,
+				CACA0EBA25749EFD0008F7BE /* LPhotoAlbumView.swift */,
+				CACA0E9C25749E7F0008F7BE /* LPhotographCollectionViewCell.swift */,
+				CACA0E9725749E3D0008F7BE /* LPhotographController.swift */,
+				CACA0EAB25749ED30008F7BE /* LPhotographGifCell.swift */,
+				CACA0EA125749EBA0008F7BE /* LPhotographImageCell.swift */,
+				CACA0EB025749EDE0008F7BE /* LPhotographLivePhotoCell.swift */,
+				CACA0EA625749EC90008F7BE /* LPhotographVideoCell.swift */,
+				CACA0F2D2574A01D0008F7BE /* LPicturesSelectedView.swift */,
+				CACA0EFB25749FCD0008F7BE /* LPreviewAnimation.swift */,
+				CACA0EC925749F300008F7BE /* LPreviewCollectionViewCell.swift */,
+				CACA0ED825749F4F0008F7BE /* LPreviewGifCell.swift */,
+				CACA0ECE25749F3C0008F7BE /* LPreviewImageCell.swift */,
+				CACA0EC425749F1D0008F7BE /* LPreviewImageController.swift */,
+				CACA0EDD25749F590008F7BE /* LPreviewLivePhoteCell.swift */,
+				CACA0ED325749F470008F7BE /* LPreviewVideoCell.swift */,
+				CACA0EE225749F680008F7BE /* LPreviewVideoController.swift */,
+				CACA0F282574A0170008F7BE /* LProgressBarView.swift */,
+				CACA0EEC25749F840008F7BE /* LTakingPicturesController.swift */,
+				CACA0EF125749F8E0008F7BE /* LTakingPicturesView.swift */,
+				CACA0F0525749FDC0008F7BE /* String+LImagePicker.swift */,
+				CACA0F0A25749FE30008F7BE /* UIColor+LImagePicker.swift */,
+				CACA0F0F25749FEC0008F7BE /* UIImage+LImagePicker.swift */,
+				CACA0F592574BF1B0008F7BE /* LImagePickerModel.swift */,
 			);
 			path = LImagePicker;
 			sourceTree = "<group>";
@@ -857,25 +700,6 @@
 				2AEE0D5C24626D16008D5179 /* Info.plist */,
 			);
 			path = LImagePickerTests;
-			sourceTree = "<group>";
-		};
-		2AEE0D912462710C008D5179 /* Const */ = {
-			isa = PBXGroup;
-			children = (
-				2AEE0D8A24626E57008D5179 /* LImagePickerManager.swift */,
-			);
-			path = Const;
-			sourceTree = "<group>";
-		};
-		2AEE0D962462710C008D5179 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2AEE0D972462710C008D5179 /* LImageNavView.swift */,
-				2AEE0D982462710C008D5179 /* LAlbumPickerTableViewCell.swift */,
-				2AEE0D992462710C008D5179 /* LImageTabBarView.swift */,
-				2AEE0D9A2462710C008D5179 /* LImagePickerCell.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		2AEEED7D249BAF850009AAE1 /* LPublicImageParameter */ = {
@@ -959,14 +783,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		2A2AED8E24F89A3400DF26EA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A2AEDA524F89A3400DF26EA /* LImagePickerController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2AEE0D4624626D15008D5179 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -975,71 +791,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2AEEED77249BAF850009AAE1 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEED8E249BAF850009AAE1 /* LPublicImageParameter.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDB0249C91E60009AAE1 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDC7249C91E60009AAE1 /* LImageCamera.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDD2249C92160009AAE1 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDE9249C92160009AAE1 /* LImageShow.h in Headers */,
-				2A6A7E7D24DFC315008709E3 /* FilterView.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2A2AED9224F89A3400DF26EA /* LImagePickerController */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2A2AEDAE24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerController" */;
-			buildPhases = (
-				2A2AED8E24F89A3400DF26EA /* Headers */,
-				2A2AED8F24F89A3400DF26EA /* Sources */,
-				2A2AED9024F89A3400DF26EA /* Frameworks */,
-				2A2AED9124F89A3400DF26EA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LImagePickerController;
-			productName = LImagePickerController;
-			productReference = 2A2AED9324F89A3400DF26EA /* LImagePickerController.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		2A2AED9A24F89A3400DF26EA /* LImagePickerControllerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2A2AEDAF24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerControllerTests" */;
-			buildPhases = (
-				2A2AED9724F89A3400DF26EA /* Sources */,
-				2A2AED9824F89A3400DF26EA /* Frameworks */,
-				2A2AED9924F89A3400DF26EA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2A2AED9E24F89A3400DF26EA /* PBXTargetDependency */,
-				2A2AEDA024F89A3400DF26EA /* PBXTargetDependency */,
-			);
-			name = LImagePickerControllerTests;
-			productName = LImagePickerControllerTests;
-			productReference = 2A2AED9B24F89A3400DF26EA /* LImagePickerControllerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		2AEE0D1D24626C87008D5179 /* LImagePickerDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2AEE0D4024626C8B008D5179 /* Build configuration list for PBXNativeTarget "LImagePickerDemo" */;
@@ -1055,10 +809,6 @@
 			);
 			dependencies = (
 				2AEE0D5F24626D16008D5179 /* PBXTargetDependency */,
-				2AEEED90249BAF850009AAE1 /* PBXTargetDependency */,
-				2AEEEDC9249C91E60009AAE1 /* PBXTargetDependency */,
-				2AEEEDEB249C92160009AAE1 /* PBXTargetDependency */,
-				2A2AEDA724F89A3400DF26EA /* PBXTargetDependency */,
 			);
 			name = LImagePickerDemo;
 			productName = LImagePickerDemo;
@@ -1125,117 +875,6 @@
 			productReference = 2AEE0D5324626D16008D5179 /* LImagePickerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2AEEED7B249BAF850009AAE1 /* LPublicImageParameter */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AEEED93249BAF850009AAE1 /* Build configuration list for PBXNativeTarget "LPublicImageParameter" */;
-			buildPhases = (
-				2AEEED77249BAF850009AAE1 /* Headers */,
-				2AEEED78249BAF850009AAE1 /* Sources */,
-				2AEEED79249BAF850009AAE1 /* Frameworks */,
-				2AEEED7A249BAF850009AAE1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LPublicImageParameter;
-			productName = LPublicImageParameter;
-			productReference = 2AEEED7C249BAF850009AAE1 /* LPublicImageParameter.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		2AEEED83249BAF850009AAE1 /* LPublicImageParameterTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AEEED96249BAF850009AAE1 /* Build configuration list for PBXNativeTarget "LPublicImageParameterTests" */;
-			buildPhases = (
-				2AEEED80249BAF850009AAE1 /* Sources */,
-				2AEEED81249BAF850009AAE1 /* Frameworks */,
-				2AEEED82249BAF850009AAE1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2AEEED87249BAF850009AAE1 /* PBXTargetDependency */,
-				2AEEED89249BAF850009AAE1 /* PBXTargetDependency */,
-			);
-			name = LPublicImageParameterTests;
-			productName = LPublicImageParameterTests;
-			productReference = 2AEEED84249BAF850009AAE1 /* LPublicImageParameterTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		2AEEEDB4249C91E60009AAE1 /* LImageCamera */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AEEEDCC249C91E60009AAE1 /* Build configuration list for PBXNativeTarget "LImageCamera" */;
-			buildPhases = (
-				2AEEEDB0249C91E60009AAE1 /* Headers */,
-				2AEEEDB1249C91E60009AAE1 /* Sources */,
-				2AEEEDB2249C91E60009AAE1 /* Frameworks */,
-				2AEEEDB3249C91E60009AAE1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LImageCamera;
-			productName = LImageCamera;
-			productReference = 2AEEEDB5249C91E60009AAE1 /* LImageCamera.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		2AEEEDBC249C91E60009AAE1 /* LImageCameraTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AEEEDCF249C91E60009AAE1 /* Build configuration list for PBXNativeTarget "LImageCameraTests" */;
-			buildPhases = (
-				2AEEEDB9249C91E60009AAE1 /* Sources */,
-				2AEEEDBA249C91E60009AAE1 /* Frameworks */,
-				2AEEEDBB249C91E60009AAE1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2AEEEDC0249C91E60009AAE1 /* PBXTargetDependency */,
-				2AEEEDC2249C91E60009AAE1 /* PBXTargetDependency */,
-			);
-			name = LImageCameraTests;
-			productName = LImageCameraTests;
-			productReference = 2AEEEDBD249C91E60009AAE1 /* LImageCameraTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		2AEEEDD6249C92160009AAE1 /* LImageShow */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AEEEDEE249C92160009AAE1 /* Build configuration list for PBXNativeTarget "LImageShow" */;
-			buildPhases = (
-				2AEEEDD2249C92160009AAE1 /* Headers */,
-				2AEEEDD3249C92160009AAE1 /* Sources */,
-				2AEEEDD4249C92160009AAE1 /* Frameworks */,
-				2AEEEDD5249C92160009AAE1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LImageShow;
-			productName = LImageShow;
-			productReference = 2AEEEDD7249C92160009AAE1 /* LImageShow.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		2AEEEDDE249C92160009AAE1 /* LImageShowTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2AEEEDF1249C92160009AAE1 /* Build configuration list for PBXNativeTarget "LImageShowTests" */;
-			buildPhases = (
-				2AEEEDDB249C92160009AAE1 /* Sources */,
-				2AEEEDDC249C92160009AAE1 /* Frameworks */,
-				2AEEEDDD249C92160009AAE1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2AEEEDE2249C92160009AAE1 /* PBXTargetDependency */,
-				2AEEEDE4249C92160009AAE1 /* PBXTargetDependency */,
-			);
-			name = LImageShowTests;
-			productName = LImageShowTests;
-			productReference = 2AEEEDDF249C92160009AAE1 /* LImageShowTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1246,14 +885,6 @@
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = L;
 				TargetAttributes = {
-					2A2AED9224F89A3400DF26EA = {
-						CreatedOnToolsVersion = 11.6;
-						LastSwiftMigration = 1160;
-					};
-					2A2AED9A24F89A3400DF26EA = {
-						CreatedOnToolsVersion = 11.6;
-						TestTargetID = 2AEE0D1D24626C87008D5179;
-					};
 					2AEE0D1D24626C87008D5179 = {
 						CreatedOnToolsVersion = 11.4.1;
 						LastSwiftMigration = 1160;
@@ -1264,33 +895,10 @@
 					};
 					2AEE0D4A24626D15008D5179 = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1220;
 					};
 					2AEE0D5224626D16008D5179 = {
 						CreatedOnToolsVersion = 11.4.1;
-						TestTargetID = 2AEE0D1D24626C87008D5179;
-					};
-					2AEEED7B249BAF850009AAE1 = {
-						CreatedOnToolsVersion = 11.5;
-						LastSwiftMigration = 1150;
-					};
-					2AEEED83249BAF850009AAE1 = {
-						CreatedOnToolsVersion = 11.5;
-						TestTargetID = 2AEE0D1D24626C87008D5179;
-					};
-					2AEEEDB4249C91E60009AAE1 = {
-						CreatedOnToolsVersion = 11.5;
-						LastSwiftMigration = 1200;
-					};
-					2AEEEDBC249C91E60009AAE1 = {
-						CreatedOnToolsVersion = 11.5;
-						TestTargetID = 2AEE0D1D24626C87008D5179;
-					};
-					2AEEEDD6249C92160009AAE1 = {
-						CreatedOnToolsVersion = 11.5;
-						LastSwiftMigration = 1150;
-					};
-					2AEEEDDE249C92160009AAE1 = {
-						CreatedOnToolsVersion = 11.5;
 						TestTargetID = 2AEE0D1D24626C87008D5179;
 					};
 				};
@@ -1313,34 +921,11 @@
 				2AEE0D3624626C8B008D5179 /* LImagePickerDemoUITests */,
 				2AEE0D4A24626D15008D5179 /* LImagePicker */,
 				2AEE0D5224626D16008D5179 /* LImagePickerTests */,
-				2AEEED7B249BAF850009AAE1 /* LPublicImageParameter */,
-				2AEEED83249BAF850009AAE1 /* LPublicImageParameterTests */,
-				2AEEEDB4249C91E60009AAE1 /* LImageCamera */,
-				2AEEEDBC249C91E60009AAE1 /* LImageCameraTests */,
-				2AEEEDD6249C92160009AAE1 /* LImageShow */,
-				2AEEEDDE249C92160009AAE1 /* LImageShowTests */,
-				2A2AED9224F89A3400DF26EA /* LImagePickerController */,
-				2A2AED9A24F89A3400DF26EA /* LImagePickerControllerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2A2AED9124F89A3400DF26EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A2AEDBF24F8D97A00DF26EA /* LImagePickerController.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2A2AED9924F89A3400DF26EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2AEE0D1C24626C87008D5179 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1368,77 +953,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2AEE0D5124626D16008D5179 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEED7A249BAF850009AAE1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A3E1E5724A1FBF100D14A6A /* LPublicImageParameter.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEED82249BAF850009AAE1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDB3249C91E60009AAE1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDBB249C91E60009AAE1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDD5249C92160009AAE1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A2AECCF24E1768E00DF26EA /* Mosaic2.fsh in Resources */,
-				2A6A7E8D24E00222008709E3 /* SplitScreen2.fsh in Resources */,
-				2A2AECD324E176A000DF26EA /* Mosaic3.fsh in Resources */,
-				2A2AECE124E412B600DF26EA /* Outside.vsh in Resources */,
-				2A2AECEC24E41ECC00DF26EA /* Illusion.fsh in Resources */,
-				2A6A7DE824DC11B3008709E3 /* Normal.fsh in Resources */,
-				2A2AECF324E4291D00DF26EA /* Burr.vsh in Resources */,
-				2A2AECE724E41E8500DF26EA /* FlashWhite.fsh in Resources */,
-				2A2AECBF24E1712700DF26EA /* SplitScreen9.fsh in Resources */,
-				2A6A7DE724DC11B3008709E3 /* Normal.vsh in Resources */,
-				2A2AECCB24E1767C00DF26EA /* Mosaic1.fsh in Resources */,
-				2A2AECC124E1713900DF26EA /* SplitScreen9.vsh in Resources */,
-				2A2AECDF24E412AB00DF26EA /* Outside.fsh in Resources */,
-				2A6A7E8A24DFF6D2008709E3 /* Gray.vsh in Resources */,
-				2A2AECE924E41E8D00DF26EA /* FlashWhite.vsh in Resources */,
-				2A2AECDB24E4127F00DF26EA /* Zoom.fsh in Resources */,
-				2A2AECD524E176A600DF26EA /* Mosaic3.vsh in Resources */,
-				2A2AECF124E4291500DF26EA /* Burr.fsh in Resources */,
-				2A2AECD124E1769500DF26EA /* Mosaic2.vsh in Resources */,
-				2A6A7E8824DFF6C3008709E3 /* Gray.fsh in Resources */,
-				2A2AECEE24E41ED600DF26EA /* Illusion.vsh in Resources */,
-				2A2AECE324E41E6F00DF26EA /* Jitter.fsh in Resources */,
-				2A6A7E8F24E0022E008709E3 /* SplitScreen2.vsh in Resources */,
-				2A2AECE524E41E7700DF26EA /* Jitter.vsh in Resources */,
-				2A2AECC724E1766500DF26EA /* UpsideDown.fsh in Resources */,
-				2A2AECC924E1766D00DF26EA /* UpsideDown.vsh in Resources */,
-				2A2AECDD24E4128B00DF26EA /* Zoom.vsh in Resources */,
-				2A2AECCD24E1768400DF26EA /* Mosaic1.vsh in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDDD249C92160009AAE1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1590,41 +1104,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2A2AED8F24F89A3400DF26EA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A2AEDB524F8A3D600DF26EA /* LImagePickerManager.swift in Sources */,
-				2A2AEDB924F8AD0700DF26EA /* LImagePickerPromptView.swift in Sources */,
-				2A2AEDC724F8E52500DF26EA /* LImageShowViewController.swift in Sources */,
-				2A2AEDBD24F8D8AD00DF26EA /* LImagePickerAboutApp.swift in Sources */,
-				2A2AEDCD24F8F23400DF26EA /* LImageShowCollectionViewCell.swift in Sources */,
-				2A2AEDC924F8E66800DF26EA /* LImageShow.swift in Sources */,
-				2A2AEDB724F8AB8200DF26EA /* LPhotoPickerController.swift in Sources */,
-				2A2AEDCB24F8E9E300DF26EA /* LCameraPickerViewController.swift in Sources */,
-				2A2AEDBB24F8B08700DF26EA /* LImagePickerViewExtensions.swift in Sources */,
-				2AAF62E224FF527B00761046 /* LAlbumPickerCell.swift in Sources */,
-				2A2AEDB324F89B8500DF26EA /* LImagePickerController.swift in Sources */,
-				2AAF62D624FCA5AD00761046 /* LPhotoPickerViewCell.swift in Sources */,
-				2A47713A25060F7100F9B839 /* LImagePickerBottomView.swift in Sources */,
-				2A2AEDC324F8DFD700DF26EA /* LAlbumPickerController.swift in Sources */,
-				2A2AEDC524F8E21000DF26EA /* LImagePickerColorExtensions.swift in Sources */,
-				2A2AEDC124F8D9F300DF26EA /* LImagePickerAboutExtensions.swift in Sources */,
-				2AAF62E424FFDB0E00761046 /* LImagePickerNavView.swift in Sources */,
-				2AAF62D224FA2B5600761046 /* LImagePickerConfiguration.swift in Sources */,
-				2AAF62D424FA329200761046 /* LCameraPickerView.swift in Sources */,
-				2AAF63302504EF5B00761046 /* LProgressView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2A2AED9724F89A3400DF26EA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A2AEDA324F89A3400DF26EA /* LImagePickerControllerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2AEE0D1A24626C87008D5179 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1637,6 +1116,7 @@
 				2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */,
 				2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */,
 				2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */,
+				CA9367C725121EDE00324C50 /* ModelTable.swift in Sources */,
 				2AEE0D2C24626C87008D5179 /* LImagePickerDemo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1653,14 +1133,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AEE0D9024626E57008D5179 /* LPhotoPickerController.swift in Sources */,
-				2AEE0D8C24626E57008D5179 /* LImagePickerController.swift in Sources */,
-				2AEE0DA62462710C008D5179 /* LImageNavView.swift in Sources */,
-				2AEE0DA92462710C008D5179 /* LImagePickerCell.swift in Sources */,
-				2AEE0DA72462710C008D5179 /* LAlbumPickerTableViewCell.swift in Sources */,
-				2AEE0DA82462710C008D5179 /* LImageTabBarView.swift in Sources */,
-				2AEE0D8D24626E57008D5179 /* LAlbumPickerController.swift in Sources */,
-				2AEE0D8F24626E57008D5179 /* LImagePickerManager.swift in Sources */,
+				CACA0F5A2574BF1B0008F7BE /* LImagePickerModel.swift in Sources */,
+				CACA0F1525749FF30008F7BE /* LImagePicker+Extension.swift in Sources */,
+				CACA0F2E2574A01D0008F7BE /* LPicturesSelectedView.swift in Sources */,
+				CACA0EAC25749ED30008F7BE /* LPhotographGifCell.swift in Sources */,
+				CACA0F292574A0170008F7BE /* LProgressBarView.swift in Sources */,
+				CACA0EFC25749FCD0008F7BE /* LPreviewAnimation.swift in Sources */,
+				CACA0EA725749EC90008F7BE /* LPhotographVideoCell.swift in Sources */,
+				CACA0EC025749F0B0008F7BE /* LPhotoAlbumTableViewCell.swift in Sources */,
+				CACA0F0625749FDC0008F7BE /* String+LImagePicker.swift in Sources */,
+				CACA0EBB25749EFD0008F7BE /* LPhotoAlbumView.swift in Sources */,
+				CACA0ED925749F4F0008F7BE /* LPreviewGifCell.swift in Sources */,
+				CACA0E9825749E3D0008F7BE /* LPhotographController.swift in Sources */,
+				CACA0F422574A05E0008F7BE /* LImagePickerProtocol.swift in Sources */,
+				CACA0EC525749F1D0008F7BE /* LPreviewImageController.swift in Sources */,
+				CACA0EE825749F730008F7BE /* LImageCroppingView.swift in Sources */,
+				CACA0EB125749EDE0008F7BE /* LPhotographLivePhotoCell.swift in Sources */,
+				CACA0F1F25749FFF0008F7BE /* LImagePickerOperation.swift in Sources */,
+				CACA0F4F2574A0690008F7BE /* LImageBottomProtocl.swift in Sources */,
+				CACA0F4A2574A0640008F7BE /* LImageNavProtocol.swift in Sources */,
+				CACA0EA225749EBA0008F7BE /* LPhotographImageCell.swift in Sources */,
+				CACA0E9D25749E7F0008F7BE /* LPhotographCollectionViewCell.swift in Sources */,
+				CACA0EED25749F840008F7BE /* LTakingPicturesController.swift in Sources */,
+				CACA0EB625749EEC0008F7BE /* LPhotoAlbumController.swift in Sources */,
+				CACA0ED425749F470008F7BE /* LPreviewVideoCell.swift in Sources */,
+				CACA0F1A25749FF90008F7BE /* LImagePickerManger.swift in Sources */,
+				CACA0E9325749DF70008F7BE /* LImagePickerContrller.swift in Sources */,
+				CACA0F1025749FEC0008F7BE /* UIImage+LImagePicker.swift in Sources */,
+				CACA0ECF25749F3C0008F7BE /* LPreviewImageCell.swift in Sources */,
+				CACA0F0B25749FE30008F7BE /* UIColor+LImagePicker.swift in Sources */,
+				CACA0EF725749F9A0008F7BE /* LEditPicturesController.swift in Sources */,
+				CACA0EDE25749F590008F7BE /* LPreviewLivePhoteCell.swift in Sources */,
+				CACA0F0125749FD40008F7BE /* LImagePcikerDefine.swift in Sources */,
+				CACA0F242574A0060008F7BE /* LImagePickerConfiguration.swift in Sources */,
+				CACA0EE325749F680008F7BE /* LPreviewVideoController.swift in Sources */,
+				CACA0ECA25749F300008F7BE /* LPreviewCollectionViewCell.swift in Sources */,
+				CACA0F382574A02B0008F7BE /* LImagePickerNavView.swift in Sources */,
+				CACA0F3D2574A0320008F7BE /* LImageBottomView.swift in Sources */,
+				CACA0F332574A0240008F7BE /* LImagePickerPromptView.swift in Sources */,
+				CACA0EF225749F8E0008F7BE /* LTakingPicturesView.swift in Sources */,
+				CACA0E8E25749DC20008F7BE /* LImagePickerNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1672,91 +1184,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2AEEED78249BAF850009AAE1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A3E1E5524A1F0C900D14A6A /* LPromptView.swift in Sources */,
-				2AEEED9C249BB32A0009AAE1 /* LAboutApp.swift in Sources */,
-				2AEEED9A249BAFE40009AAE1 /* LAlbumPickerModel.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEED80249BAF850009AAE1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEED8C249BAF850009AAE1 /* LPublicImageParameterTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDB1249C91E60009AAE1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A271AFD24B36CC2009239EA /* LImageCameraView.swift in Sources */,
-				2A271AFA24B33BAC009239EA /* LImageCameraViewController.swift in Sources */,
-				2A271B0324B4C7E7009239EA /* LImageCameraPlayerView.swift in Sources */,
-				2A271B0124B4B1C9009239EA /* LImageCameraTabBarView.swift in Sources */,
-				2A271AFF24B4224E009239EA /* LImageCameraOperationView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDB9249C91E60009AAE1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDC5249C91E60009AAE1 /* LImageCameraTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDD3249C92160009AAE1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDFD249C96630009AAE1 /* LShowImageNavView.swift in Sources */,
-				2A75812024A105CC00592990 /* LShowVideoPlayViewController.swift in Sources */,
-				2AEEEDF7249C940C0009AAE1 /* LShowImageConfiguration.swift in Sources */,
-				2AEEEDFF249CE1D80009AAE1 /* LShowImageTabBarView.swift in Sources */,
-				2AEEEDFB249C95CC0009AAE1 /* LShowImageVCDelegate.swift in Sources */,
-				2A6A7E9324E00785008709E3 /* LShowImageFilterCell.swift in Sources */,
-				2A75812424A1071C00592990 /* LEditPhotosViewController.swift in Sources */,
-				2A75812224A106E000592990 /* LEditPickerNavView.swift in Sources */,
-				2AEEEDF5249C92E20009AAE1 /* LImageShow.swift in Sources */,
-				2A6A7E7E24DFC315008709E3 /* FilterView.m in Sources */,
-				2AEEEE01249CE2650009AAE1 /* LShowImageCollectionViewCell.swift in Sources */,
-				2A6A7E9124E00776008709E3 /* LShowImageFilterBar.swift in Sources */,
-				2AEEEDF9249C958F0009AAE1 /* LShowImageViewController.swift in Sources */,
-				2AEEEE03249CE6110009AAE1 /* LGifImage.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2AEEEDDB249C92160009AAE1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2AEEEDE7249C92160009AAE1 /* LImageShowTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2A2AED9E24F89A3400DF26EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2A2AED9224F89A3400DF26EA /* LImagePickerController */;
-			targetProxy = 2A2AED9D24F89A3400DF26EA /* PBXContainerItemProxy */;
-		};
-		2A2AEDA024F89A3400DF26EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
-			targetProxy = 2A2AED9F24F89A3400DF26EA /* PBXContainerItemProxy */;
-		};
-		2A2AEDA724F89A3400DF26EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2A2AED9224F89A3400DF26EA /* LImagePickerController */;
-			targetProxy = 2A2AEDA624F89A3400DF26EA /* PBXContainerItemProxy */;
-		};
 		2AEE0D3924626C8B008D5179 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
@@ -1776,51 +1206,6 @@
 			isa = PBXTargetDependency;
 			target = 2AEE0D4A24626D15008D5179 /* LImagePicker */;
 			targetProxy = 2AEE0D5E24626D16008D5179 /* PBXContainerItemProxy */;
-		};
-		2AEEED87249BAF850009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEEED7B249BAF850009AAE1 /* LPublicImageParameter */;
-			targetProxy = 2AEEED86249BAF850009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEED89249BAF850009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
-			targetProxy = 2AEEED88249BAF850009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEED90249BAF850009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEEED7B249BAF850009AAE1 /* LPublicImageParameter */;
-			targetProxy = 2AEEED8F249BAF850009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEEDC0249C91E60009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEEEDB4249C91E60009AAE1 /* LImageCamera */;
-			targetProxy = 2AEEEDBF249C91E60009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEEDC2249C91E60009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
-			targetProxy = 2AEEEDC1249C91E60009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEEDC9249C91E60009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEEEDB4249C91E60009AAE1 /* LImageCamera */;
-			targetProxy = 2AEEEDC8249C91E60009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEEDE2249C92160009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEEEDD6249C92160009AAE1 /* LImageShow */;
-			targetProxy = 2AEEEDE1249C92160009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEEDE4249C92160009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEE0D1D24626C87008D5179 /* LImagePickerDemo */;
-			targetProxy = 2AEEEDE3249C92160009AAE1 /* PBXContainerItemProxy */;
-		};
-		2AEEEDEB249C92160009AAE1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2AEEEDD6249C92160009AAE1 /* LImageShow */;
-			targetProxy = 2AEEEDEA249C92160009AAE1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1846,109 +1231,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2A2AEDAA24F89A3400DF26EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LImagePickerController/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerController;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2A2AEDAB24F89A3400DF26EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LImagePickerController/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerController;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		2A2AEDAC24F89A3400DF26EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P2JD4K827;
-				INFOPLIST_FILE = LImagePickerControllerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerControllerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Debug;
-		};
-		2A2AEDAD24F89A3400DF26EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P2JD4K827;
-				INFOPLIST_FILE = LImagePickerControllerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker.LImagePickerControllerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Release;
-		};
 		2AEE0D3E24626C8B008D5179 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2073,7 +1355,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
+				DEVELOPMENT_TEAM = XQRN8QEZM2;
 				INFOPLIST_FILE = LImagePickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2097,7 +1379,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
+				DEVELOPMENT_TEAM = XQRN8QEZM2;
 				INFOPLIST_FILE = LImagePickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2158,6 +1440,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2177,6 +1460,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2188,6 +1472,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F10A9830BBAA32545D82EB59 /* Pods-LImagePicker.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2258,336 +1543,9 @@
 			};
 			name = Release;
 		};
-		2AEEED94249BAF850009AAE1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LPublicImageParameter/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "-212.LPublicImageParameter";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2AEEED95249BAF850009AAE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LPublicImageParameter/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "-212.LPublicImageParameter";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		2AEEED97249BAF850009AAE1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = LPublicImageParameterTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "-212.LPublicImageParameterTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Debug;
-		};
-		2AEEED98249BAF850009AAE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = LPublicImageParameterTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "-212.LPublicImageParameterTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Release;
-		};
-		2AEEEDCD249C91E60009AAE1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LImageCamera/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageCamera;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2AEEEDCE249C91E60009AAE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LImageCamera/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageCamera;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		2AEEEDD0249C91E60009AAE1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P2JD4K827;
-				INFOPLIST_FILE = LImageCameraTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageCameraTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Debug;
-		};
-		2AEEEDD1249C91E60009AAE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P2JD4K827;
-				INFOPLIST_FILE = LImageCameraTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageCameraTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Release;
-		};
-		2AEEEDEF249C92160009AAE1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LImageShow/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageShow;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2AEEEDF0249C92160009AAE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = AZM26TJN7U;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LImageShow/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageShow;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		2AEEEDF2249C92160009AAE1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P2JD4K827;
-				INFOPLIST_FILE = LImageShowTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageShowTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Debug;
-		};
-		2AEEEDF3249C92160009AAE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P2JD4K827;
-				INFOPLIST_FILE = LImageShowTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImageShowTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LImagePickerDemo.app/LImagePickerDemo";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2A2AEDAE24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerController" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2A2AEDAA24F89A3400DF26EA /* Debug */,
-				2A2AEDAB24F89A3400DF26EA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2A2AEDAF24F89A3400DF26EA /* Build configuration list for PBXNativeTarget "LImagePickerControllerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2A2AEDAC24F89A3400DF26EA /* Debug */,
-				2A2AEDAD24F89A3400DF26EA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2AEE0D1924626C87008D5179 /* Build configuration list for PBXProject "LImagePickerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2629,60 +1587,6 @@
 			buildConfigurations = (
 				2AEE0D6724626D16008D5179 /* Debug */,
 				2AEE0D6824626D16008D5179 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AEEED93249BAF850009AAE1 /* Build configuration list for PBXNativeTarget "LPublicImageParameter" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AEEED94249BAF850009AAE1 /* Debug */,
-				2AEEED95249BAF850009AAE1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AEEED96249BAF850009AAE1 /* Build configuration list for PBXNativeTarget "LPublicImageParameterTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AEEED97249BAF850009AAE1 /* Debug */,
-				2AEEED98249BAF850009AAE1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AEEEDCC249C91E60009AAE1 /* Build configuration list for PBXNativeTarget "LImageCamera" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AEEEDCD249C91E60009AAE1 /* Debug */,
-				2AEEEDCE249C91E60009AAE1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AEEEDCF249C91E60009AAE1 /* Build configuration list for PBXNativeTarget "LImageCameraTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AEEEDD0249C91E60009AAE1 /* Debug */,
-				2AEEEDD1249C91E60009AAE1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AEEEDEE249C92160009AAE1 /* Build configuration list for PBXNativeTarget "LImageShow" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AEEEDEF249C92160009AAE1 /* Debug */,
-				2AEEEDF0249C92160009AAE1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2AEEEDF1249C92160009AAE1 /* Build configuration list for PBXNativeTarget "LImageShowTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2AEEEDF2249C92160009AAE1 /* Debug */,
-				2AEEEDF3249C92160009AAE1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

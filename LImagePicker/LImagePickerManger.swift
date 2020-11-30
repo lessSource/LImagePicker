@@ -1,8 +1,8 @@
 //
-//  LImagePickerManager.swift
-//  LImagePickerController
+//  LImagePickerManger.swift
+//  LImagePicker
 //
-//  Created by L j on 2020/8/28.
+//  Created by HY.Ltd on 2020/11/30.
 //  Copyright © 2020 L. All rights reserved.
 //
 
@@ -10,49 +10,20 @@ import UIKit
 import Photos
 import MobileCoreServices
 
-final class LImagePickerManager {
+final class LImagePickerManger {
     
     /** 默认600像素宽 */
     public var photoPreviewMaxWidth: CGFloat = 600
-    
+    /** 是否修正图片 */
     public var shouldFixOrientation: Bool = false
     
-    // 默认4列
-    public var columnNumber: Int = 4 {
-        didSet {
-            configScreenWidth()
-            let margin: CGFloat = 4.0
-            let itemWH = (LScreenWidth - 2.0 * margin - 4.0) / CGFloat(columnNumber) - margin
-            AssetGridThumbnailSize = CGSize(width: itemWH * LScreenScale, height: itemWH * LScreenScale)
-            
-        }
-    }
+    static let shared = LImagePickerManger()
     
-    fileprivate var LScreenScale: CGFloat = 0.0
-    fileprivate var LScreenWidth: CGFloat = 0.0
-    fileprivate var AssetGridThumbnailSize: CGSize = .zero
-    
-    static let shared = LImagePickerManager()
-    
-    private init() {
-        configScreenWidth()
-    }
-}
-
-extension LImagePickerManager {
-    
-    fileprivate func configScreenWidth() {
-        LScreenWidth = UIScreen.main.bounds.size.width
-        
-        LScreenScale = 2.0
-        if LScreenWidth > 700 {
-            LScreenScale = 1.5
-        }
-    }
+    private init() { }
     
 }
 
-extension LImagePickerManager {
+extension LImagePickerManger {
     
     // 获取相册权限
     func requestsPhotosAuthorization() -> Bool {
@@ -106,32 +77,43 @@ extension LImagePickerManager {
             }
         }
     }
-    
 }
 
-
-extension LImagePickerManager {
+extension LImagePickerManger {
     
-    // 获取封面图
+    // 获取图片
     @discardableResult
-    func getPostImageWithAlbumModel(model: LAlbumPickerModel, completion: @escaping((UIImage?) -> ())) -> PHImageRequestID {
-        guard let asset = model.asset else {
-            return -1
+    func getPhotoWithAsset(_ asset: PHAsset, size: CGSize, resizeMode: PHImageRequestOptionsResizeMode = .fast, progress: PHAssetImageProgressHandler?, completion: @escaping (UIImage?, Bool) -> ()) -> PHImageRequestID {
+        let option = PHImageRequestOptions()
+        option.resizeMode = resizeMode
+        option.isNetworkAccessAllowed = true
+        option.progressHandler = progress
+        return PHImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: option) { (image, info) in
+            var downloadFinished = false
+            if let info = info {
+                downloadFinished = !(info[PHImageCancelledKey] as? Bool ?? false) && (info[PHImageErrorKey] == nil)
+            }
+            let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool ?? false)
+            if downloadFinished {
+                let result = self.fixOrientation(aImage: image)
+                completion(result, isDegraded)
+            }
         }
-        return getPhotoWithAsset(asset, photoWidth: 80, completion: { (image, info, isfof) in
-            completion(image)
-        }, progressHandler: { (dous, error, objc, info) in
-            
-        }, networkAccessAllowed: true)
-        
+    }
+    
+    
+    // 获取原图
+    @discardableResult
+    func getOriginalPhotoWithAsset(asset: PHAsset, progressHandler: PHAssetImageProgressHandler?, completion: @escaping (UIImage?, Bool) -> ()) -> PHImageRequestID {
+        return getPhotoWithAsset(asset, size: PHImageManagerMaximumSize, resizeMode: .fast, progress: progressHandler, completion: completion)
     }
     
     
     // 获取相册
-    func getAlbumResources(_ mediaType: PHAssetMediaType = .unknown, duration: Int = Int.max, complete: @escaping (_ dataArray: [LAlbumPickerModel]) -> ()) {
+    func getAlbumResources(_ mediaType: PHAssetMediaType = .unknown, duration: Int = Int.max, complete: @escaping (_ dataArray: [LPhotoAlbumModel]) -> ()) {
         
         DispatchQueue.global().async {
-            var array: Array = [LAlbumPickerModel]()
+            var array: Array = [LPhotoAlbumModel]()
             let options = PHFetchOptions()
             let smartAlbums: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: options)
             
@@ -149,7 +131,7 @@ extension LImagePickerManager {
                 if collection.assetCollectionSubtype.rawValue == 1000000201 { return } // [最近删除] 相册
                 
                 if fetchResult.count > 0 {
-                    let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0)
+                    let model = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0)
                     
                     if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
                         array.insert(model, at: 0)
@@ -173,7 +155,7 @@ extension LImagePickerManager {
                 }
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: assetCollection, options: allPhotosOptions)
                 if fetchResult.count > 0 {
-                    let model = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0)
+                    let model = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0)
                     array.append(model)
                 }
             }
@@ -184,9 +166,8 @@ extension LImagePickerManager {
         }
     }
     
-    
     // MARK: - 获取相册/相册数组
-    func getPhotoAlbumResources(_ mediaType: PHAssetMediaType = .unknown, successPHAsset: @escaping (LAlbumPickerModel) -> ()) {
+    func getPhotoAlbumResources(_ mediaType: PHAssetMediaType = .unknown, successPHAsset: @escaping (LPhotoAlbumModel) -> ()) {
         
         DispatchQueue.global().async {
             var mediaTypePhAsset: PHFetchResult<PHAsset> = PHFetchResult()
@@ -203,7 +184,7 @@ extension LImagePickerManager {
                     if self.isCameraRollAlbm(metadata: collection) {
                         mediaTypePhAsset = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
                         DispatchQueue.main.async {
-                            let albumModel = LAlbumPickerModel(title: collection.localizedTitle ?? "", asset: mediaTypePhAsset.lastObject, fetchResult: mediaTypePhAsset, selectCount: 0)
+                            let albumModel = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: mediaTypePhAsset.lastObject, fetchResult: mediaTypePhAsset, selectCount: 0)
                             successPHAsset(albumModel)
                         }
                         
@@ -213,20 +194,23 @@ extension LImagePickerManager {
         }
     }
     
+    
+    
     // MARK: - 获取照片数组
-    func getAssetsFromFetchResult(_ result: PHFetchResult<PHAsset>?, completion: (([LImagePickerResourcesModel]) -> ())) {
+    func getAssetsFromFetchResult(_ result: PHFetchResult<PHAsset>?, completion: (([LPhotographModel]) -> ())) {
         guard let `result` = result else {
             completion([])
             return
         }
         
-        var resourcesModelArr: Array = [LImagePickerResourcesModel]()
+        var resourcesModelArr: Array = [LPhotographModel]()
         result.enumerateObjects { (asset, idx, objc) in
-            let resourceModel = LImagePickerResourcesModel(media: asset, type: .photo, isSelect: false, selectIndex: 0)
+            let resourceModel = LPhotographModel(media: asset, type: .photo, isSelect: false, selectIndex: 0)
             resourcesModelArr.append(resourceModel)
         }
         completion(resourcesModelArr)
     }
+    
     
     fileprivate func isCameraRollAlbm(metadata: PHAssetCollection) -> Bool {
         
@@ -245,39 +229,19 @@ extension LImagePickerManager {
         }
     }
     
-    // MARK: - 获取大图
+    // MARK: - 获取asset data
     func requestImageDataForAsset(_ asset: PHAsset, completion: @escaping ((Data?, String?, UIImage.Orientation, [AnyHashable : Any]?) -> ()), progressHandler: PHAssetImageProgressHandler?) -> PHImageRequestID {
         let options = PHImageRequestOptions()
-        
-        options.progressHandler = { progress, error, stop, info in
-            DispatchQueue.main.async {
-                progressHandler?(progress, error, stop, info)
-            }
+        if (asset.value(forKey: "filename") as? String)?.hasSuffix("GIF") == true {
+            options.version = .original
         }
+        options.progressHandler = progressHandler
         options.isNetworkAccessAllowed = true
         options.resizeMode = .fast
+        options.deliveryMode = .highQualityFormat
         let imageRequestID = PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: completion)
         
         return imageRequestID
-    }
-    
-    // 获取原图
-    func getOriginalPhotoWithAsset(asset: PHAsset, progressHandler: @escaping PHAssetImageProgressHandler, completion: (UIImage, [AnyHashable : Any], Bool) -> ()) -> PHImageRequestID {
-        
-        let option = PHImageRequestOptions()
-        option.isNetworkAccessAllowed = true
-        option.progressHandler = progressHandler
-        
-        option.resizeMode = .fast
-        
-        let imageRequestID = PHImageManager.default().requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: option) { (result, info) in
-            
-            print(info as Any)
-            
-        }
-        
-        return imageRequestID
-        
     }
     
     // MARK: - 获取视频
@@ -289,85 +253,6 @@ extension LImagePickerManager {
         }
         PHImageManager.default().requestPlayerItem(forVideo: asset, options: option, resultHandler: completion)
     }
-    
-    // MARK: - 获取图片
-    @discardableResult
-    func getPhotoWithAsset(_ asset: PHAsset, completion: @escaping (UIImage?, [AnyHashable: Any]?, Bool) -> (), progressHandler: PHAssetImageProgressHandler?, networkAccessAllowed: Bool) -> PHImageRequestID {
-        var fullScreenWidth = LScreenWidth
-        if photoPreviewMaxWidth > 0 && fullScreenWidth > photoPreviewMaxWidth {
-            fullScreenWidth = photoPreviewMaxWidth
-        }
-        return getPhotoWithAsset(asset, photoWidth: fullScreenWidth, completion: completion, progressHandler: progressHandler, networkAccessAllowed: networkAccessAllowed)
-    }
-    
-    
-    @discardableResult
-    func getPhotoWithAsset(_ asset: PHAsset, photoWidth: CGFloat, completion: @escaping (UIImage?, [AnyHashable: Any]?, Bool) -> (), progressHandler: PHAssetImageProgressHandler?, networkAccessAllowed: Bool) -> PHImageRequestID {
-        var imageSize: CGSize = .zero
-        
-        if photoWidth < LScreenWidth && photoWidth < photoPreviewMaxWidth {
-            imageSize = AssetGridThumbnailSize
-        }else {
-            let phAsset = asset
-            let aspectRation: CGFloat = CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
-            var pixelWidth = photoWidth * LScreenScale
-            
-            // 超宽图片
-            if aspectRation > 1.8 {
-                pixelWidth = pixelWidth * aspectRation
-            }
-            
-            // 超高图片
-            if aspectRation < 0.2 {
-                pixelWidth = pixelWidth * 0.5
-            }
-            let pixelHeight = pixelWidth / aspectRation
-            imageSize = CGSize(width: pixelWidth, height: pixelHeight)
-            
-        }
-        
-        let option = PHImageRequestOptions()
-        option.resizeMode = PHImageRequestOptionsResizeMode.fast
-        
-        let imageRequestID = PHImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: .aspectFill, options: option) { (result, info) in
-            let cancelled: Bool? = info?[PHImageCancelledKey] as? Bool
-            if !(cancelled == true) && result != nil {
-                let image = self.fixOrientation(aImage: result)
-                let isDegraded: Bool = info?[PHImageResultIsDegradedKey] as? Bool ?? false
-                completion(image, info, isDegraded)
-            }
-            
-            print(info as Any)
-            
-            // Dowunload image from iCloud / 从iCloud下载图片
-            if (info?[PHImageResultIsInCloudKey] != nil) && result == nil && networkAccessAllowed {
-                
-                let options = PHImageRequestOptions()
-                options.progressHandler = { (progress, error, objc, info) in
-                    DispatchQueue.main.async {
-                        progressHandler?(progress, error, objc, info)
-                    }
-                }
-                options.isNetworkAccessAllowed = true
-                options.resizeMode = .fast
-                // iOS 13.0  requestImageDataAndOrientation
-                PHImageManager.default().requestImageData(for: asset, options: options) { (imageData, dataUTI, orientation, info) in
-                    guard let `imageData` = imageData else {
-                        completion(nil, info, false)
-                        return
-                    }
-                    var resultImage = UIImage(data: imageData)
-                    if resultImage == nil && result != nil {
-                        resultImage = result
-                    }
-                    resultImage = self.fixOrientation(aImage: resultImage)
-                    completion(resultImage, info, false)
-                }
-            }
-        }
-        return imageRequestID
-    }
-    
     
     // MARK:- 修改图片转向
     fileprivate func fixOrientation(aImage: UIImage?) -> UIImage? {
@@ -425,43 +310,31 @@ extension LImagePickerManager {
         
     }
     
-    
     // 获取一组图片的大小
-    fileprivate func getPhotosBytesWith(assetArray: [LImagePickerResourcesModel], completion: @escaping ((String) -> ())) {
+    fileprivate func getPhotosBytesWith(assetArray: [LPhotographModel], completion: @escaping ((String) -> ())) {
         if assetArray.count == 0 {
             completion("0B")
             return
         }
-        
         var dataLength: Int = 0
         for resourcesModel in assetArray {
-            
-            guard let asset = resourcesModel.media as? PHAsset else {
-                continue
-            }
-            
             let options = PHImageRequestOptions()
             options.resizeMode = .fast
             options.isNetworkAccessAllowed = true
-            
             if resourcesModel.type == .photoGif {
                 options.version = .original
             }
-            
-            PHImageManager.default().requestImageData(for: asset, options: options) { (imageData, dataUIT, orientation, info) in
+            PHImageManager.default().requestImageData(for: resourcesModel.media, options: options) { (imageData, dataUIT, orientation, info) in
                 if let data = imageData {
                     dataLength += data.count
                     
-                    if asset == assetArray.last?.media as? PHAsset {
+                    if resourcesModel.media == assetArray.last?.media {
                         let bytes = self.getBytesFromData(length: Double(dataLength))
                         completion(bytes)
                     }
                 }
             }
         }
-        
-        
-        
     }
     
     // 格式化图片大小
@@ -477,10 +350,7 @@ extension LImagePickerManager {
         return bytes
     }
     
-}
-
-
-extension LImagePickerManager {
+    
     
     // 保存图片
     fileprivate func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
@@ -544,8 +414,6 @@ extension LImagePickerManager {
             }
             
         }
-        
-        
     }
     
     
@@ -571,6 +439,7 @@ extension LImagePickerManager {
         
         guard let exportSession = AVAssetExportSession(asset: videoAsset, presetName: presetName) else {
             let errorMessage = "当前设备不支持该预设: \(presetName)"
+            print(errorMessage)
             return
             
         }
@@ -578,8 +447,8 @@ extension LImagePickerManager {
         let formater = DateFormatter()
         formater.dateFormat = "yyyy-MM-dd-HH:mm:ss-SSS"
         let dateStr = formater.string(from: Date())
-        var outputPath = NSHomeDirectory() + "/tem/video-\(dateStr).mp4"
-        
+        let outputPath = NSHomeDirectory() + "/tem/video-\(dateStr).mp4"
+        print(outputPath)
         
         exportSession.shouldOptimizeForNetworkUse = true
         
@@ -595,8 +464,6 @@ extension LImagePickerManager {
             //
             //            }
             // 替换URL
-            
-            
         }
         exportSession.outputURL = URL(fileURLWithPath: outputPath)
         //
@@ -646,11 +513,9 @@ extension LImagePickerManager {
             completion(asset!, nil)
             return
         }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: retryCount - 1, completion: completion)
         }
-        
     }
     
     
@@ -725,4 +590,10 @@ extension LImagePickerManager {
         
         return degress
     }
+
+    
+    
 }
+
+
+
