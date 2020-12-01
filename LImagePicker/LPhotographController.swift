@@ -78,7 +78,7 @@ class LPhotographController: UIViewController {
     
 }
 
-extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataArray.count
     }
@@ -123,7 +123,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if dataArray[indexPath.item].type == .shooting {
-            let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: nil)
+            let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
             present(imagePicker, animated: true, completion: nil)
             return
         }
@@ -131,10 +131,14 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell)
         let mediaArray = dataArray.compactMap { $0.media }
         let imageModel = LPreviewImageModel(currentIndex: indexPath.item, dataArray: mediaArray)
-        let imagePicker = LImagePickerController(configuration: imageModel, delegate: nil)
+        let imagePicker = LImagePickerController(configuration: imageModel, delegate: self)
         imagePicker.transitioningDelegate = animationDelegate
         present(imagePicker, animated: true, completion: nil)
     }
     
+    func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset) {
+        dataArray.insert(LPhotographModel(media: asset, type: .photo, isSelect: false, selectIndex: 0), at: 1)
+        collectionView.reloadData()
+    }
     
 }

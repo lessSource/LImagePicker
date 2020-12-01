@@ -92,6 +92,10 @@ class ViewController: UIViewController {
 //
 //
 extension ViewController: LImagePickerProtocol {
+//    func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset) {
+//
+//    }
+    
     
     func editPictures(viewConttroller: UIViewController, croppingImage: UIImage?, originalImage: UIImage?) {
         print("11")

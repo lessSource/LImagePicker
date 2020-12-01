@@ -50,6 +50,10 @@ class LTakingPicturesController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print(self, "++++++释放")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -127,7 +131,7 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
         case .complete:
             if let image = contentImage {
                 LImagePickerManager.shared.savePhotoWithImage(image: image, location: nil) { (asset) in
-                    print(asset)
+                    self.imagePickerDelegate?.takingPicturesSaveImage(viewController: self, asset: asset)
                 } failureClosure: { (error) in
                     print(error ?? "")
                 }

@@ -99,11 +99,15 @@ struct LApp {
             return collection
         }
         var createID: String = ""
-        try? PHPhotoLibrary.shared().performChangesAndWait {
-            let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: appName)
-            createID = request.placeholderForCreatedAssetCollection.localIdentifier
+        do {
+            try PHPhotoLibrary.shared().performChangesAndWait {
+                let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: appName)
+                createID = request.placeholderForCreatedAssetCollection.localIdentifier
+            }
+            return PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [createID], options: nil).firstObject
+        } catch {
+            return nil
         }
-        return PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [createID], options: nil).firstObject
     }
     
     

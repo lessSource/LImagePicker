@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 public protocol LImagePickerProtocol: class {
     
@@ -15,13 +16,19 @@ public protocol LImagePickerProtocol: class {
     
     // 拍照
     func takingPictures(viewController: UIViewController, image: UIImage?)
+    
+    // 保存照片
+    func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset)
+    
 }
 
-extension LImagePickerProtocol {
+public extension LImagePickerProtocol {
     
     func editPictures(viewConttroller: UIViewController, croppingImage: UIImage?, originalImage: UIImage?) { }
     
     func takingPictures(viewController: UIViewController, image: UIImage?) { }
+    
+    func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset) { }
 }
 
 

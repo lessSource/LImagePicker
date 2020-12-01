@@ -364,20 +364,30 @@ extension LImagePickerManager {
         }) { (success, error) in
             // 获取自定义相册
             let result = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
-            if let assetCollection = LApp.getCreatPhotoAlbum() {
-                try? PHPhotoLibrary.shared().performChangesAndWait {
+            guard let assetCollection = LApp.getCreatPhotoAlbum() else {
+                DispatchQueue.main.async {
+                    if success {
+                        self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
+                    }else {
+                        // 保存图片出错
+                        failureClosure(error)
+                    }
+                }
+                return
+            }
+            do {
+                try PHPhotoLibrary.shared().performChangesAndWait {
                     let request = PHAssetCollectionChangeRequest(for: assetCollection)
                     // 添加到自定义相册---追加---不能成为封面
-                    //                        request?.addAssets(result)
+                    // request?.addAssets(result)
                     // 插入到自定义相册---插入---可以成为封面
                     request?.insertAssets(result, at: IndexSet(arrayLiteral: 0))
                 }
-            }
-            DispatchQueue.main.async {
-                if success {
+                DispatchQueue.main.async {
                     self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
-                }else {
-                    // 保存图片出错
+                }
+            } catch {
+                DispatchQueue.main.async {
                     failureClosure(error)
                 }
             }
