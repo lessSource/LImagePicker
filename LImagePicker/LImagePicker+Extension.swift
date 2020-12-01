@@ -15,7 +15,7 @@ extension NSObject {
     }
     
     // 用于获取cell的reuse identifire
-    public class var l_identifire: String {
+    class var l_identifire: String {
         return String(format: "%@_identifire", self.lnameOfClass)
     }
     

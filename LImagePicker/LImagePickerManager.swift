@@ -10,20 +10,20 @@ import UIKit
 import Photos
 import MobileCoreServices
 
-final class LImagePickerManger {
+final class LImagePickerManager {
     
     /** 默认600像素宽 */
     public var photoPreviewMaxWidth: CGFloat = 600
     /** 是否修正图片 */
     public var shouldFixOrientation: Bool = false
     
-    static let shared = LImagePickerManger()
+    static let shared = LImagePickerManager()
     
     private init() { }
     
 }
 
-extension LImagePickerManger {
+extension LImagePickerManager {
     
     // 获取相册权限
     func requestsPhotosAuthorization() -> Bool {
@@ -79,7 +79,7 @@ extension LImagePickerManger {
     }
 }
 
-extension LImagePickerManger {
+extension LImagePickerManager {
     
     // 获取图片
     @discardableResult
@@ -255,7 +255,7 @@ extension LImagePickerManger {
     }
     
     // MARK:- 修改图片转向
-    fileprivate func fixOrientation(aImage: UIImage?) -> UIImage? {
+    public func fixOrientation(aImage: UIImage?) -> UIImage? {
         if (!shouldFixOrientation) { return aImage }
         guard let `aImage` = aImage else { return nil }
         
@@ -263,7 +263,7 @@ extension LImagePickerManger {
             return aImage
         }
         
-        var transform: CGAffineTransform = CGAffineTransform()
+        var transform: CGAffineTransform = CGAffineTransform.identity
         
         switch aImage.imageOrientation {
         case .down, .downMirrored:
@@ -294,7 +294,8 @@ extension LImagePickerManger {
             return aImage
         }
         
-        transform.concatenating(ctx.ctm)
+        
+        ctx.concatenate(transform)
         
         switch aImage.imageOrientation {
         case .leftMirrored, .left, .rightMirrored, .right:
@@ -353,35 +354,41 @@ extension LImagePickerManger {
     
     
     // 保存图片
-    fileprivate func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
+    public func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset) -> ()), failureClosure: @escaping ((Error?) -> ())) {
         var localIdentifier = ""
-        
         PHPhotoLibrary.shared().performChanges({
             let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
             localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
             reuqest.location = location
             reuqest.creationDate = Date()
         }) { (success, error) in
-            
+            // 获取自定义相册
+            let result = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
+            if let assetCollection = LApp.getCreatPhotoAlbum() {
+                try? PHPhotoLibrary.shared().performChangesAndWait {
+                    let request = PHAssetCollectionChangeRequest(for: assetCollection)
+                    // 添加到自定义相册---追加---不能成为封面
+                    //                        request?.addAssets(result)
+                    // 插入到自定义相册---插入---可以成为封面
+                    request?.insertAssets(result, at: IndexSet(arrayLiteral: 0))
+                }
+            }
             DispatchQueue.main.async {
                 if success {
                     self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
                 }else {
                     // 保存图片出错
+                    failureClosure(error)
                 }
             }
-            
         }
-        
     }
     
-    fileprivate func savePhotoWithImage(image: UIImage, meta: Dictionary<String, String>, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
+    fileprivate func savePhotoWithImage(image: UIImage, meta: Dictionary<String, String>, location: CLLocation?, completion: @escaping ((PHAsset) -> ())) {
         
         guard let imageData: CFData = image.jpegData(compressionQuality: 1.0) as CFData? else {
             return
         }
-        
-        
         let source = CGImageSourceCreateWithData(imageData, nil)
         let formater = DateFormatter()
         formater.dateFormat = "yyyy-MM-dd-HH:mm:ss-SSS"
@@ -404,7 +411,6 @@ extension LImagePickerManger {
             request?.creationDate = Date()
         }) { (success, error) in
             try? FileManager.default.removeItem(atPath: path)
-            
             DispatchQueue.main.async {
                 if success {
                     self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
@@ -506,11 +512,10 @@ extension LImagePickerManger {
         
     }
     
-    fileprivate func fetchAssetByIocalIdentifier(localIdentifier: String, retryCount: Int, completion: @escaping ((PHAsset, Error?) -> ())) {
-        
+    fileprivate func fetchAssetByIocalIdentifier(localIdentifier: String, retryCount: Int, completion: @escaping ((PHAsset) -> ())) {
         let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject
         if asset != nil || retryCount <= 0 {
-            completion(asset!, nil)
+            completion(asset!)
             return
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -526,8 +531,8 @@ extension LImagePickerManger {
         
         let degrees = degressFormVideoFileWithAsset(asset: videoAsset)
         if degrees != 0 {
-            var translateToCenter: CGAffineTransform = CGAffineTransform()
-            var mixedTransform: CGAffineTransform = CGAffineTransform()
+            var translateToCenter: CGAffineTransform = CGAffineTransform.identity
+            var mixedTransform: CGAffineTransform = CGAffineTransform.identity
             videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
             
             let tracks = videoAsset.tracks(withMediaType: .video)
@@ -590,10 +595,83 @@ extension LImagePickerManger {
         
         return degress
     }
-
-    
-    
 }
 
+// MARK: - 剪裁图片
+extension LImagePickerManager {
+    // 获的裁剪后的图片
+    public func tz_cropImageView(imageView: UIImageView, rect: CGRect, zoomScale: CGFloat, containerView: UIView) -> UIImage? {
+        var transform: CGAffineTransform = CGAffineTransform.identity
+        // 平移处理
+        let imageViewRect = imageView.convert(imageView.bounds, to: containerView)
+        let point = CGPoint(x: imageViewRect.origin.x + imageViewRect.size.width / 2, y: imageViewRect.origin.y + imageViewRect.size.height / 2)
+        let xMargin = containerView.frame.size.width - rect.maxX - rect.origin.x
+        let zeroPoint = CGPoint(x: (containerView.l_width - xMargin) / 2, y: containerView.center.y)
+        let translation = CGPoint(x: point.x - zeroPoint.x, y: point.y - zeroPoint.y)
+        transform = CGAffineTransform(translationX: translation.x, y: translation.y)
+        // 缩放处理
+        transform = transform.scaledBy(x: zoomScale, y: zoomScale)
+        
+        let cgImage = newTransformedImage(transform: transform, sourceImage: imageView.image?.cgImage, soureceSize: imageView.image?.size ?? .zero, outputWidth: rect.size.width * UIScreen.main.scale, cropSize: rect.size, imageViewSize: imageView.frame.size)
+        if let cgImage = cgImage {
+            var cropedImage: UIImage? = UIImage(cgImage: cgImage)
+            cropedImage = fixOrientation(aImage: cropedImage)
+            return cropedImage
+        }
+        return nil
+    }
+    
+    
+    fileprivate func newTransformedImage(transform: CGAffineTransform, sourceImage: CGImage?, soureceSize: CGSize, outputWidth: CGFloat, cropSize: CGSize, imageViewSize: CGSize) -> CGImage? {
+        guard let source = newScaledImage(sourece: sourceImage, size: soureceSize), let colorSpace = source.colorSpace else {
+            return nil
+        }
+        let aspect = cropSize.height/cropSize.width
+        let outputSize = CGSize(width: outputWidth, height: outputWidth * aspect)
+        
+        let context = CGContext(data: nil, width: Int(outputSize.width), height: Int(outputSize.height), bitsPerComponent: source.bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: source.bitmapInfo.rawValue)
+        context?.setFillColor(UIColor.clear.cgColor)
+        context?.fill(CGRect(x: 0, y: 0, width: outputSize.width, height: outputSize.height))
+        
+        var uiCoords = CGAffineTransform(scaleX: outputSize.width / cropSize.width , y: outputSize.height / cropSize.height)
+        uiCoords = uiCoords.translatedBy(x: cropSize.width / 2.0, y: cropSize.height / 2.0)
+        uiCoords = uiCoords.scaledBy(x: 1.0, y: -1.0)
+        context?.concatenate(uiCoords)
+        context?.concatenate(transform)
+        context?.scaleBy(x: 1.0, y: -1.0)
+        
+        context?.draw(source, in: CGRect(x: -imageViewSize.width / 2, y: -imageViewSize.height / 2.0, width: imageViewSize.width, height: imageViewSize.height))
+        let result = context?.makeImage()
+        return result
+    }
+    
+    
+    fileprivate func newScaledImage(sourece: CGImage?, size: CGSize) -> CGImage? {
+        guard let `sourece` = sourece else { return nil }
+        let srcSize = size
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+        let content: CGContext? = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bytesPerRow: 0, space: rgbColorSpace, bitmapInfo: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue)
+        content?.interpolationQuality = .none
+        content?.translateBy(x: size.width/2, y: size.height/2)
+        content?.draw(sourece, in: CGRect(x: -srcSize.width/2, y: -srcSize.height/2, width: srcSize.width, height: srcSize.height))
+        let result = content?.makeImage()
+        return result
+    }
+    
+    // 获取圆形图片
+    public func tz_circularClipImage(image: UIImage?) -> UIImage? {
+        guard let `image` = image else { return nil }
+        UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
+        let ctx = UIGraphicsGetCurrentContext()
+        let rect = CGRect(origin: .zero, size: image.size)
+        ctx?.addEllipse(in: rect)
+        ctx?.clip()
+        image.draw(in: rect)
+        let circleImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return circleImage
+    }
+    
+}
 
 

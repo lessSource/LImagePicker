@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Photos
 
 class LPhotographController: UIViewController {
-
+    
     public var albumModel: LPhotoAlbumModel?
-
+    
     fileprivate var dataArray: Array = [LPhotographModel]()
+    
+    fileprivate var animationDelegate = LPreviewAnimationDelegate()
     
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -49,13 +52,22 @@ class LPhotographController: UIViewController {
     // MARK: - initData
     fileprivate func initData() {
         if let albumModel = albumModel {
-            LImagePickerManger.shared.getAssetsFromFetchResult(albumModel.fetchResult) { [weak self] (array) in
-                guard let `self` = self else { return }
+            LImagePickerManager.shared.getAssetsFromFetchResult(albumModel.fetchResult) { [weak self] (array) in
+                guard let `self` = self, let imagePicker = navigationController as? LImagePickerController else { return }
                 self.dataArray = array
+                for item in imagePicker.selectArray {
+                    if let index = array.firstIndex(of: item) {
+                        self.dataArray[index] = item
+                    }
+                }
+                if imagePicker.allowTakePicture {
+                    let photographModel = LPhotographModel(media: PHAsset(), type: .shooting, isSelect: false, selectIndex: 0)
+                    self.dataArray.insert(photographModel, at: 0)
+                }
                 self.collectionView.reloadData()
             }
         }else {
-            LImagePickerManger.shared.getPhotoAlbumResources(.image) { [weak self] (albumModel) in
+            LImagePickerManager.shared.getPhotoAlbumResources(.image) { [weak self] (albumModel) in
                 guard let `self` = self else { return }
                 self.albumModel = albumModel
                 self.initData()
@@ -82,6 +94,10 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         case .video:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographGifCell.l_identifire, for: indexPath) as! LPhotographGifCell
             return cell
+        case .shooting:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographImageCell.l_identifire, for: indexPath) as! LPhotographImageCell
+            cell.imageView.backgroundColor = UIColor.white
+            return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographImageCell.l_identifire, for: indexPath) as! LPhotographImageCell
             cell.loadingResourcesModel(dataArray[indexPath.row])
@@ -104,5 +120,21 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if dataArray[indexPath.item].type == .shooting {
+            let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: nil)
+            present(imagePicker, animated: true, completion: nil)
+            return
+        }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? LPhotographImageCell else { return }
+        animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell)
+        let mediaArray = dataArray.compactMap { $0.media }
+        let imageModel = LPreviewImageModel(currentIndex: indexPath.item, dataArray: mediaArray)
+        let imagePicker = LImagePickerController(configuration: imageModel, delegate: nil)
+        imagePicker.transitioningDelegate = animationDelegate
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     
 }

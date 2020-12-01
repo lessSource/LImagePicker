@@ -6,7 +6,7 @@
 //  Copyright © 2020 L. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Photos
 
 // 媒体类型
@@ -21,6 +21,28 @@ enum LImagePickerMediaType {
     case photoGif
     /** 视频 */
     case video
+}
+
+public protocol LImagePickerMediaProtocol { }
+
+extension String: LImagePickerMediaProtocol { }
+
+extension PHAsset: LImagePickerMediaProtocol { }
+
+extension UIImage: LImagePickerMediaProtocol { }
+
+// 查看大图模型
+public struct LPreviewImageModel {
+    /** 当前序号 */
+    var currentIndex: Int
+    /** 数据源 */
+    var dataArray: [LImagePickerMediaProtocol]
+    
+    public init(currentIndex: Int = 0, dataArray: [LImagePickerMediaProtocol] = [LImagePickerMediaProtocol]()) {
+        self.currentIndex = currentIndex
+        self.dataArray = dataArray
+    }
+    
 }
 
 // 相册模型

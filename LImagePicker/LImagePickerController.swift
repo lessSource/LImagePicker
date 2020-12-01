@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class LImagePickerContrller: LImagePickerNavigationController {
+public class LImagePickerController: LImagePickerNavigationController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,35 +16,18 @@ public class LImagePickerContrller: LImagePickerNavigationController {
         // Do any additional setup after loading the view.
     }
     
-    /** 选择图片 */
-    public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerProtocol? = nil) {
-        let photographVC = LPhotographController()
-        self.init(rootViewController: photographVC)
-    }
+    /** 最多可选数量，默认9 */
+    fileprivate(set) var maxImageCount: Int = 9
+    /** 选中资源 */
+    var selectArray: [LPhotographModel] = []
+    /** 选中的数量 */
+    /** 是否允许拍摄照片 */
+    public var allowTakePicture: Bool = true
+    /** 获取图片的超时时间 */
+    public var timeout: Int = 15
+    /** 默认为NO，如果设置为YES，代理方法里photos会是nil */
+    public var onlyReturnAsset: Bool = false
     
-    /** 显示大图 */
-    public convenience init(images: [UIImage], delegate: LImagePickerProtocol? = nil) {
-        let previewImageVC = LPreviewImageController()
-        self.init(rootViewController: previewImageVC)
-    }
-    
-    /** 拍照 */
-    public convenience init(allowTakePicture: Bool = false, timeout: Int = 15, delegate: LImagePickerProtocol? = nil) {
-        let takingPicturesVC = LTakingPicturesController()
-        self.init(rootViewController: takingPicturesVC)
-    }
-    
-    /** 编辑 */
-    public convenience init(contentImage: UIImage, delegate: LImagePickerProtocol? = nil) {
-        let editPicturesVC = LEditPicturesController()
-        self.init(rootViewController: editPicturesVC)
-    }
-    
-    /** 显示视频 */
-    public convenience init(videoUrl: URL, delegate: LImagePickerProtocol? = nil) {
-        let previewVideoVC = LPreviewVideoController()
-        self.init(rootViewController: previewVideoVC)
-    }
     
     fileprivate override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -57,7 +40,6 @@ public class LImagePickerContrller: LImagePickerNavigationController {
         }
     }
     
-    
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -66,13 +48,50 @@ public class LImagePickerContrller: LImagePickerNavigationController {
         fatalError("init(coder:) has not been implemented")
     }
     
-
     deinit {
         print(self, "++++++释放")
     }
 }
 
-extension LImagePickerContrller: UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+extension LImagePickerController {
+    
+    /** 选择图片 */
+    public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerProtocol? = nil) {
+        let photographVC = LPhotographController()
+        self.init(rootViewController: photographVC)
+        self.maxImageCount = count
+    }
+    
+    /** 显示大图 */
+    public convenience init(configuration: LPreviewImageModel, delegate: LImagePickerProtocol? = nil) {
+        let previewImageVC = LPreviewImageController(configuration: configuration)
+        self.init(rootViewController: previewImageVC)
+    }
+    
+    /** 拍照 */
+    public convenience init(allowPickingVideo: Bool, maxDuration: TimeInterval = 15, delegate: LImagePickerProtocol? = nil) {
+        let takingPicturesVC = LTakingPicturesController(allowPickingVideo: allowPickingVideo, maxDuration: maxDuration)
+        takingPicturesVC.imagePickerDelegate = delegate
+        self.init(rootViewController: takingPicturesVC)
+    }
+    
+    /** 编辑 */
+    public convenience init(contentMedia: LImagePickerMediaProtocol, delegate: LImagePickerProtocol? = nil) {
+        let editPicturesVC = LEditPicturesController(mediaProtocol: contentMedia)
+        editPicturesVC.imagePickerDelegate = delegate
+        self.init(rootViewController: editPicturesVC)
+    }
+    
+    /** 显示视频 */
+    public convenience init(videoUrl: URL, delegate: LImagePickerProtocol? = nil) {
+        let previewVideoVC = LPreviewVideoController()
+        self.init(rootViewController: previewVideoVC)
+    }
+    
+    
+}
+ 
+extension LImagePickerController: UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return navigationController?.viewControllers.count != 1

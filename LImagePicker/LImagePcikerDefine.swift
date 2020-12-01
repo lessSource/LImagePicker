@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Photos
 
 struct LConstant {
     /** 屏幕宽度 */
@@ -86,4 +86,25 @@ struct LApp {
     static var cocumentsPath: String {
         return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
     }
+    
+    static func getCreatPhotoAlbum() -> PHAssetCollection? {
+        let collections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: nil)
+        var assetCollection: PHAssetCollection?
+        collections.enumerateObjects { (collection, i, objc) in
+            if collection.localizedTitle == appName {
+                assetCollection = collection
+            }
+        }
+        if let collection = assetCollection {
+            return collection
+        }
+        var createID: String = ""
+        try? PHPhotoLibrary.shared().performChangesAndWait {
+            let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: appName)
+            createID = request.placeholderForCreatedAssetCollection.localIdentifier
+        }
+        return PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [createID], options: nil).firstObject
+    }
+    
+    
 }

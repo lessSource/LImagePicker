@@ -12,7 +12,7 @@ import UIKit
 extension UIColor {
     
     /** 随机颜色 */
-    public class var randomColor: UIColor {
+    class var randomColor: UIColor {
         return UIColor(red: CGFloat(arc4random_uniform(256))/255.0, green: CGFloat(arc4random_uniform(256))/255.0, blue: CGFloat(arc4random_uniform(256))/255.0, alpha: 1.0)
     }
     
