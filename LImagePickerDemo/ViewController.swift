@@ -9,6 +9,7 @@
 import UIKit
 import LImagePicker
 import Kingfisher
+import Photos
 
 ////import LImagePicker
 ////import Photos
@@ -109,6 +110,12 @@ extension ViewController: LImagePickerProtocol {
         originalImageView.image = image
     }
     
+    func photographSelectImage(viewController: UIViewController, photos: [UIImage], assets: [PHAsset]) {
+        contentImage.image = photos[0]
+        originalImageView.image = photos[1]
+    }
+    
+    
 }
 
 @objc
@@ -116,7 +123,8 @@ extension ViewController {
 //
     // 图库
     func galleryButtonClick() {
-        let imagePicker = LImagePickerController(delegate: self)
+        let imagePicker = LImagePickerController(withMaxImage: 20, delegate: self)
+        imagePicker.sortAscendingByModificationDate = false
         present(imagePicker, animated: true, completion: nil)
         print(111)
         

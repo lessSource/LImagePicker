@@ -18,8 +18,69 @@ extension UIColor {
     
     // 背景色
     class var backColor: UIColor {
-        return UIColor.withHex(hexString: "#ff0000")
+        return UIColor.white
     }
+    
+    // 拍摄背景色
+    class var shootingBackColor: UIColor {
+        return UIColor.withHex(hexString: "#B1BDCB")
+    }
+    
+    // 拍摄字体颜色
+    class var shootingTextColor: UIColor {
+        return UIColor.white
+    }
+    
+    // 选中颜色
+    class var mediaSelectColor: UIColor {
+        return UIColor.withHex(hexString: "#007AFD")
+    }
+    
+    // 选中字体颜色
+    class var mediaSelectTextColor: UIColor {
+        return UIColor.white
+    }
+    
+    // 导航栏背景色
+    class var navViewBackColor: UIColor {
+        return UIColor.white
+    }
+    
+    // 预览导航栏背景色
+    class var previewNavBackColor: UIColor {
+        return UIColor.withHex(hexString: "#222425")
+    }
+    
+    // 导航栏标题颜色
+    class var navViewTitleColor: UIColor {
+        return UIColor.withHex(hexString: "#2A2A2A")
+    }
+    
+    // 便签栏
+    class var bottomViewBackColor: UIColor {
+        return UIColor.white
+    }
+    
+    // 便签栏预览颜色
+    class var bottomViewPreviewColor: UIColor {
+        return UIColor.withHex(hexString: "#242A39")
+    }
+    
+    // 标签栏确定颜色
+    class var bottomViewConfirmColor: UIColor {
+        return UIColor.white
+    }
+    
+    // 标签栏确定背景颜色
+    class var bottomViewConfirmBackColor: UIColor {
+        return UIColor.withHex(hexString: "#007AFD")
+    }
+
+    // 标签栏数量颜色
+    class var bottomViewTitleColor: UIColor {
+        return UIColor.withHex(hexString: "#B1BDCB")
+    }
+    
     
     class func withHex(hexString hex: String, alpha: CGFloat = 1) -> UIColor {
         // 去除空格

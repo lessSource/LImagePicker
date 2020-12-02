@@ -16,6 +16,8 @@ final class LImagePickerManager {
     public var photoPreviewMaxWidth: CGFloat = 600
     /** 是否修正图片 */
     public var shouldFixOrientation: Bool = false
+    /// 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个
+    public var sortAscendingByModificationDate: Bool = true
     
     static let shared = LImagePickerManager()
     
@@ -126,6 +128,11 @@ extension LImagePickerManager {
                 }else {
                     allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
                 }
+                if !self.sortAscendingByModificationDate {
+                    allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: self.sortAscendingByModificationDate)]
+                }
+                
+                
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
                 if collection.assetCollectionSubtype == .smartAlbumAllHidden { return }
                 if collection.assetCollectionSubtype.rawValue == 1000000201 { return } // [最近删除] 相册
@@ -153,6 +160,10 @@ extension LImagePickerManager {
                 }else {
                     allPhotosOptions.predicate = NSPredicate(format: "mediaType = %d", mediaType.rawValue)
                 }
+                if !self.sortAscendingByModificationDate {
+                    allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: self.sortAscendingByModificationDate)]
+                }
+                
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: assetCollection, options: allPhotosOptions)
                 if fetchResult.count > 0 {
                     let model = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0)
@@ -174,6 +185,9 @@ extension LImagePickerManager {
             // 获取所有资源
             let allPhotosOptions = PHFetchOptions()
             
+            if !self.sortAscendingByModificationDate {
+                allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: self.sortAscendingByModificationDate)]
+            }
             if mediaType == .unknown {
                 mediaTypePhAsset = PHAsset.fetchAssets(with: allPhotosOptions)
             }else {
@@ -356,15 +370,29 @@ extension LImagePickerManager {
     // 保存图片
     public func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset) -> ()), failureClosure: @escaping ((Error?) -> ())) {
         var localIdentifier = ""
-        PHPhotoLibrary.shared().performChanges({
+        PHPhotoLibrary.shared().performChanges {
             let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
             localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
             reuqest.location = location
             reuqest.creationDate = Date()
-        }) { (success, error) in
+        } completionHandler: { (success, error) in
             // 获取自定义相册
             let result = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
-            guard let assetCollection = LApp.getCreatPhotoAlbum() else {
+            if let assetCollection = LApp.getCreatPhotoAlbum() {
+                do {
+                    try PHPhotoLibrary.shared().performChangesAndWait {
+                        let request = PHAssetCollectionChangeRequest(for: assetCollection)
+                        request?.insertAssets(result, at: IndexSet(arrayLiteral: 0))
+                    }
+                    DispatchQueue.main.async {
+                        self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        failureClosure(error)
+                    }
+                }
+            }else {
                 DispatchQueue.main.async {
                     if success {
                         self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
@@ -372,23 +400,6 @@ extension LImagePickerManager {
                         // 保存图片出错
                         failureClosure(error)
                     }
-                }
-                return
-            }
-            do {
-                try PHPhotoLibrary.shared().performChangesAndWait {
-                    let request = PHAssetCollectionChangeRequest(for: assetCollection)
-                    // 添加到自定义相册---追加---不能成为封面
-                    // request?.addAssets(result)
-                    // 插入到自定义相册---插入---可以成为封面
-                    request?.insertAssets(result, at: IndexSet(arrayLiteral: 0))
-                }
-                DispatchQueue.main.async {
-                    self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    failureClosure(error)
                 }
             }
         }

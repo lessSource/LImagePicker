@@ -16,7 +16,6 @@
 		2A47715A2508631B00F9B839 /* LShowImageFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4771582508631B00F9B839 /* LShowImageFilterCell.swift */; };
 		2A47715B2508631B00F9B839 /* LShowImageFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4771592508631B00F9B839 /* LShowImageFilterBar.swift */; };
 		2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2124626C87008D5179 /* AppDelegate.swift */; };
-		2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2324626C87008D5179 /* SceneDelegate.swift */; };
 		2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2524626C87008D5179 /* ViewController.swift */; };
 		2AEE0D2924626C87008D5179 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2724626C87008D5179 /* Main.storyboard */; };
 		2AEE0D2C24626C87008D5179 /* LImagePickerDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AEE0D2A24626C87008D5179 /* LImagePickerDemo.xcdatamodeld */; };
@@ -66,13 +65,13 @@
 		CACA0F2E2574A01D0008F7BE /* LPicturesSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F2D2574A01D0008F7BE /* LPicturesSelectedView.swift */; };
 		CACA0F332574A0240008F7BE /* LImagePickerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F322574A0240008F7BE /* LImagePickerPromptView.swift */; };
 		CACA0F382574A02B0008F7BE /* LImagePickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F372574A02B0008F7BE /* LImagePickerNavView.swift */; };
-		CACA0F3D2574A0320008F7BE /* LImageBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F3C2574A0320008F7BE /* LImageBottomView.swift */; };
+		CACA0F3D2574A0320008F7BE /* LImagePickerBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F3C2574A0320008F7BE /* LImagePickerBottomView.swift */; };
 		CACA0F422574A05E0008F7BE /* LImagePickerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F412574A05E0008F7BE /* LImagePickerProtocol.swift */; };
-		CACA0F4A2574A0640008F7BE /* LImageNavProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F492574A0640008F7BE /* LImageNavProtocol.swift */; };
-		CACA0F4F2574A0690008F7BE /* LImageBottomProtocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F4E2574A0690008F7BE /* LImageBottomProtocl.swift */; };
+		CACA0F4F2574A0690008F7BE /* LImagePickerButtonProtocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F4E2574A0690008F7BE /* LImagePickerButtonProtocl.swift */; };
 		CACA0F5A2574BF1B0008F7BE /* LImagePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0F592574BF1B0008F7BE /* LImagePickerModel.swift */; };
 		CACA0FB1257624D30008F7BE /* LTakingPicturesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0FB0257624D30008F7BE /* LTakingPicturesProtocol.swift */; };
 		CACA0FB625762ECF0008F7BE /* LTakingPicturesOperationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0FB525762ECF0008F7BE /* LTakingPicturesOperationView.swift */; };
+		CACA0FEC257782C60008F7BE /* LProgressHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0FEB257782C60008F7BE /* LProgressHUDView.swift */; };
 		D25CA19329EF42C15E2830EA /* Pods_LImagePicker_LImagePickerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7597E7FDDDF881C524BF756F /* Pods_LImagePicker_LImagePickerTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -202,7 +201,6 @@
 		2ACD8225246433D70070C4F0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		2AEE0D1E24626C87008D5179 /* LImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEE0D2124626C87008D5179 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2AEE0D2324626C87008D5179 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2AEE0D2524626C87008D5179 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2AEE0D2824626C87008D5179 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2AEE0D2B24626C87008D5179 /* LImagePickerDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LImagePickerDemo.xcdatamodel; sourceTree = "<group>"; };
@@ -286,13 +284,13 @@
 		CACA0F2D2574A01D0008F7BE /* LPicturesSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPicturesSelectedView.swift; sourceTree = "<group>"; };
 		CACA0F322574A0240008F7BE /* LImagePickerPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerPromptView.swift; sourceTree = "<group>"; };
 		CACA0F372574A02B0008F7BE /* LImagePickerNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavView.swift; sourceTree = "<group>"; };
-		CACA0F3C2574A0320008F7BE /* LImageBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageBottomView.swift; sourceTree = "<group>"; };
+		CACA0F3C2574A0320008F7BE /* LImagePickerBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerBottomView.swift; sourceTree = "<group>"; };
 		CACA0F412574A05E0008F7BE /* LImagePickerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerProtocol.swift; sourceTree = "<group>"; };
-		CACA0F492574A0640008F7BE /* LImageNavProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageNavProtocol.swift; sourceTree = "<group>"; };
-		CACA0F4E2574A0690008F7BE /* LImageBottomProtocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageBottomProtocl.swift; sourceTree = "<group>"; };
+		CACA0F4E2574A0690008F7BE /* LImagePickerButtonProtocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerButtonProtocl.swift; sourceTree = "<group>"; };
 		CACA0F592574BF1B0008F7BE /* LImagePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerModel.swift; sourceTree = "<group>"; };
 		CACA0FB0257624D30008F7BE /* LTakingPicturesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTakingPicturesProtocol.swift; sourceTree = "<group>"; };
 		CACA0FB525762ECF0008F7BE /* LTakingPicturesOperationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTakingPicturesOperationView.swift; sourceTree = "<group>"; };
+		CACA0FEB257782C60008F7BE /* LProgressHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LProgressHUDView.swift; sourceTree = "<group>"; };
 		D529DBA0BCAD4D0586A5660B /* Pods-LImagePicker-LImagePickerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker-LImagePickerTests.release.xcconfig"; path = "Target Support Files/Pods-LImagePicker-LImagePickerTests/Pods-LImagePicker-LImagePickerTests.release.xcconfig"; sourceTree = "<group>"; };
 		E593C2F444C760FA6EE885A7 /* Pods-LImagePickerDemo-LImagePickerDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePickerDemo-LImagePickerDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-LImagePickerDemo-LImagePickerDemoUITests/Pods-LImagePickerDemo-LImagePickerDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F10A9830BBAA32545D82EB59 /* Pods-LImagePicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.release.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.release.xcconfig"; sourceTree = "<group>"; };
@@ -618,7 +616,6 @@
 			isa = PBXGroup;
 			children = (
 				2AEE0D2124626C87008D5179 /* AppDelegate.swift */,
-				2AEE0D2324626C87008D5179 /* SceneDelegate.swift */,
 				2AEE0D2524626C87008D5179 /* ViewController.swift */,
 				2A4771592508631B00F9B839 /* LShowImageFilterBar.swift */,
 				2A4771582508631B00F9B839 /* LShowImageFilterCell.swift */,
@@ -652,14 +649,13 @@
 			children = (
 				2AEE0D4E24626D15008D5179 /* Info.plist */,
 				CACA0EF625749F9A0008F7BE /* LEditPicturesController.swift */,
-				CACA0F4E2574A0690008F7BE /* LImageBottomProtocl.swift */,
-				CACA0F3C2574A0320008F7BE /* LImageBottomView.swift */,
 				CACA0EE725749F730008F7BE /* LImageCroppingView.swift */,
-				CACA0F492574A0640008F7BE /* LImageNavProtocol.swift */,
 				CACA0F0025749FD40008F7BE /* LImagePcikerDefine.swift */,
 				2AEE0D8924626E57008D5179 /* LImagePicker.bundle */,
 				2AEE0D4D24626D15008D5179 /* LImagePicker.h */,
 				CACA0F1425749FF30008F7BE /* LImagePicker+Extension.swift */,
+				CACA0F4E2574A0690008F7BE /* LImagePickerButtonProtocl.swift */,
+				CACA0F3C2574A0320008F7BE /* LImagePickerBottomView.swift */,
 				CACA0F232574A0060008F7BE /* LImagePickerConfiguration.swift */,
 				CACA0E9225749DF70008F7BE /* LImagePickerController.swift */,
 				CACA0F1925749FF90008F7BE /* LImagePickerManager.swift */,
@@ -688,6 +684,7 @@
 				CACA0ED325749F470008F7BE /* LPreviewVideoCell.swift */,
 				CACA0EE225749F680008F7BE /* LPreviewVideoController.swift */,
 				CACA0F282574A0170008F7BE /* LProgressBarView.swift */,
+				CACA0FEB257782C60008F7BE /* LProgressHUDView.swift */,
 				CACA0EEC25749F840008F7BE /* LTakingPicturesController.swift */,
 				CACA0FB525762ECF0008F7BE /* LTakingPicturesOperationView.swift */,
 				CACA0FB0257624D30008F7BE /* LTakingPicturesProtocol.swift */,
@@ -1121,7 +1118,6 @@
 				2A47715B2508631B00F9B839 /* LShowImageFilterBar.swift in Sources */,
 				2AEE0D2624626C87008D5179 /* ViewController.swift in Sources */,
 				2AEE0D2224626C87008D5179 /* AppDelegate.swift in Sources */,
-				2AEE0D2424626C87008D5179 /* SceneDelegate.swift in Sources */,
 				CA9367C725121EDE00324C50 /* ModelTable.swift in Sources */,
 				2AEE0D2C24626C87008D5179 /* LImagePickerDemo.xcdatamodeld in Sources */,
 			);
@@ -1157,8 +1153,7 @@
 				CACA0EB125749EDE0008F7BE /* LPhotographLivePhotoCell.swift in Sources */,
 				CACA0FB625762ECF0008F7BE /* LTakingPicturesOperationView.swift in Sources */,
 				CACA0F1F25749FFF0008F7BE /* LImagePickerOperation.swift in Sources */,
-				CACA0F4F2574A0690008F7BE /* LImageBottomProtocl.swift in Sources */,
-				CACA0F4A2574A0640008F7BE /* LImageNavProtocol.swift in Sources */,
+				CACA0F4F2574A0690008F7BE /* LImagePickerButtonProtocl.swift in Sources */,
 				CACA0EA225749EBA0008F7BE /* LPhotographImageCell.swift in Sources */,
 				CACA0E9D25749E7F0008F7BE /* LPhotographCollectionViewCell.swift in Sources */,
 				CACA0EED25749F840008F7BE /* LTakingPicturesController.swift in Sources */,
@@ -1177,10 +1172,11 @@
 				CACA0EE325749F680008F7BE /* LPreviewVideoController.swift in Sources */,
 				CACA0ECA25749F300008F7BE /* LPreviewCollectionViewCell.swift in Sources */,
 				CACA0F382574A02B0008F7BE /* LImagePickerNavView.swift in Sources */,
-				CACA0F3D2574A0320008F7BE /* LImageBottomView.swift in Sources */,
+				CACA0F3D2574A0320008F7BE /* LImagePickerBottomView.swift in Sources */,
 				CACA0F332574A0240008F7BE /* LImagePickerPromptView.swift in Sources */,
 				CACA0EF225749F8E0008F7BE /* LTakingPicturesView.swift in Sources */,
 				CACA0E8E25749DC20008F7BE /* LImagePickerNavigationController.swift in Sources */,
+				CACA0FEC257782C60008F7BE /* LProgressHUDView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class LTakingPicturesController: UIViewController {
 
@@ -51,6 +52,7 @@ class LTakingPicturesController: UIViewController {
     }
     
     deinit {
+//        PHPhotoLibrary.shared().unregisterChangeObserver(self)
         print(self, "++++++释放")
     }
     
@@ -59,6 +61,9 @@ class LTakingPicturesController: UIViewController {
         // Do any additional setup after loading the view.
         LImagePickerManager.shared.shouldFixOrientation = true
         initView()
+        
+//        PHPhotoLibrary.shared().register(self)
+        
     }
 
     // MARK: - initView
@@ -76,6 +81,7 @@ class LTakingPicturesController: UIViewController {
 }
 
 extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOperationDelegate {
+
     
     func imageCameraCaptureDeviceDidChange() {
         print("有变化")
@@ -130,11 +136,26 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
             dismiss(animated: true, completion: nil)
         case .complete:
             if let image = contentImage {
-                LImagePickerManager.shared.savePhotoWithImage(image: image, location: nil) { (asset) in
-                    self.imagePickerDelegate?.takingPicturesSaveImage(viewController: self, asset: asset)
-                } failureClosure: { (error) in
-                    print(error ?? "")
+//                LImagePickerManager.shared.savePhotoWithImage(image: image, location: nil) { (asset) in
+//                    self.imagePickerDelegate?.takingPicturesSaveImage(viewController: self, asset: asset)
+//                } failureClosure: { (error) in
+//                    print(error ?? "")
+//                }
+                var localIdentifier = ""
+                PHPhotoLibrary.shared().performChanges {
+                    print("111111")
+                    let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
+                    localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
+                    reuqest.location = nil
+                    reuqest.creationDate = Date()
+                } completionHandler: { (success, error) in
+
                 }
+
+                
+                
+                
+                
             }
             imagePickerDelegate?.takingPictures(viewController: self, image: contentImage)
             dismiss(animated: true, completion: nil)

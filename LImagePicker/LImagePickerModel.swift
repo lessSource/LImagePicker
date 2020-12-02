@@ -23,6 +23,75 @@ enum LImagePickerMediaType {
     case video
 }
 
+// 按钮
+enum LImagePickerButtonType {
+    /** 关闭 */
+    case cancle
+    /** 标题 */
+    case title
+    /** 预览 */
+    case preview
+    /** 确定 */
+    case confirm
+    /** 预览选择 */
+    case previewSelect
+}
+
+// HUD样式
+enum LProgressHUDStyle: Int {
+    /** */
+    case light
+    /** */
+    case lightBlur
+    /**  */
+    case dark
+    /** */
+    case darkBlur
+    
+    var backColor: UIColor {
+        switch self {
+        case .light:
+            return .white
+        case .dark:
+            return .darkGray
+        default:
+            return .clear
+        }
+    }
+    
+    var textColor: UIColor {
+        switch self {
+        case .light, .lightBlur:
+            return .black
+        default:
+            return .white
+        }
+    }
+    
+    var indicatorStyle: UIActivityIndicatorView.Style {
+        switch self {
+        case .light, .lightBlur:
+            return .gray
+        default:
+            return .white
+        }
+    }
+    
+    var blurEffectStyle: UIBlurEffect.Style? {
+        switch self {
+        case .light, .dark:
+            return nil
+        case .lightBlur:
+            return .extraLight
+        default:
+            return .dark
+        }
+    }
+    
+    
+}
+
+
 public protocol LImagePickerMediaProtocol { }
 
 extension String: LImagePickerMediaProtocol { }
@@ -30,6 +99,8 @@ extension String: LImagePickerMediaProtocol { }
 extension PHAsset: LImagePickerMediaProtocol { }
 
 extension UIImage: LImagePickerMediaProtocol { }
+
+extension LPhotographModel: LImagePickerMediaProtocol { }
 
 // 查看大图模型
 public struct LPreviewImageModel {

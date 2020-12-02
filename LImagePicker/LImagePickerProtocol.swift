@@ -20,6 +20,12 @@ public protocol LImagePickerProtocol: class {
     // 保存照片
     func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset)
     
+    // 选中图片
+    func photographSelectImage(viewController: UIViewController, photos: [UIImage], assets: [PHAsset])
+    
+    // 预览图片状态改变
+    func previewImageState(viewController: UIViewController)
+    
 }
 
 public extension LImagePickerProtocol {
@@ -29,6 +35,10 @@ public extension LImagePickerProtocol {
     func takingPictures(viewController: UIViewController, image: UIImage?) { }
     
     func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset) { }
+    
+    func photographSelectImage(viewController: UIViewController, photos: [UIImage], assets: [PHAsset]) { }
+    
+    func previewImageState(viewController: UIViewController) { }
 }
 
 

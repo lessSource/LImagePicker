@@ -11,6 +11,8 @@ import Photos
 
 class LPhotographCollectionViewCell: UICollectionViewCell {
     
+    public var didSelectClosure = { }
+    
     public var mediaAsset: PHAsset?
     
     public var representedAssetIdentifier: String = ""

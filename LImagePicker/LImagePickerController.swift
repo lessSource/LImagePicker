@@ -14,20 +14,27 @@ public class LImagePickerController: LImagePickerNavigationController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print("112")
     }
     
     /** 最多可选数量，默认9 */
     fileprivate(set) var maxImageCount: Int = 9
     /** 选中资源 */
     var selectArray: [LPhotographModel] = []
-    /** 选中的数量 */
     /** 是否允许拍摄照片 */
     public var allowTakePicture: Bool = true
     /** 获取图片的超时时间 */
-    public var timeout: Int = 15
+    public var timeout: TimeInterval = 15.0
     /** 默认为NO，如果设置为YES，代理方法里photos会是nil */
-    public var onlyReturnAsset: Bool = false
+    public var onlyReturnAsset: Bool = false    
     
+    /// 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个
+    public var sortAscendingByModificationDate: Bool = true {
+        didSet {
+            LImagePickerManager.shared.sortAscendingByModificationDate = sortAscendingByModificationDate
+        }
+    }
+        
     
     fileprivate override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -40,7 +47,7 @@ public class LImagePickerController: LImagePickerNavigationController {
         }
     }
     
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    fileprivate override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -58,6 +65,7 @@ extension LImagePickerController {
     /** 选择图片 */
     public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerProtocol? = nil) {
         let photographVC = LPhotographController()
+        photographVC.imagePickerDelegate = delegate
         self.init(rootViewController: photographVC)
         self.maxImageCount = count
     }
@@ -65,6 +73,7 @@ extension LImagePickerController {
     /** 显示大图 */
     public convenience init(configuration: LPreviewImageModel, delegate: LImagePickerProtocol? = nil) {
         let previewImageVC = LPreviewImageController(configuration: configuration)
+        previewImageVC.imagePickerDelegate = delegate
         self.init(rootViewController: previewImageVC)
     }
     

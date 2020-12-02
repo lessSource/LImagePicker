@@ -9,13 +9,116 @@
 import UIKit
 
 class LImagePickerNavView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    public weak var delegate: LImagePickerButtonProtocl?
+    
+    fileprivate lazy var cancleButton: UIButton = {
+        let button = UIButton(type: .custom)
+        return button
+    }()
+    
+    fileprivate lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.textColor = UIColor.navViewTitleColor
+        return label
+    }()
+    
+    // MARK: - 选择序号
+    fileprivate lazy var selectButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.isHidden = true
+        return button
+    }()
+    
+    fileprivate lazy var selectImageView: UIImageView = {
+        let selectImageView = UIImageView()
+        selectImageView.contentMode = .scaleAspectFit
+        selectImageView.clipsToBounds = true
+        selectImageView.isHidden = true
+        return selectImageView
+    }()
+    
+    fileprivate lazy var indexLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.mediaSelectColor
+        label.textColor = UIColor.mediaSelectTextColor
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        label.layer.cornerRadius = 12
+        label.clipsToBounds = true
+        label.isHidden = true
+        return label
+    }()
+    
+    public var isPreviewButton: Bool = false {
+        didSet {
+            selectButton.isHidden = !isPreviewButton
+            selectImageView.isHidden = !isPreviewButton
+        }
     }
-    */
+    
+    public var title: String = "" {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+    
+    public var cancleImageStr: String = "" {
+        didSet {
+            cancleButton.setImage(UIImage.lImageNamedFromMyBundle(name: cancleImageStr), for: .normal)
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        initView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - initView
+    fileprivate func initView() {
+        cancleButton.frame = CGRect(x: 16, y: l_height - 35, width: 26, height: 26)
+        titleLabel.frame = CGRect(x: LConstant.screenWidth/2 - 50, y: LConstant.statusHeight, width: 100, height: LConstant.topBarHeight)
+        selectImageView.frame = CGRect(x: LConstant.screenWidth - 40, y: l_height - 34, width: 24, height: 24)
+        indexLabel.frame = selectImageView.frame
+        selectButton.frame = CGRect(x: LConstant.screenWidth - 44, y: l_height - 44, width: 44, height: 44)
+        
+        addSubview(cancleButton)
+        addSubview(titleLabel)
+        addSubview(selectImageView)
+        addSubview(indexLabel)
+        addSubview(selectButton)
+        
+        cancleButton.addTarget(self, action: #selector(cancleButtonClick), for: .touchUpInside)
+        selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
+    }
+    
+    public func selectSerialNumber(index: Int) {
+        selectImageView.isHidden = false
+        if index == 0 {
+            selectImageView.image = UIImage.lImageNamedFromMyBundle(name: "icon_photograph_nor")
+        }else {
+            selectImageView.image = UIImage.lImageNamedFromMyBundle(name: "icon_photograph_sel")
+        }
+    }
+    
 
+}
+
+@objc
+extension LImagePickerNavView {
+    
+    fileprivate func cancleButtonClick() {
+        delegate?.buttonView(view: self, buttonType: .cancle)
+    }
+    
+    fileprivate func selectButtonClick() {
+        delegate?.buttonView(view: self, buttonType: .previewSelect)
+    }
 }
