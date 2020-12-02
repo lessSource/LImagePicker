@@ -28,13 +28,16 @@ public class LImagePickerController: LImagePickerNavigationController {
     /** 默认为NO，如果设置为YES，代理方法里photos会是nil */
     public var onlyReturnAsset: Bool = false    
     
-    /// 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个
+    /** 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个 */
     public var sortAscendingByModificationDate: Bool = true {
         didSet {
             LImagePickerManager.shared.sortAscendingByModificationDate = sortAscendingByModificationDate
         }
     }
         
+    /**  */
+    public var isViewLargerImage: Bool = true
+    
     
     fileprivate override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)

@@ -9,6 +9,8 @@
 import UIKit
 import Photos
 
+// 有拍照按钮时  需要重新定位
+
 private let cellMargin: CGFloat = 20
 
 class LPreviewImageController: UICollectionViewController {
@@ -22,17 +24,15 @@ class LPreviewImageController: UICollectionViewController {
     fileprivate(set) var currentIndex: Int = 0
     
     fileprivate lazy var navView: LImagePickerNavView = {
-        let navView = LImagePickerNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
+        let navView = LImagePickerNavView(frame: CGRect(x: 0, y: -LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
         navView.cancleImageStr = "icon_back_white"
-        navView.backgroundColor = UIColor.previewNavBackColor
         navView.isPreviewButton = true
         navView.delegate = self
         return navView
     }()
     
     fileprivate lazy var bottomView: LImagePickerBottomView = {
-        let bottomView = LImagePickerBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
-        bottomView.backgroundColor = UIColor.previewNavBackColor
+        let bottomView = LImagePickerBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
         bottomView.isPreviewHidden = true
         return bottomView
     }()
@@ -62,12 +62,20 @@ class LPreviewImageController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration: 0.3) {
+            self.navView.l_y = 0
+            self.bottomView.l_y = LConstant.screenHeight - LConstant.bottomBarHeight
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         initView()
     }
-
+    
     // MARK: - initView
     fileprivate func initView() {
         collectionView.frame = UIScreen.main.bounds
@@ -84,17 +92,26 @@ class LPreviewImageController: UICollectionViewController {
         } else {
             // Fallback on earlier versions
         }
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex), at: .left, animated: false)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex - 1), at: .left, animated: false)
         if let photographModel = configuration.dataArray[currentIndex] as? LPhotographModel {
             navView.selectSerialNumber(index: photographModel.selectIndex)
         }
         view.addSubview(navView)
-        view.addSubview(bottomView)
-        bottomView.number = configuration.dataArray.count
+        guard let imagePicker = navigationController as? LImagePickerController else { return }
+        if imagePicker.isViewLargerImage {
+            navView.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+        }else {
+            navView.backgroundColor = UIColor.previewNavBackColor
+            bottomView.backgroundColor = UIColor.previewNavBackColor
+            view.addSubview(bottomView)
+            bottomView.number = configuration.dataArray.count
+        }
+        
+        
     }
 }
 
-extension LPreviewImageController: LImagePickerButtonProtocl {
+extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProtocol {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return configuration.dataArray.count
@@ -106,6 +123,7 @@ extension LPreviewImageController: LImagePickerButtonProtocl {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: LPreviewImageCell = collectionView.dequeueReusableCell(withReuseIdentifier: LPreviewImageCell.l_identifire, for: indexPath) as! LPreviewImageCell
+        cell.delegate = self
         if let asset = configuration.dataArray[indexPath.section] as? PHAsset  {
             cell.getPhotoAsset(asset: asset)
         }else if let image = configuration.dataArray[indexPath.section] as? UIImage {
@@ -149,6 +167,16 @@ extension LPreviewImageController: LImagePickerButtonProtocl {
             }
             imagePickerDelegate?.previewImageState(viewController: self)
             
+        }
+    }
+    
+    func previewImageDidSelect(cell: UICollectionViewCell) {
+//        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        guard let imagePicker = navigationController as? LImagePickerController else { return }
+        if imagePicker.isViewLargerImage {
+            UIView.animate(withDuration: 0.3) {
+                self.navView.l_y = self.navView.l_y == 0 ? -LConstant.navbarAndStatusBar : 0
+            }
         }
     }
     

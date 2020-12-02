@@ -186,8 +186,9 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
             return
         }
         guard let cell = collectionView.cellForItem(at: indexPath) as? LPhotographImageCell else { return }
-        animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell)
-        let mediaArray = dataArray.compactMap { $0.media }
+        animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
+        var mediaArray = dataArray.compactMap { $0.media }
+        mediaArray.removeFirst()
         let imageModel = LPreviewImageModel(currentIndex: indexPath.item, dataArray: mediaArray)
         let imagePicker = LImagePickerController(configuration: imageModel, delegate: self)
         imagePicker.transitioningDelegate = animationDelegate
@@ -260,6 +261,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
             }
         }else if buttonType == .preview {
             let previeVC = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: imagePicker.selectArray), delegate: self)
+            previeVC.isViewLargerImage = false
             animationDelegate = LPreviewAnimationDelegate()
             previeVC.transitioningDelegate = animationDelegate
             present(previeVC, animated: true, completion: nil)

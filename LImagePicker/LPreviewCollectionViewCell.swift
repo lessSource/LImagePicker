@@ -11,6 +11,8 @@ import Photos
 
 class LPreviewCollectionViewCell: UICollectionViewCell {
     
+    public weak var delegate: LPreviewImageProtocol?
+    
     fileprivate lazy var imageRequestID: PHImageRequestID = PHInvalidImageRequestID
 
     fileprivate lazy var representedAssetIdentifier: String = ""
@@ -183,7 +185,7 @@ extension LPreviewCollectionViewCell {
     
     // 点击
     fileprivate func tapAction() {
-//        didSelectClosure?(.tapAction)
+        delegate?.previewImageDidSelect(cell: self)
     }
     
     // 长按

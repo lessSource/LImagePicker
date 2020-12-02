@@ -42,3 +42,17 @@ public extension LImagePickerProtocol {
 }
 
 
+
+protocol LPreviewImageProtocol: class {
+    
+    func previewImageDidSelect(cell: UICollectionViewCell)
+    
+}
+
+extension LPreviewImageProtocol {
+    
+    func previewImageDidSelect(cell: UICollectionViewCell) { }
+
+    
+}
+
