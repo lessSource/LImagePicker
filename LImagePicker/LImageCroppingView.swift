@@ -10,13 +10,14 @@ import UIKit
 
 class LImageCroppingView: UIView {
     
-    public var cropRect: CGRect =  CGRect(x: LConstant.screenWidth/2 - 150 , y: LConstant.screenHeight / 2 - 150 , width: 300, height: 300)
+    public var cropRect: CGRect =  CGRect.zero
+    
+    public var needCircleCrop: Bool = true
  
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
         isUserInteractionEnabled = false
-        initView()
     }
     
     required init?(coder: NSCoder) {
@@ -24,11 +25,18 @@ class LImageCroppingView: UIView {
     }
     
     // MARK: - initView
-    fileprivate func initView() {
+    public func drawCroppingView() {
+        guard let imagePicker =  viewController()?.navigationController as? LImagePickerController else { return }
+        cropRect = imagePicker.cropRect
+        needCircleCrop = imagePicker.needCircleCrop
         
         let path = UIBezierPath(rect: bounds)
         let shapeLayer = CAShapeLayer()
-        path.append(UIBezierPath(arcCenter: center, radius: cropRect.size.width/2, startAngle: 0, endAngle: 2.0 * CGFloat.pi, clockwise: false))
+        if needCircleCrop {
+            path.append(UIBezierPath(arcCenter: center, radius: cropRect.size.width/2, startAngle: 0, endAngle: 2.0 * CGFloat.pi, clockwise: false))
+        }else {
+            path.append(UIBezierPath(rect: cropRect))
+        }
         shapeLayer.path = path.cgPath
         shapeLayer.fillRule = .evenOdd
         shapeLayer.fillColor = UIColor.black.cgColor

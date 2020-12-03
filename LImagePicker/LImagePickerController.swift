@@ -20,7 +20,7 @@ public class LImagePickerController: LImagePickerNavigationController {
     /** 最多可选数量，默认9 */
     fileprivate(set) var maxImageCount: Int = 9
     /** 选中资源 */
-    var selectArray: [LPhotographModel] = []
+    internal var selectArray: [LPhotographModel] = []
     /** 是否允许拍摄照片 */
     public var allowTakePicture: Bool = true
     /** 获取图片的超时时间 */
@@ -38,6 +38,17 @@ public class LImagePickerController: LImagePickerNavigationController {
     public var isViewLargerImage: Bool = true
     /** 查看大图返回时需要修改定位的数量，例如前面过滤一个拍照按钮 */
     public var correctionNumber: Int = 0
+    
+    /** 在单选模式下，照片列表页中，显示选择按钮,默认为false */
+    public var showSelectBtn: Bool = false
+    /** 允许裁剪,默认为YES，showSelectBtn为false才生效 */
+    public var allowCrop: Bool = true
+    /** 剪裁框的尺寸 */
+    public var cropRect: CGRect = CGRect(x: 0, y: (LConstant.screenHeight - LConstant.screenWidth)/2, width: LConstant.screenWidth, height: LConstant.screenWidth)
+    /** 需要圆形剪裁框 */
+    public var needCircleCrop: Bool = true
+    /** 剪裁的图形是否是圆形 */
+    public var cropCircle: Bool = false
     
     
     fileprivate override init(rootViewController: UIViewController) {

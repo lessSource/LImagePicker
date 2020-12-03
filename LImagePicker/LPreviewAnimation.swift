@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LPreviewAnimationDelegate: NSObject, UIViewControllerTransitioningDelegate {
+public class LPreviewAnimationDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
     fileprivate var isPresentAnimatotion: Bool = true
     // 动画时间

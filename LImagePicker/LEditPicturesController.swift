@@ -58,9 +58,41 @@ class LEditPicturesController: UIViewController {
         return croppingView
     }()
     
+    fileprivate lazy var label: UILabel = {
+        let label = UILabel()
+        label.text = "移动或缩放图片"
+        label.textColor = UIColor.white
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    fileprivate lazy var confirmButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("确定", for: .normal)
+        button.backgroundColor = UIColor.bottomViewConfirmBackColor
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.layer.cornerRadius = 18
+        return button
+    }()
+    
+    fileprivate lazy var chooseButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("重新选择", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        return button
+    }()
+    
+    
     init(mediaProtocol: LImagePickerMediaProtocol) {
         self.mediaProtocol = mediaProtocol
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        print(self, "+++++释放")
     }
     
     required init?(coder: NSCoder) {
@@ -70,6 +102,7 @@ class LEditPicturesController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.black
         LImagePickerManager.shared.shouldFixOrientation = true
         _addGestureRecognizer()
         initView()
@@ -78,10 +111,21 @@ class LEditPicturesController: UIViewController {
     
     // MARK: - initView
     fileprivate func initView() {
+        label.frame = CGRect(x: 100, y: LConstant.statusHeight, width: LConstant.screenWidth - 200, height: LConstant.topBarHeight)
+        confirmButton.frame = CGRect(x: LConstant.screenWidth - 92, y: LConstant.screenHeight - 66 - LConstant.barHeight, width: 72, height: 36)
+        chooseButton.frame = CGRect(x: 20, y: LConstant.screenHeight - 66 - LConstant.barHeight, width: chooseButton.intrinsicContentSize.width, height: 36)
+        
         view.addSubview(scrollView)
         scrollView.addSubview(imageContainerView)
         imageContainerView.addSubview(currentImage)
         view.addSubview(croppingView)
+        view.addSubview(label)
+        view.addSubview(confirmButton)
+        view.addSubview(chooseButton)
+        croppingView.drawCroppingView()
+        
+        confirmButton.addTarget(self, action: #selector(confirmButtonClick), for: .touchUpInside)
+        chooseButton.addTarget(self, action: #selector(chooseButtonClick), for: .touchUpInside)
     }
     
     func requestPhotoSize(asset: PHAsset) -> CGSize {
@@ -220,10 +264,7 @@ extension LEditPicturesController {
     
     // 点击
     fileprivate func tapAction() {        
-        var corPedImage = LImagePickerManager.shared.tz_cropImageView(imageView: currentImage, rect: croppingView.cropRect , zoomScale: scrollView.zoomScale, containerView: view)
-        corPedImage = LImagePickerManager.shared.tz_circularClipImage(image: corPedImage)
-        imagePickerDelegate?.editPictures(viewConttroller: self, croppingImage: corPedImage, originalImage: currentImage.image)
-        dismiss(animated: true, completion: nil)
+  
     }
     
     // 长按
@@ -253,5 +294,18 @@ extension LEditPicturesController {
         default: break
         }
         
+    }
+    
+    fileprivate func confirmButtonClick() {
+        var corPedImage = LImagePickerManager.shared.tz_cropImageView(imageView: currentImage, rect: croppingView.cropRect , zoomScale: scrollView.zoomScale, containerView: view)
+        if let imageNavPicker = navigationController as? LImagePickerController, imageNavPicker.cropCircle {
+            corPedImage = LImagePickerManager.shared.tz_circularClipImage(image: corPedImage)
+        }
+        imagePickerDelegate?.editPictures(viewConttroller: self, croppingImage: corPedImage, originalImage: currentImage.image)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func chooseButtonClick() {
+        navigationController?.popViewController(animated: true)
     }
 }

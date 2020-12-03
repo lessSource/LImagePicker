@@ -73,7 +73,16 @@ extension UIView {
         }
     }
     
-    
+    func viewController() -> UIViewController? {
+        var next = self.next
+        while next != nil {
+            if next is UIViewController {
+                return next as? UIViewController
+            }
+            next = next?.next
+        }
+        return  nil
+    }
 }
 
 extension UIButton {

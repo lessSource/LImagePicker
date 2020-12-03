@@ -22,7 +22,7 @@ import Photos
 //
 class ViewController: UIViewController {
 //
-////    fileprivate var delegate: ModelAnimationDelegate?
+    fileprivate var delegate: LPreviewAnimationDelegate = LPreviewAnimationDelegate()
 //
     fileprivate lazy var contentImage: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 100, y: 300, width: 200, height: 200))
@@ -102,7 +102,6 @@ extension ViewController: LImagePickerProtocol {
         print("11")
         contentImage.image = croppingImage
         originalImageView.image = originalImage
-        
     }
     
     func takingPictures(viewController: UIViewController, image: UIImage?) {
@@ -123,8 +122,9 @@ extension ViewController {
 //
     // 图库
     func galleryButtonClick() {
-        let imagePicker = LImagePickerController(withMaxImage: 20, delegate: self)
+        let imagePicker = LImagePickerController(withMaxImage: 1, delegate: self)
         imagePicker.sortAscendingByModificationDate = false
+        imagePicker.cropCircle = true
         present(imagePicker, animated: true, completion: nil)
         print(111)
         
@@ -136,7 +136,9 @@ extension ViewController {
     }
     
     func originalImageViewTapClick() {
-        let imagePicker = LImagePickerController(contentMedia: originalImageView.image! , delegate: self)
+        delegate = LPreviewAnimationDelegate(contentImage: originalImageView, superView: originalImageView.superview)
+        let imagePicker = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: [originalImageView.image!]), delegate: self)
+        imagePicker.transitioningDelegate = delegate
         present(imagePicker, animated: true, completion: nil)
         
     }

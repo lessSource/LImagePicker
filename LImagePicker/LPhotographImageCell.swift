@@ -32,6 +32,7 @@ class LPhotographImageCell: LPhotographCollectionViewCell {
         label.textAlignment = .center
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
+        label.isHidden = true
         return label
     }()
     
@@ -52,6 +53,7 @@ class LPhotographImageCell: LPhotographCollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -72,7 +72,12 @@ class LPhotographController: UIViewController {
         collectionView.register(LPhotographShootingCell.self, forCellWithReuseIdentifier: LPhotographShootingCell.l_identifire)
         view.addSubview(collectionView)
         view.addSubview(navView)
-        view.addSubview(bottomView)
+        guard let imagePicker = navigationController as? LImagePickerController else { return }
+        if imagePicker.maxImageCount != 1 || imagePicker.showSelectBtn {
+            view.addSubview(bottomView)
+        }else {
+            collectionView.l_height = LConstant.screenHeight - LConstant.navbarAndStatusBar
+        }
     }
     
     // MARK: - initData
@@ -152,9 +157,12 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LPhotographImageCell.l_identifire, for: indexPath) as! LPhotographImageCell
             cell.loadingResourcesModel(dataArray[indexPath.row])
-            cell.selectSerialNumber(index: dataArray[indexPath.row].selectIndex, allowSelect: allowSelect)
-            cell.didSelectClosure = { [weak self] in
-                self?.collectionViewDidSelectImage(indexPath: indexPath)
+            guard let imagePicker = navigationController as? LImagePickerController else { return cell }
+            if imagePicker.maxImageCount != 1 || imagePicker.showSelectBtn {
+                cell.selectSerialNumber(index: dataArray[indexPath.row].selectIndex, allowSelect: allowSelect)
+                cell.didSelectClosure = { [weak self] in
+                    self?.collectionViewDidSelectImage(indexPath: indexPath)
+                }
             }
             return cell
         }
@@ -186,6 +194,15 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
             }
             return
         }
+        guard let imageNavPicker = navigationController as? LImagePickerController else { return }
+        if !imageNavPicker.showSelectBtn && imageNavPicker.maxImageCount == 1 {
+            // 剪切
+            let editPicturesVC = LEditPicturesController(mediaProtocol: dataArray[indexPath.item].media)
+            editPicturesVC.imagePickerDelegate = imagePickerDelegate
+            navigationController?.pushViewController(editPicturesVC, animated: true)
+            return
+        }
+        // 显示大图
         guard let cell = collectionView.cellForItem(at: indexPath) as? LPhotographImageCell else { return }
         animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
         let mediaArray = dataArray.filter { $0.type != .shooting }
