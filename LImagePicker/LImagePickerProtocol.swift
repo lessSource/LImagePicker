@@ -24,7 +24,7 @@ public protocol LImagePickerProtocol: class {
     func photographSelectImage(viewController: UIViewController, photos: [UIImage], assets: [PHAsset])
     
     // 预览图片状态改变
-    func previewImageState(viewController: UIViewController)
+    func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol)
     
 }
 
@@ -38,7 +38,9 @@ public extension LImagePickerProtocol {
     
     func photographSelectImage(viewController: UIViewController, photos: [UIImage], assets: [PHAsset]) { }
     
-    func previewImageState(viewController: UIViewController) { }
+    func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) { }
+    
+    
 }
 
 
@@ -53,6 +55,14 @@ extension LPreviewImageProtocol {
     
     func previewImageDidSelect(cell: UICollectionViewCell) { }
 
+}
+
+protocol LPreviewBottomProtocol: class {
+    
+    func previewBottomView(view: UIView, didSelect index: Int)
     
 }
+
+
+
 

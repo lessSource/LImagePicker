@@ -70,6 +70,7 @@ class LPhotographImageCell: LPhotographCollectionViewCell {
         selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
     }
     
+    // 相册
     public func selectSerialNumber(index: Int, allowSelect: Bool) {
         if index == 0 {
             selectImageView.image = UIImage.lImageNamedFromMyBundle(name: "icon_photograph_nor")
@@ -81,6 +82,20 @@ class LPhotographImageCell: LPhotographCollectionViewCell {
             indexLabel.isHidden = false
             indexLabel.text = "\(index)"
             imageMaskView.isHidden = true
+        }
+    }
+    
+    // 预览
+    public func previewSelect(isCurrent: Bool, isSelect: Bool) {
+        selectImageView.isHidden = true
+        indexLabel.isHidden = true
+        selectButton.isHidden = true
+        imageMaskView.isHidden = isSelect
+        if isCurrent {
+            imageView.layer.borderColor = UIColor.withHex(hexString: "#007AFD").cgColor
+            imageView.layer.borderWidth = 3
+        }else {
+            imageView.layer.borderWidth = 0
         }
     }
     

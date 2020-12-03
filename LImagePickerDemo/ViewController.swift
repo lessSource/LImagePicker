@@ -111,8 +111,8 @@ extension ViewController: LImagePickerProtocol {
     }
     
     func photographSelectImage(viewController: UIViewController, photos: [UIImage], assets: [PHAsset]) {
-        contentImage.image = photos[0]
-        originalImageView.image = photos[1]
+//        contentImage.image = photos[0]
+//        originalImageView.image = photos[1]
     }
     
     

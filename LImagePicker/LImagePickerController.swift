@@ -34,9 +34,10 @@ public class LImagePickerController: LImagePickerNavigationController {
             LImagePickerManager.shared.sortAscendingByModificationDate = sortAscendingByModificationDate
         }
     }
-        
-    /**  */
+    /** 是否是查看大图 */
     public var isViewLargerImage: Bool = true
+    /** 查看大图返回时需要修改定位的数量，例如前面过滤一个拍照按钮 */
+    public var correctionNumber: Int = 0
     
     
     fileprivate override init(rootViewController: UIViewController) {

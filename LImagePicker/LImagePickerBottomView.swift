@@ -15,8 +15,9 @@ class LImagePickerBottomView: UIView {
     fileprivate lazy var previewButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("预览", for: .normal)
-        button.setTitleColor(UIColor.bottomViewPreviewColor, for: .normal)
+        button.setTitleColor(UIColor.buttonViewPreviewNorColor, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.isUserInteractionEnabled = false
         return button
     }()
     
@@ -24,10 +25,11 @@ class LImagePickerBottomView: UIView {
         let button = UIButton(type: .custom)
         button.setTitle("确定", for: .normal)
         button.setTitleColor(UIColor.bottomViewConfirmColor, for: .normal)
-        button.backgroundColor = UIColor.bottomViewConfirmBackColor
+        button.backgroundColor = UIColor.bottomViewConfirmNorBackColor
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
+        button.isUserInteractionEnabled = false
         return button
     }()
     
@@ -51,6 +53,15 @@ class LImagePickerBottomView: UIView {
             numberLabel.isHidden = false
             numberLabel.text = "已选\(number)张"
             numberLabel.l_width = numberLabel.intrinsicContentSize.width
+        }
+    }
+    
+    public var isConfirmSelect: Bool = true {
+        didSet {
+            previewButton.isUserInteractionEnabled = isConfirmSelect
+            previewButton.setTitleColor(isConfirmSelect ? UIColor.bottomViewPreviewColor : UIColor.buttonViewPreviewNorColor , for: .normal)
+            confirmButton.isUserInteractionEnabled = isConfirmSelect
+            confirmButton.backgroundColor = isConfirmSelect ? UIColor.bottomViewConfirmBackColor : UIColor.bottomViewConfirmNorBackColor
         }
     }
     

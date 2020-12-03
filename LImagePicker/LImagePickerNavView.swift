@@ -53,16 +53,33 @@ class LImagePickerNavView: UIView {
         return label
     }()
     
+    fileprivate lazy var completeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("完成", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.backgroundColor = UIColor.bottomViewConfirmBackColor
+        button.isHidden = true
+        button.layer.cornerRadius = 14
+        return button
+    }()
+    
     public var isPreviewButton: Bool = false {
         didSet {
             selectButton.isHidden = !isPreviewButton
             selectImageView.isHidden = !isPreviewButton
+            completeButton.isHidden = isPreviewButton
         }
     }
     
     public var title: String = "" {
         didSet {
             titleLabel.text = title
+        }
+    }
+    
+    public var titleColor: UIColor = UIColor.clear {
+        didSet {
+            titleLabel.textColor = titleColor
         }
     }
     
@@ -84,16 +101,18 @@ class LImagePickerNavView: UIView {
     // MARK: - initView
     fileprivate func initView() {
         cancleButton.frame = CGRect(x: 16, y: l_height - 35, width: 26, height: 26)
-        titleLabel.frame = CGRect(x: LConstant.screenWidth/2 - 50, y: LConstant.statusHeight, width: 100, height: LConstant.topBarHeight)
-        selectImageView.frame = CGRect(x: LConstant.screenWidth - 40, y: l_height - 34, width: 24, height: 24)
+        titleLabel.frame = CGRect(x: l_width/2 - 50, y: LConstant.statusHeight, width: 100, height: LConstant.topBarHeight)
+        selectImageView.frame = CGRect(x: l_width - 40, y: l_height - 34, width: 24, height: 24)
         indexLabel.frame = selectImageView.frame
-        selectButton.frame = CGRect(x: LConstant.screenWidth - 44, y: l_height - 44, width: 44, height: 44)
+        selectButton.frame = CGRect(x: l_width - 44, y: l_height - 44, width: 44, height: 44)
+        completeButton.frame = CGRect(x: l_width - 70, y: l_height - 36, width: 55, height: 28)
         
         addSubview(cancleButton)
         addSubview(titleLabel)
         addSubview(selectImageView)
         addSubview(indexLabel)
         addSubview(selectButton)
+        addSubview(completeButton)
         
         cancleButton.addTarget(self, action: #selector(cancleButtonClick), for: .touchUpInside)
         selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)

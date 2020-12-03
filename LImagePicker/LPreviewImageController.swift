@@ -9,8 +9,6 @@
 import UIKit
 import Photos
 
-// 有拍照按钮时  需要重新定位
-
 private let cellMargin: CGFloat = 20
 
 class LPreviewImageController: UICollectionViewController {
@@ -23,18 +21,30 @@ class LPreviewImageController: UICollectionViewController {
     /** 当前序号 */
     fileprivate(set) var currentIndex: Int = 0
     
+    /** 有拍照按钮时需要重新定位 */
+    fileprivate(set) var correctionNumber: Int = 0
+    
     fileprivate lazy var navView: LImagePickerNavView = {
         let navView = LImagePickerNavView(frame: CGRect(x: 0, y: -LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
-        navView.cancleImageStr = "icon_back_white"
+        navView.cancleImageStr = "icon_close_white"
         navView.isPreviewButton = true
         navView.delegate = self
+        navView.titleColor = UIColor.previewNavTitleColor
         return navView
     }()
     
     fileprivate lazy var bottomView: LImagePickerBottomView = {
         let bottomView = LImagePickerBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
         bottomView.isPreviewHidden = true
+        bottomView.isConfirmSelect = true
         return bottomView
+    }()
+    
+    fileprivate lazy var previewView: LPreviewBottomView = {
+        let previewView = LPreviewBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - 76 - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: 76))
+        previewView.backgroundColor = UIColor.previewNavBackColor
+        previewView.delegate = self
+        return previewView
     }()
     
     fileprivate override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -64,9 +74,12 @@ class LPreviewImageController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3) {
-            self.navView.l_y = 0
-            self.bottomView.l_y = LConstant.screenHeight - LConstant.bottomBarHeight
+        guard let imagePicker = navigationController as? LImagePickerController else { return }
+        if imagePicker.isViewLargerImage {
+            UIView.animate(withDuration: 0.3) {
+                self.navView.l_y = 0
+                self.bottomView.l_y = LConstant.screenHeight - LConstant.bottomBarHeight
+            }
         }
     }
     
@@ -92,26 +105,34 @@ class LPreviewImageController: UICollectionViewController {
         } else {
             // Fallback on earlier versions
         }
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex - 1), at: .left, animated: false)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: configuration.currentIndex), at: .left, animated: false)
         if let photographModel = configuration.dataArray[currentIndex] as? LPhotographModel {
             navView.selectSerialNumber(index: photographModel.selectIndex)
         }
         view.addSubview(navView)
         guard let imagePicker = navigationController as? LImagePickerController else { return }
+        correctionNumber = imagePicker.correctionNumber
         if imagePicker.isViewLargerImage {
             navView.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+            navView.title = "\(currentIndex + 1)/\(configuration.dataArray.count)"
+            navView.isPreviewButton = false
         }else {
+            navView.l_y = 0
+            bottomView.l_y = LConstant.screenHeight - LConstant.bottomBarHeight
             navView.backgroundColor = UIColor.previewNavBackColor
             bottomView.backgroundColor = UIColor.previewNavBackColor
             view.addSubview(bottomView)
             bottomView.number = configuration.dataArray.count
+            view.addSubview(previewView)
+            previewView.dataArray = configuration.dataArray.compactMap { $0 as? LPhotographModel }
+            previewView.selectIndex = configuration.currentIndex
         }
         
         
     }
 }
 
-extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProtocol {
+extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProtocol, LPreviewBottomProtocol {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return configuration.dataArray.count
@@ -143,8 +164,14 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         currentIndex = Int(scrollView.contentOffset.x / scrollView.l_width)
-        if let photographModel = configuration.dataArray[safe: currentIndex] as? LPhotographModel {
-            navView.selectSerialNumber(index: photographModel.selectIndex)
+        guard let imagePicker = navigationController as? LImagePickerController else { return }
+        if imagePicker.isViewLargerImage {
+            navView.title = "\(currentIndex + 1)/\(configuration.dataArray.count)"
+        }else {
+            if let photographModel = configuration.dataArray[safe: currentIndex] as? LPhotographModel {
+                navView.selectSerialNumber(index: photographModel.selectIndex)
+            }
+            previewView.selectIndex = currentIndex
         }
     }
     
@@ -154,19 +181,18 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
         }else if buttonType == .confirm {
             
         }else if buttonType == .previewSelect {
-            if let photographModel = configuration.dataArray[safe: currentIndex] as? LPhotographModel {
-                photographModel.isSelect = !photographModel.isSelect
-                if !photographModel.isSelect {
-                    photographModel.selectIndex = 0
-                }
-                navView.selectSerialNumber(index: photographModel.selectIndex)
-            }
-            let selectArray = configuration.dataArray.compactMap { $0 as? LPhotographModel }.filter { $0.isSelect }
-            for (i, item) in selectArray.enumerated() {
-                item.selectIndex = i + 1
-            }
-            imagePickerDelegate?.previewImageState(viewController: self)
+            guard let photographModel = configuration.dataArray[safe: currentIndex] as? LPhotographModel else { return }
             
+            photographModel.isSelect = !photographModel.isSelect
+            if !photographModel.isSelect {
+                photographModel.selectIndex = 0
+            }else {
+                photographModel.selectIndex = 1
+            }
+            navView.selectSerialNumber(index: photographModel.selectIndex)
+            previewView.selectIndex = currentIndex
+            bottomView.number = configuration.dataArray.compactMap { $0 as? LPhotographModel }.filter { $0.isSelect }.count
+            imagePickerDelegate?.previewImageState(viewController: self, mediaProtocol: photographModel)
         }
     }
     
@@ -178,6 +204,14 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
                 self.navView.l_y = self.navView.l_y == 0 ? -LConstant.navbarAndStatusBar : 0
             }
         }
+    }
+    
+    func previewBottomView(view: UIView, didSelect index: Int) {
+//        if abs(currentIndex - index) > 1 {
+//            collectionView.scrollToItem(at: IndexPath(item: 0, section: currentIndex > index ? index + 1 : index - 1), at: .left, animated: false)///
+//        }
+        currentIndex = index
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: currentIndex), at: .left, animated: false)
     }
     
 }

@@ -119,6 +119,7 @@ class LPhotographController: UIViewController {
                 item.selectIndex = i + 1
             }
         }
+        bottomView.isConfirmSelect = imagePicker.selectArray.count > 0
         allowSelect = imagePicker.selectArray.count != imagePicker.maxImageCount
         collectionView.reloadData()
     }
@@ -187,10 +188,10 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         }
         guard let cell = collectionView.cellForItem(at: indexPath) as? LPhotographImageCell else { return }
         animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
-        var mediaArray = dataArray.compactMap { $0.media }
-        mediaArray.removeFirst()
-        let imageModel = LPreviewImageModel(currentIndex: indexPath.item, dataArray: mediaArray)
+        let mediaArray = dataArray.filter { $0.type != .shooting }
+        let imageModel = LPreviewImageModel(currentIndex: indexPath.item - 1, dataArray: mediaArray)
         let imagePicker = LImagePickerController(configuration: imageModel, delegate: self)
+        imagePicker.correctionNumber = 1
         imagePicker.transitioningDelegate = animationDelegate
         present(imagePicker, animated: true, completion: nil)
     }
@@ -201,9 +202,18 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         collectionView.reloadData()
     }
     
-    func previewImageState(viewController: UIViewController) {
-        guard let imagePicker = navigationController as? LImagePickerController else { return }
-        imagePicker.selectArray = imagePicker.selectArray.filter { $0.isSelect }
+    func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) {
+        guard let imagePicker = navigationController as? LImagePickerController, let photographModel = mediaProtocol as? LPhotographModel else { return }
+        if photographModel.isSelect {
+            imagePicker.selectArray.append(photographModel)
+        }else {
+            imagePicker.selectArray.removeAll(where: { $0 == photographModel } )
+        }
+        for (i, item) in imagePicker.selectArray.enumerated() {
+            item.selectIndex = i + 1
+        }
+        bottomView.isConfirmSelect = imagePicker.selectArray.count > 0
+        allowSelect = imagePicker.selectArray.count != imagePicker.maxImageCount
         collectionView.reloadData()
     }
     

@@ -51,6 +51,11 @@ extension UIColor {
         return UIColor.withHex(hexString: "#222425")
     }
     
+    // 预览标题颜色
+    class var previewNavTitleColor: UIColor {
+        return UIColor.white
+    }
+    
     // 导航栏标题颜色
     class var navViewTitleColor: UIColor {
         return UIColor.withHex(hexString: "#2A2A2A")
@@ -66,6 +71,11 @@ extension UIColor {
         return UIColor.withHex(hexString: "#242A39")
     }
     
+    // 标签栏未选中颜色
+    class var buttonViewPreviewNorColor: UIColor {
+        return UIColor.withHex(hexString: "#DAE0E6")
+    }
+    
     // 标签栏确定颜色
     class var bottomViewConfirmColor: UIColor {
         return UIColor.white
@@ -74,6 +84,11 @@ extension UIColor {
     // 标签栏确定背景颜色
     class var bottomViewConfirmBackColor: UIColor {
         return UIColor.withHex(hexString: "#007AFD")
+    }
+    
+    // 标签栏确定不能点击背景颜色
+    class var bottomViewConfirmNorBackColor: UIColor {
+        return UIColor.withHex(hexString: "#D4DAE0")
     }
 
     // 标签栏数量颜色

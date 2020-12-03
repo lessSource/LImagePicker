@@ -138,7 +138,7 @@ extension LPreviewAnimationDelegate {
         }
         var endView: UIView?
         if let collectionView = superView as? UICollectionView {
-            let indexPath = IndexPath(item: formVC.currentIndex, section: 0)
+            let indexPath = IndexPath(item: formVC.currentIndex + formVC.correctionNumber, section: 0)
             endView = collectionView.cellForItem(at: indexPath)
         }else {
             endView = contentImage

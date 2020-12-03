@@ -29,6 +29,7 @@
 		2AEE0D6124626D16008D5179 /* LImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEE0D4B24626D15008D5179 /* LImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2AEE0D8E24626E57008D5179 /* LImagePicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2AEE0D8924626E57008D5179 /* LImagePicker.bundle */; };
 		4ACEB85AAA49E5A82D5EECBA /* Pods_LImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC2D23AF78BF62EC9A0FA0B /* Pods_LImagePicker.framework */; };
+		CA8061092578907300C95E97 /* LPreviewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8061082578907300C95E97 /* LPreviewBottomView.swift */; };
 		CA9367C725121EDE00324C50 /* ModelTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9367C625121EDE00324C50 /* ModelTable.swift */; };
 		CACA0E8E25749DC20008F7BE /* LImagePickerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */; };
 		CACA0E9325749DF70008F7BE /* LImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E9225749DF70008F7BE /* LImagePickerController.swift */; };
@@ -247,6 +248,7 @@
 		9EE72F3B60D8ABA4C27E033F /* Pods-LImagePicker-LImagePickerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker-LImagePickerTests.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker-LImagePickerTests/Pods-LImagePicker-LImagePickerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LImagePickerDemo_LImagePickerDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1A9ECADFED227E90A273D9 /* Pods-LImagePickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePickerDemo.release.xcconfig"; path = "Target Support Files/Pods-LImagePickerDemo/Pods-LImagePickerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		CA8061082578907300C95E97 /* LPreviewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewBottomView.swift; sourceTree = "<group>"; };
 		CA9367C625121EDE00324C50 /* ModelTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTable.swift; sourceTree = "<group>"; };
 		CACA0E7125749BCB0008F7BE /* LPublicImageParameter copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LPublicImageParameter copy-Info.plist"; path = "/Users/hy.ltd/Desktop/svn/LImagePicker/LPublicImageParameter copy-Info.plist"; sourceTree = "<absolute>"; };
 		CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavigationController.swift; sourceTree = "<group>"; };
@@ -654,8 +656,8 @@
 				2AEE0D8924626E57008D5179 /* LImagePicker.bundle */,
 				2AEE0D4D24626D15008D5179 /* LImagePicker.h */,
 				CACA0F1425749FF30008F7BE /* LImagePicker+Extension.swift */,
-				CACA0F4E2574A0690008F7BE /* LImagePickerButtonProtocl.swift */,
 				CACA0F3C2574A0320008F7BE /* LImagePickerBottomView.swift */,
+				CACA0F4E2574A0690008F7BE /* LImagePickerButtonProtocl.swift */,
 				CACA0F232574A0060008F7BE /* LImagePickerConfiguration.swift */,
 				CACA0E9225749DF70008F7BE /* LImagePickerController.swift */,
 				CACA0F1925749FF90008F7BE /* LImagePickerManager.swift */,
@@ -676,6 +678,7 @@
 				CACA0EA625749EC90008F7BE /* LPhotographVideoCell.swift */,
 				CACA0F2D2574A01D0008F7BE /* LPicturesSelectedView.swift */,
 				CACA0EFB25749FCD0008F7BE /* LPreviewAnimation.swift */,
+				CA8061082578907300C95E97 /* LPreviewBottomView.swift */,
 				CACA0EC925749F300008F7BE /* LPreviewCollectionViewCell.swift */,
 				CACA0ED825749F4F0008F7BE /* LPreviewGifCell.swift */,
 				CACA0ECE25749F3C0008F7BE /* LPreviewImageCell.swift */,
@@ -1146,6 +1149,7 @@
 				CACA0F0625749FDC0008F7BE /* String+LImagePicker.swift in Sources */,
 				CACA0EBB25749EFD0008F7BE /* LPhotoAlbumView.swift in Sources */,
 				CACA0ED925749F4F0008F7BE /* LPreviewGifCell.swift in Sources */,
+				CA8061092578907300C95E97 /* LPreviewBottomView.swift in Sources */,
 				CACA0E9825749E3D0008F7BE /* LPhotographController.swift in Sources */,
 				CACA0F422574A05E0008F7BE /* LImagePickerProtocol.swift in Sources */,
 				CACA0EC525749F1D0008F7BE /* LPreviewImageController.swift in Sources */,
