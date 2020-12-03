@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 import CoreMotion
 
-
 class LTakingPicturesView: UIView {
     
     fileprivate let COUNT_DUR_TIMER_INTERVAL: TimeInterval = 0.05
@@ -43,7 +42,7 @@ class LTakingPicturesView: UIView {
     public var photoOutput = AVCapturePhotoOutput()
 
     /** 视频输出流 */
-    public var captureMovieFileOutput = AVCaptureMovieFileOutput()
+    public var captureVideoDataOutput = AVCaptureVideoDataOutput()
     
     /** 预览层 */
     public var previewLayer: AVCaptureVideoPreviewLayer?
@@ -81,6 +80,18 @@ class LTakingPicturesView: UIView {
     
     fileprivate var countDurTime: Timer?
     
+    fileprivate var filter: CIFilter = CIFilter(name: "CIPhotoEffectTransfer")!
+    fileprivate lazy var context: CIContext = {
+        let eaglContext = EAGLContext(api: .openGLES2)
+        
+        let options = [CIContextOption.workingColorSpace: NSNull()]
+        return CIContext(eaglContext: eaglContext!, options: options)
+    }()
+    
+    lazy var filterNames: [String] = {
+        return ["CIColorInvert", "CIPhotoEffectMono", "CIPhotoEffectInstant", "CIPhotoEffectTransfer"]
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         senseType = .system
@@ -96,7 +107,9 @@ class LTakingPicturesView: UIView {
     }
     
     // MARK: - public
+    
     public func setUpSession() {
+        captureSession.beginConfiguration()
         // 设置分辨率
         if captureSession.canSetSessionPreset(sessionPreset) {
             captureSession.sessionPreset = sessionPreset
@@ -140,20 +153,20 @@ class LTakingPicturesView: UIView {
         if captureSession.canAddOutput(photoOutput) {
             photoOutput.isHighResolutionCaptureEnabled = true
             captureSession.addOutput(photoOutput)
-            captureSession.commitConfiguration()
         }
                 
         // 不设置这个属性，超过10s的视频会没有声音
-        captureMovieFileOutput.movieFragmentInterval = .invalid
-        if captureSession.canAddOutput(captureMovieFileOutput) {
-            captureSession.addOutput(captureMovieFileOutput)
-            
-            let captureConnection = captureMovieFileOutput.connection(with: .video)
+        captureVideoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
+        captureVideoDataOutput.alwaysDiscardsLateVideoFrames = true
+        if captureSession.canAddOutput(captureVideoDataOutput) {
+            captureSession.addOutput(captureVideoDataOutput)
+            let captureConnection = captureVideoDataOutput.connection(with: .video)
             // 开启视频防抖
             if captureConnection?.isVideoStabilizationSupported == true {
                 captureConnection?.preferredVideoStabilizationMode = .auto
             }
         }
+        captureVideoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "VideoQueue"))
         
         // 预览层
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -166,7 +179,7 @@ class LTakingPicturesView: UIView {
         
         // 填充模式
         previewLayer?.videoGravity = .resizeAspectFill
-        
+        captureSession.commitConfiguration()
         addNotification(to: captureDevice!)
     }
     
@@ -193,11 +206,11 @@ class LTakingPicturesView: UIView {
             return
         }
         isRecording = true
-        let captureConnection = captureMovieFileOutput.connection(with: .video)
+        let captureConnection = captureVideoDataOutput.connection(with: .video)
         // 如果正在录制，则重新录制，先暂停
-        if captureMovieFileOutput.isRecording {
-            stopVideoRecoding()
-        }
+//        if captureVideoDataOutput.isRecordin {
+//            stopVideoRecoding()
+//        }
         // 预览图层和视频方向保持一致
         captureConnection?.videoOrientation = previewLayer?.connection?.videoOrientation ?? AVCaptureVideoOrientation.portrait
         if !videoFilePath.isEmpty {
@@ -206,16 +219,16 @@ class LTakingPicturesView: UIView {
         // 添加路径
         let fileUrl = URL(fileURLWithPath: filePath)
         videoFilePath = filePath
-        captureMovieFileOutput.startRecording(to: fileUrl, recordingDelegate: self)
+//        captureVideoDataOutput.startRecording(to: fileUrl, recordingDelegate: self)
         
     }
     
     // 结束录制
     public func stopVideoRecoding() {
         waitingForStop = true
-        if captureMovieFileOutput.isRecording {
-            captureMovieFileOutput.stopRecording()
-        }
+//        if captureMovieFileOutput.isRecording {
+//            captureMovieFileOutput.stopRecording()
+//        }
         isRecording = false
         stopCountDurTimer()
     }
@@ -329,7 +342,41 @@ class LTakingPicturesView: UIView {
 }
 
 
-extension LTakingPicturesView: AVCaptureFileOutputRecordingDelegate, AVCapturePhotoCaptureDelegate {
+extension LTakingPicturesView: AVCaptureFileOutputRecordingDelegate, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
+
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        print("1234")
+        let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+        let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
+        var currentVideoDimensions: CMVideoDimensions? = CMVideoFormatDescriptionGetDimensions(formatDescription!)
+        var currentSampleTime: CMTime? = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer)
+
+        var outputImage = CIImage(cvImageBuffer: imageBuffer!)
+        if filter != nil {
+            filter.setValue(outputImage, forKey: kCIInputImageKey)
+            outputImage = filter.outputImage!
+            let orientation = UIDevice.current.orientation
+            var t: CGAffineTransform!
+            if orientation == UIDeviceOrientation.portrait {
+                t = CGAffineTransform(rotationAngle: -CGFloat.pi / 2.0)
+            } else if orientation == UIDeviceOrientation.portraitUpsideDown {
+                t = CGAffineTransform(rotationAngle: CGFloat.pi / 2.0)
+            } else if (orientation == UIDeviceOrientation.landscapeRight) {
+                t = CGAffineTransform(rotationAngle: CGFloat.pi)
+            } else {
+                t = CGAffineTransform(rotationAngle: 0)
+            }
+            outputImage = outputImage.transformed(by: t)
+            let cgImage = self.context.createCGImage(outputImage, from: outputImage.extent)
+            DispatchQueue.main.async {
+                self.previewLayer?.contents = cgImage
+            }
+        }
+        
+    }
+    
+
+    
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
 
@@ -361,6 +408,7 @@ extension LTakingPicturesView: AVCaptureFileOutputRecordingDelegate, AVCapturePh
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+                
         waitingForStop = false
         if error == nil {
             let isOverDuration = totleDuration >= maxDuration

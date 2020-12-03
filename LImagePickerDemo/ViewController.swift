@@ -11,19 +11,10 @@ import LImagePicker
 import Kingfisher
 import Photos
 
-////import LImagePicker
-////import Photos
-////import LImageShow
-////import LPublicImageParameter
-////import Kingfisher
-////import LImagePickerController
-//
-//
-//
 class ViewController: UIViewController {
-//
+    
     fileprivate var delegate: LPreviewAnimationDelegate = LPreviewAnimationDelegate()
-//
+
     fileprivate lazy var contentImage: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 100, y: 300, width: 200, height: 200))
         image.backgroundColor = UIColor.orange
@@ -66,37 +57,13 @@ class ViewController: UIViewController {
         
         originalImageView.kf.setImage(with: ImageResource(downloadURL: URL(string: "https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg")!))
         
-        
-//        let cameraButton = UIButton(type: .custom)
-//        cameraButton.frame = CGRect(x: UIScreen.main.bounds.width - 150, y: 100, width: 100, height: 50)
-//        cameraButton.backgroundColor = UIColor.red
-//        cameraButton.setTitle("相机", for: .normal)
-//        cameraButton.addTarget(self, action: #selector(cameraButtonClick), for: .touchUpInside)
-//        view.addSubview(cameraButton)
-//
-//        contentImage.isUserInteractionEnabled = true
-//        contentImage.image = UIImage(named: "123456")
-//        contentImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(contentImageClick)))
-//
-////        let
-//
     }
-//
-//
-//
-//    func calculateStructSize(_ size: Int) -> Int {
-//        return 1
-//    }
-//
-//
+
 }
 //
 //
 extension ViewController: LImagePickerProtocol {
-//    func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset) {
-//
-//    }
-    
+
     
     func editPictures(viewConttroller: UIViewController, croppingImage: UIImage?, originalImage: UIImage?) {
         print("11")
