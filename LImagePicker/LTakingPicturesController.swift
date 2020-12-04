@@ -24,7 +24,6 @@ class LTakingPicturesController: UIViewController {
     fileprivate lazy var takingPicturesView: LTakingPicturesView = {
         let videoView = LTakingPicturesView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.screenHeight))
         videoView.delegate = self
-        videoView.setUpSession()
         videoView.maxDuration = 15
         return videoView
     }()
@@ -52,7 +51,6 @@ class LTakingPicturesController: UIViewController {
     }
     
     deinit {
-//        PHPhotoLibrary.shared().unregisterChangeObserver(self)
         print(self, "++++++释放")
     }
     
@@ -61,27 +59,44 @@ class LTakingPicturesController: UIViewController {
         // Do any additional setup after loading the view.
         LImagePickerManager.shared.shouldFixOrientation = true
         initView()
-        
-//        PHPhotoLibrary.shared().register(self)
-        
     }
 
     // MARK: - initView
     fileprivate func initView() {
         view.addSubview(takingPicturesView)
         view.addSubview(operationView)
-        takingPicturesView.captureSession.startRunning()
+        let videoStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        let aideoStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+        
+        
+        
+        if videoStatus == .authorized || videoStatus == .notDetermined {
+            takingPicturesView.setUpSession()
+            takingPicturesView.captureSession.startRunning()
+        }else {
+            view.placeholderShow(true) { (promptView) in
+                promptView.title("请在iPhone的\'设置-隐私-相机'选项中\r允许\(LApp.appName)访问你的手机相机")
+                promptView.imageName("icon_permissions")
+                promptView.delegate = self
+            }
+        }
+
     }
     
     // MARK: - fileprivate
     fileprivate func imageCameraCompleteShooting() {
         operationView.shootingComplete()
-//        tabBarView.isHidden = false
     }
 }
 
-extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOperationDelegate {
+extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOperationDelegate, LPromptViewDelegate {
 
+    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
+        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [: ], completionHandler: nil)
+        }
+    }
+    
     
     func imageCameraCaptureDeviceDidChange() {
         print("有变化")
@@ -127,7 +142,8 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
         case .suspended:
             takingPicturesView.stopVideoRecoding()
         case .taking:
-            takingPicturesView.startRecordPhoto()
+//            takingPicturesView.startRecordPhoto()
+            takingPicturesView.startRecordVideo(filePath: "122")
         case .remake:
             takingPicturesView.captureSession.startRunning()
 //            tabBarView.isHidden = true
@@ -141,21 +157,17 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
 //                } failureClosure: { (error) in
 //                    print(error ?? "")
 //                }
-                var localIdentifier = ""
-                PHPhotoLibrary.shared().performChanges {
-                    print("111111")
-                    let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-                    localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
-                    reuqest.location = nil
-                    reuqest.creationDate = Date()
-                } completionHandler: { (success, error) in
-
-                }
-
-                
-                
-                
-                
+//                var localIdentifier = ""
+//                PHPhotoLibrary.shared().performChanges {
+//                    print("111111")
+//                    let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
+//                    localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
+//                    reuqest.location = nil
+//                    reuqest.creationDate = Date()
+//                } completionHandler: { (success, error) in
+//
+//                }
+                print(image)
             }
             imagePickerDelegate?.takingPictures(viewController: self, image: contentImage)
             dismiss(animated: true, completion: nil)

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LImagePicker"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A multi - selection, selection of original and video image selector, while there is a preview function."
 
   s.homepage     = "https://github.com/lessSource/LImagePicker"
@@ -17,8 +17,7 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   s.requires_arc = true
 
-  s.frameworks   = 'Photos', 'MobileCoreServices', "CoreMotion", "AVFoundation"
-
+  s.frameworks   = 'Photos'
  # s.dependency 'SDWebImage'
  
 

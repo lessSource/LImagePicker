@@ -209,14 +209,12 @@ extension LImagePickerManager {
     }
     
     
-    
     // MARK: - 获取照片数组
     func getAssetsFromFetchResult(_ result: PHFetchResult<PHAsset>?, completion: (([LPhotographModel]) -> ())) {
         guard let `result` = result else {
             completion([])
             return
         }
-        
         var resourcesModelArr: Array = [LPhotographModel]()
         result.enumerateObjects { (asset, idx, objc) in
             let resourceModel = LPhotographModel(media: asset, type: .photo, isSelect: false, selectIndex: 0)
@@ -227,7 +225,6 @@ extension LImagePickerManager {
     
     
     fileprivate func isCameraRollAlbm(metadata: PHAssetCollection) -> Bool {
-        
         var versionStr: String = UIDevice.current.systemVersion
         versionStr = versionStr.replacingOccurrences(of: ".", with: "")
         if versionStr.count <= 1 {
@@ -365,186 +362,7 @@ extension LImagePickerManager {
         return bytes
     }
     
-    
-    
-    // 保存图片
-    public func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset) -> ()), failureClosure: @escaping ((Error?) -> ())) {
-        var localIdentifier = ""
-        PHPhotoLibrary.shared().performChanges {
-            let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-            localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
-            reuqest.location = location
-            reuqest.creationDate = Date()
-        } completionHandler: { (success, error) in
-            // 获取自定义相册
-            let result = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
-            if let assetCollection = LApp.getCreatPhotoAlbum() {
-                do {
-                    try PHPhotoLibrary.shared().performChangesAndWait {
-                        let request = PHAssetCollectionChangeRequest(for: assetCollection)
-                        request?.insertAssets(result, at: IndexSet(arrayLiteral: 0))
-                    }
-                    DispatchQueue.main.async {
-                        self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        failureClosure(error)
-                    }
-                }
-            }else {
-                DispatchQueue.main.async {
-                    if success {
-                        self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
-                    }else {
-                        // 保存图片出错
-                        failureClosure(error)
-                    }
-                }
-            }
-        }
-    }
-    
-    fileprivate func savePhotoWithImage(image: UIImage, meta: Dictionary<String, String>, location: CLLocation?, completion: @escaping ((PHAsset) -> ())) {
-        
-        guard let imageData: CFData = image.jpegData(compressionQuality: 1.0) as CFData? else {
-            return
-        }
-        let source = CGImageSourceCreateWithData(imageData, nil)
-        let formater = DateFormatter()
-        formater.dateFormat = "yyyy-MM-dd-HH:mm:ss-SSS"
-        let urlStr = formater.string(from: Date())
-        let path = "\(NSTemporaryDirectory()).image-\(urlStr).jpg"
-        let temURL = URL(fileURLWithPath: path)
-        
-        guard let destination = CGImageDestinationCreateWithURL(temURL as CFURL, kUTTypeJPEG, 1, nil), let source0 = source else {
-            return
-        }
-        CGImageDestinationAddImageFromSource(destination, source0, 0, meta as CFDictionary)
-        CGImageDestinationFinalize(destination)
-        //        CFreleass
-        
-        var localIdentifier = ""
-        PHPhotoLibrary.shared().performChanges({
-            let request = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: temURL)
-            localIdentifier = request?.placeholderForCreatedAsset?.localIdentifier ?? ""
-            request?.location = location
-            request?.creationDate = Date()
-        }) { (success, error) in
-            try? FileManager.default.removeItem(atPath: path)
-            DispatchQueue.main.async {
-                if success {
-                    self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: 10, completion: completion)
-                }else {
-                    // 保存图片出错
-                }
-            }
-            
-        }
-    }
-    
-    
-    
-    // 导出视频
-    fileprivate func getVideoOutputPathWithAsset(asset: PHAsset, presetName: String) {
-        
-        let options = PHVideoRequestOptions()
-        options.deliveryMode = .automatic
-        options.isNetworkAccessAllowed = true
-        
-        PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { (avasset, audioMix, info) in
-            guard let avAsset = avasset as? AVURLAsset else {
-                return
-            }
-            self.startExportVideoWithAsset(videoAsset: avAsset, presetName: presetName)
-        }
-        
-    }
-    
-    
-    fileprivate func startExportVideoWithAsset(videoAsset: AVURLAsset, presetName: String) {
-        
-        guard let exportSession = AVAssetExportSession(asset: videoAsset, presetName: presetName) else {
-            let errorMessage = "当前设备不支持该预设: \(presetName)"
-            print(errorMessage)
-            return
-            
-        }
-        
-        let formater = DateFormatter()
-        formater.dateFormat = "yyyy-MM-dd-HH:mm:ss-SSS"
-        let dateStr = formater.string(from: Date())
-        let outputPath = NSHomeDirectory() + "/tem/video-\(dateStr).mp4"
-        print(outputPath)
-        
-        exportSession.shouldOptimizeForNetworkUse = true
-        
-        let supportedTypeArray = exportSession.supportedFileTypes
-        if supportedTypeArray.contains(.mp4) {
-            exportSession.outputFileType = .mp4
-        }else if supportedTypeArray.count == 0 {
-            // 失败
-            return
-        }else {
-            exportSession.outputFileType = supportedTypeArray.first
-            //            if videoAsset.url && videoAsset.url.lastPathComponent {
-            //
-            //            }
-            // 替换URL
-        }
-        exportSession.outputURL = URL(fileURLWithPath: outputPath)
-        //
-        let filePath = "\(NSHomeDirectory())/tmp"
-        
-        if !FileManager.default.fileExists(atPath: filePath) {
-            
-            do {
-                try FileManager.default.createDirectory(atPath: filePath, withIntermediateDirectories: true, attributes: nil)
-                
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-        }
-        
-        // 修改视频转向
-        exportSession.exportAsynchronously {
-            DispatchQueue.main.async {
-                switch exportSession.status {
-                case .unknown:
-                    print("unknown")
-                case .waiting:
-                    print("waiting")
-                case .exporting:
-                    print("exporting")
-                case .completed:
-                    print("completed")
-                // 成功
-                case .failed:
-                    print("failed")
-                // 视频导出失败
-                case .cancelled:
-                    print("cancelled")
-                // 导出任务失败
-                default: break
-                }
-            }
-        }
-        
-    }
-    
-    fileprivate func fetchAssetByIocalIdentifier(localIdentifier: String, retryCount: Int, completion: @escaping ((PHAsset) -> ())) {
-        let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject
-        if asset != nil || retryCount <= 0 {
-            completion(asset!)
-            return
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.fetchAssetByIocalIdentifier(localIdentifier: localIdentifier, retryCount: retryCount - 1, completion: completion)
-        }
-    }
-    
-    
+
     // 获取优化后的视频转向信息
     fileprivate func fixedCompositionWithAsset(videoAsset: AVAsset) -> AVMutableVideoComposition {
         

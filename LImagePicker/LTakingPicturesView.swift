@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import CoreMotion
+import CoreImage
 
 class LTakingPicturesView: UIView {
     
@@ -47,6 +47,13 @@ class LTakingPicturesView: UIView {
     /** 预览层 */
     public var previewLayer: AVCaptureVideoPreviewLayer?
     
+    public var videoLayer: CALayer = {
+        let videoLayer = CALayer()
+        videoLayer.frame = CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.screenHeight)
+//        videoLayer.setAffineTransform(CGAffineTransform.init(rotationAngle: CGFloat.pi/2))
+        return videoLayer
+    }()
+    
     /** 视频地址 */
     fileprivate(set) var videoFilePath: String = ""
     
@@ -58,18 +65,9 @@ class LTakingPicturesView: UIView {
     /** 最大时长 */
     public var maxDuration: TimeInterval = Double.leastNormalMagnitude
     
-    // 重力感应对象
-    fileprivate var cmmotionManager: CMMotionManager = CMMotionManager()
-    
     // 记录设备方向
     fileprivate var deviceOrientation: UIDeviceOrientation = .unknown
     
-    // 识别方向
-    public var senseType: LDirectionSenseType = .none {
-        didSet {
-            setSenseType(senseType: senseType)
-        }
-    }
     
     /** 是否正在录制 */
     fileprivate(set) var isRecording: Bool = false
@@ -80,12 +78,11 @@ class LTakingPicturesView: UIView {
     
     fileprivate var countDurTime: Timer?
     
-    fileprivate var filter: CIFilter = CIFilter(name: "CIPhotoEffectTransfer")!
+    fileprivate var filter: CIFilter = CIFilter(name: "CIBumpDistortion")!
     fileprivate lazy var context: CIContext = {
-        let eaglContext = EAGLContext(api: .openGLES2)
+        let eaglContext = CIContext(options: nil)
         
-        let options = [CIContextOption.workingColorSpace: NSNull()]
-        return CIContext(eaglContext: eaglContext!, options: options)
+        return eaglContext
     }()
     
     lazy var filterNames: [String] = {
@@ -94,7 +91,6 @@ class LTakingPicturesView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        senseType = .system
     }
     
     required init?(coder: NSCoder) {
@@ -127,6 +123,7 @@ class LTakingPicturesView: UIView {
             captureDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
         } catch {
             print(error.localizedDescription)
+            return
         }
         
         if captureSession.canAddInput(captureDeviceInput!) {
@@ -143,8 +140,9 @@ class LTakingPicturesView: UIView {
             audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
         } catch {
             print(error.localizedDescription)
+            return
         }
-        
+
         if captureSession.canAddInput(audioDeviceInput!) {
             captureSession.addInput(audioDeviceInput!)
         }
@@ -171,8 +169,10 @@ class LTakingPicturesView: UIView {
         // 预览层
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.frame = bounds
+        videoLayer.frame = bounds
         layer.insertSublayer(previewLayer!, at: 0)
-        
+        previewLayer?.addSublayer(videoLayer)
+
         // 设置预览层方向
         let captureConnection = previewLayer?.connection
         captureConnection?.videoOrientation = captureVideoPreiewOrientation
@@ -191,11 +191,7 @@ class LTakingPicturesView: UIView {
         }
         let videoConnection = photoOutput.connection(with: .video)
         if videoConnection?.isVideoOrientationSupported == true {
-            if senseType == .system {
-                videoConnection?.videoOrientation = getCaptureVideoOrientation(orientation: UIDevice.current.orientation)
-            }else {
-                videoConnection?.videoOrientation = getCaptureVideoOrientation(orientation: deviceOrientation)
-            }
+            videoConnection?.videoOrientation = getCaptureVideoOrientation(orientation: UIDevice.current.orientation)
         }
         photoOutput.capturePhoto(with: settings, delegate: self)
     }
@@ -233,32 +229,6 @@ class LTakingPicturesView: UIView {
         stopCountDurTimer()
     }
     
-    // MARK: - fileprivate
-    // 设置方向
-    fileprivate func setSenseType(senseType: LDirectionSenseType) {
-        if senseType == .motion {
-            if cmmotionManager.isDeviceMotionAvailable {
-                cmmotionManager.startAccelerometerUpdates(to: OperationQueue.current ?? OperationQueue()) { [weak self] (accelerometerData, error) in
-                    let x = accelerometerData?.acceleration.x ?? 0.0
-                    let y = accelerometerData?.acceleration.y ?? 0.0
-                    if fabs(y) >= fabs(x) {
-                        if y >= 0 {
-                            self?.deviceOrientation = .portraitUpsideDown
-                        }else {
-                            self?.deviceOrientation = .portrait
-                        }
-                    }else {
-                        if x >= 0 {
-                            self?.deviceOrientation = .landscapeRight
-                        }else {
-                            self?.deviceOrientation = .landscapeLeft
-                        }
-                    }
-                    
-                }
-            }
-        }
-    }
     
     fileprivate func getCaptureVideoOrientation(orientation: UIDeviceOrientation) -> AVCaptureVideoOrientation {
         var result: AVCaptureVideoOrientation = .portrait
@@ -351,6 +321,8 @@ extension LTakingPicturesView: AVCaptureFileOutputRecordingDelegate, AVCapturePh
         var currentVideoDimensions: CMVideoDimensions? = CMVideoFormatDescriptionGetDimensions(formatDescription!)
         var currentSampleTime: CMTime? = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer)
 
+    
+        
         var outputImage = CIImage(cvImageBuffer: imageBuffer!)
         if filter != nil {
             filter.setValue(outputImage, forKey: kCIInputImageKey)
@@ -369,6 +341,7 @@ extension LTakingPicturesView: AVCaptureFileOutputRecordingDelegate, AVCapturePh
             outputImage = outputImage.transformed(by: t)
             let cgImage = self.context.createCGImage(outputImage, from: outputImage.extent)
             DispatchQueue.main.async {
+                self.videoLayer.contents = cgImage
                 self.previewLayer?.contents = cgImage
             }
         }

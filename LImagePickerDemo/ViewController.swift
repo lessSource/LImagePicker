@@ -89,7 +89,7 @@ extension ViewController {
 //
     // 图库
     func galleryButtonClick() {
-        let imagePicker = LImagePickerController(withMaxImage: 1, delegate: self)
+        let imagePicker = LImagePickerController(withMaxImage: 5, delegate: self)
         imagePicker.sortAscendingByModificationDate = false
         imagePicker.cropCircle = true
         present(imagePicker, animated: true, completion: nil)

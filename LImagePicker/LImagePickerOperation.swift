@@ -29,6 +29,10 @@ class LImagePickerOperation: Operation {
         super.init()
     }
     
+    deinit {
+        print(self, "+++++++释放")
+    }
+    
     // 手动触发KVO
     fileprivate var pri_isExecuting = false {
         willSet {
@@ -80,11 +84,8 @@ class LImagePickerOperation: Operation {
             fetchFinish()
             return
         }
-        
         pri_isExecuting = true
-        
-        // 编辑图片
-        
+                
         // gif
         
         // 图片

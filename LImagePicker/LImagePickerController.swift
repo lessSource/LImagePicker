@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 public class LImagePickerController: LImagePickerNavigationController {
 
@@ -25,7 +26,7 @@ public class LImagePickerController: LImagePickerNavigationController {
     public var allowTakePicture: Bool = true
     /** 获取图片的超时时间 */
     public var timeout: TimeInterval = 15.0
-    /** 默认为NO，如果设置为YES，代理方法里photos会是nil */
+    /** 默认为NO，如果设置为YES，代理方法里photos中没有数据 */
     public var onlyReturnAsset: Bool = false    
     
     /** 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个 */
@@ -83,6 +84,34 @@ extension LImagePickerController {
         photographVC.imagePickerDelegate = delegate
         self.init(rootViewController: photographVC)
         self.maxImageCount = count
+        
+        
+        let status = PHPhotoLibrary.authorizationStatus()
+        if status == .notDetermined {
+            PHPhotoLibrary.requestAuthorization { (status) in
+                DispatchQueue.main.async {
+                    if status == .denied {
+                        photographVC.view.placeholderShow(true) { (promptView) in
+                            promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(LApp.appName)访问你的手机相册")
+                            promptView.imageName("icon_permissions")
+                            promptView.delegate = self
+                        }
+                    }else {
+                        photographVC.initData()
+                    }
+                }
+                
+            }
+        }else if status == .denied {
+//            photographVC.na
+            photographVC.view.placeholderShow(true) { (promptView) in
+                promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(LApp.appName)访问你的手机相册")
+                promptView.imageName("icon_permissions")
+                promptView.delegate = self
+            }
+        }
+        
+        
     }
     
     /** 显示大图 */
@@ -115,7 +144,14 @@ extension LImagePickerController {
     
 }
  
-extension LImagePickerController: UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+extension LImagePickerController: UIGestureRecognizerDelegate, UINavigationControllerDelegate, LPromptViewDelegate {
+    
+    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
+        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [: ], completionHandler: nil)
+        }
+    }
+    
     
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return navigationController?.viewControllers.count != 1

@@ -81,7 +81,7 @@ class LPhotographController: UIViewController {
     }
     
     // MARK: - initData
-    fileprivate func initData() {
+    public func initData() {
         if let albumModel = albumModel {
             navView.title = albumModel.title
             LImagePickerManager.shared.getAssetsFromFetchResult(albumModel.fetchResult) { [weak self] (array) in
@@ -110,7 +110,8 @@ class LPhotographController: UIViewController {
     fileprivate func collectionViewDidSelectImage(indexPath: IndexPath) {
         guard let imagePicker = navigationController as? LImagePickerController else { return }
         if imagePicker.selectArray.count == imagePicker.maxImageCount && !imagePicker.selectArray.contains(dataArray[indexPath.item]) {
-            print("最多能选\(imagePicker.maxImageCount)张照片")
+            let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imagePicker.maxImageCount)张照片")
+            hub.showPromptInfo(showView: self.view)
             return
         }
         dataArray[indexPath.item].isSelect = !dataArray[indexPath.item].isSelect
@@ -128,7 +129,6 @@ class LPhotographController: UIViewController {
         allowSelect = imagePicker.selectArray.count != imagePicker.maxImageCount
         collectionView.reloadData()
     }
-    
     
 }
 
@@ -190,7 +190,9 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
                 let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
                 present(imagePicker, animated: true, completion: nil)
             }else {
-                print("图片已选择完")
+                guard let imageNavPicker = navigationController as? LImagePickerController else { return }
+                let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imageNavPicker.maxImageCount)张照片")
+                hub.showPromptInfo(showView: self.view)
             }
             return
         }
@@ -204,6 +206,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         }
         // 显示大图
         guard let cell = collectionView.cellForItem(at: indexPath) as? LPhotographImageCell else { return }
+        if imageNavPicker.maxImageCount == imageNavPicker.selectArray.count { return }
         animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
         let mediaArray = dataArray.filter { $0.type != .shooting }
         let imageModel = LPreviewImageModel(currentIndex: indexPath.item - 1, dataArray: mediaArray)
@@ -239,6 +242,14 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func buttonView(view: UIView, buttonType: LImagePickerButtonType) {
         guard let imagePicker = navigationController as? LImagePickerController else { return }
         if buttonType == .confirm {
+            // 不请求UIImage
+            if imagePicker.onlyReturnAsset {
+                let assets = imagePicker.selectArray.compactMap { $0.media }
+                imagePickerDelegate?.photographSelectImage(viewController: self, photos: [], assets: assets)
+                dismiss(animated: true, completion: nil)
+                return
+            }
+                        
             let hud = LProgressHUDView(style: .darkBlur)
             var timeout = false
             hud.timeoutBlock = { [weak self] in
@@ -248,15 +259,6 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
                 timeout = true
             }
             hud.show(timeout: imagePicker.timeout, showView: self.view)
-            
-            // 不请求UIimage
-            if imagePicker.onlyReturnAsset {
-                hud.hide()
-                let assets = imagePicker.selectArray.compactMap { $0.media }
-                imagePickerDelegate?.photographSelectImage(viewController: self, photos: [], assets: assets)
-                dismiss(animated: true, completion: nil)
-                return
-            }
             
             var images: [UIImage?] = Array(repeating: nil, count: imagePicker.selectArray.count)
             var assets: [PHAsset?] = Array(repeating: nil, count: imagePicker.selectArray.count)
@@ -268,8 +270,8 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
             for (i, item) in imagePicker.selectArray.enumerated() {
                 let operation = LImagePickerOperation(photographModel: item, isOriginal: true) { [weak self] (image, asset) in
                     guard !timeout, let `self` = self else { return }
-                    
                     sucCount += 1
+                    
                     if let image = image {
                         images[i] = image
                         assets[i] = asset ?? item.media
@@ -303,14 +305,9 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         guard var fetchResult = albumModel?.fetchResult else { return }
         DispatchQueue.main.sync {
             if let changes = changeInstance.changeDetails(for: fetchResult) {
-                // Keep the new fetch result for future use.
                 fetchResult = changes.fetchResultAfterChanges
                 if changes.hasIncrementalChanges {
-                    // If there are incremental diffs, animate them in the collection view.
                     collectionView.performBatchUpdates({
-                        // For indexes to make sense, updates must be in this order:
-                        // delete, insert, reload, move
-                        // The first is the take picture button
                         if let removed = changes.removedIndexes, removed.count > 0 {
                             let deleteIndexs = removed.map { IndexPath(item: $0 + 1, section: 0) }
                             for index in deleteIndexs {
@@ -340,7 +337,6 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
                         }
                     })
                 } else {
-                    // Reload the collection view if incremental diffs are not available.
                     collectionView.reloadData()
                 }
             }
