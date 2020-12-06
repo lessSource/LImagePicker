@@ -50,7 +50,6 @@ class LPhotographCollectionViewCell: UICollectionViewCell {
     fileprivate func loadingPhotoAsset(_ asset: PHAsset) {
         representedAssetIdentifier = asset.localIdentifier
         let resquestID = LImagePickerManager.shared.getPhotoWithAsset(asset, size: CGSize(width: self.l_width * UIScreen.main.scale, height: self.l_height * UIScreen.main.scale)) { (progress, error, objc, info) in
-            print(progress)
         } completion: { (image, isDegraded) in
             if self.representedAssetIdentifier == asset.localIdentifier {
                 self.imageView.image = image

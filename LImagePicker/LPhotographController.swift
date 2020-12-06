@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import PhotosUI
 
 class LPhotographController: UIViewController {
     
@@ -35,11 +36,13 @@ class LPhotographController: UIViewController {
         let bottomView = LImagePickerBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
         bottomView.backgroundColor = UIColor.bottomViewBackColor
         bottomView.delegate = self
+        bottomView.isHidden = true
         return bottomView
     }()
     
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
+        
         let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
@@ -60,7 +63,15 @@ class LPhotographController: UIViewController {
         // Do any additional setup after loading the view.
         PHPhotoLibrary.shared().register(self)
         initView()
-        initData()
+        LImagePickerManager.shared.requestsPhotosAuthorization { (authorized) in
+            if authorized {
+                self.initData()
+            }else {
+                self.placeholderShow()
+            }
+            self.bottomView.isHidden = !authorized
+            self.lateralSpreadsReturn(isSideslipping: authorized)
+        }
     }
     
     // MARK: - initView
@@ -105,6 +116,27 @@ class LPhotographController: UIViewController {
                 self.initData()
             }
         }
+    }
+    
+    // 提示
+    fileprivate func placeholderShow() {
+        collectionView.placeholderShow(true) { (promptView) in
+            promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(LApp.appName)访问你的手机相册")
+            promptView.imageName("icon_permissions")
+        }
+    }
+    
+    // 是否能够用侧滑返回
+    fileprivate func lateralSpreadsReturn(isSideslipping: Bool) {
+        if isSideslipping {
+            if let _ = navigationController?.responds(to: #selector(getter: UINavigationController.interactivePopGestureRecognizer)) {
+                navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+            }
+        }else {
+            navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+            navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        }
+        
     }
     
     fileprivate func collectionViewDidSelectImage(indexPath: IndexPath) {
@@ -175,7 +207,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
@@ -187,8 +219,14 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if dataArray[indexPath.item].type == .shooting {
             if allowSelect {
-                let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
-                present(imagePicker, animated: true, completion: nil)
+                if #available(iOS 14, *) {
+                    PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
+                } else {
+                    // Fallback on earlier versions
+                }
+                
+//                let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
+//                present(imagePicker, animated: true, completion: nil)
             }else {
                 guard let imageNavPicker = navigationController as? LImagePickerController else { return }
                 let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imageNavPicker.maxImageCount)张照片")
@@ -337,7 +375,8 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
                         }
                     })
                 } else {
-                    collectionView.reloadData()
+                    albumModel?.fetchResult = fetchResult
+                    initData()
                 }
             }
         }

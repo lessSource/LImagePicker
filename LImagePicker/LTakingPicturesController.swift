@@ -142,8 +142,8 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
         case .suspended:
             takingPicturesView.stopVideoRecoding()
         case .taking:
-//            takingPicturesView.startRecordPhoto()
-            takingPicturesView.startRecordVideo(filePath: "122")
+            takingPicturesView.startRecordPhoto()
+//            takingPicturesView.startRecordVideo(filePath: "122")
         case .remake:
             takingPicturesView.captureSession.startRunning()
 //            tabBarView.isHidden = true

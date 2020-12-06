@@ -28,26 +28,22 @@ final class LImagePickerManager {
 extension LImagePickerManager {
     
     // 获取相册权限
-    func requestsPhotosAuthorization() -> Bool {
-        var status = PHPhotoLibrary.authorizationStatus()
+    func requestsPhotosAuthorization(allow: @escaping ((Bool) -> ())) {
+        let status = PHPhotoLibrary.authorizationStatus()
         if status == .notDetermined {
-            let semaphore = DispatchSemaphore(value: 0)
-            self.requestAuthorizationWithCompletion { (authorizationStatus) in
-                status = authorizationStatus
-                semaphore.signal()
+            PHPhotoLibrary.requestAuthorization { (authorizationStatus) in
+                DispatchQueue.main.async {
+                    if authorizationStatus == .denied || status == .restricted {
+                        allow(false)
+                    }else {
+                        allow(true)
+                    }
+                }
             }
-            semaphore.wait()
-            return status == .authorized
+        }else if status == .denied || status == .restricted {
+            allow(false)
         }else {
-            return status == .authorized
-        }
-    }
-    
-    func requestAuthorizationWithCompletion(_ completion: ((PHAuthorizationStatus) -> ())?) {
-        PHPhotoLibrary.requestAuthorization { (status) in
-            if let closure = completion {
-                closure(status)
-            }
+            allow(true)
         }
     }
     

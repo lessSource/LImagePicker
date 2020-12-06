@@ -207,9 +207,6 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
     }
     
     func previewBottomView(view: UIView, didSelect index: Int) {
-//        if abs(currentIndex - index) > 1 {
-//            collectionView.scrollToItem(at: IndexPath(item: 0, section: currentIndex > index ? index + 1 : index - 1), at: .left, animated: false)///
-//        }
         currentIndex = index
         collectionView.scrollToItem(at: IndexPath(item: 0, section: currentIndex), at: .left, animated: false)
     }

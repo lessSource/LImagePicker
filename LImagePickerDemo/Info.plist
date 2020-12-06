@@ -28,6 +28,8 @@
 	<string>ImitationShaking需要您的同意，才能获取您的麦克风访问权限</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ImitationShaking需要您的同意，才能获取您的相册访问权限</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

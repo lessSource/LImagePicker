@@ -37,7 +37,7 @@ class LImagePickerPromptView: UIView {
     }()
     
     private lazy var imageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: (bounds.width - 150)/2, y: 150 + LConstant.navbarAndStatusBar, width: 150, height: 120))
+        let imageView = UIImageView(frame: CGRect(x: (bounds.width - 150)/2, y: 150, width: 150, height: 120))
         imageView.image = UIImage(named: "hp_pc_bacao")
         imageView.clipsToBounds = true
         imageView.contentMode = .center
@@ -179,12 +179,8 @@ extension UIView {
                     t_v = v
                 }
             }
-            if t_v.isKind(of: UIScrollView.self) {
-                t_v.insertSubview(promptView, aboveSubview: t_v.subviews[0])
-                promptView.backgroundColor = t_v.backgroundColor
-            }else {
-                self.addSubview(promptView)
-            }
+            t_v.insertSubview(promptView, aboveSubview: t_v.subviews[0])
+            promptView.backgroundColor = t_v.backgroundColor
         }else {
             self.addSubview(promptView)
         }

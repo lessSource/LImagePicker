@@ -14,14 +14,14 @@ public class LImagePickerController: LImagePickerNavigationController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        print("112")
     }
     
     /** 最多可选数量，默认9 */
     fileprivate(set) var maxImageCount: Int = 9
     /** 选中资源 */
     internal var selectArray: [LPhotographModel] = []
+    /** 相簿显示样式 */
+    internal var photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack
     /** 是否允许拍摄照片 */
     public var allowTakePicture: Bool = true
     /** 获取图片的超时时间 */
@@ -79,39 +79,20 @@ public class LImagePickerController: LImagePickerNavigationController {
 extension LImagePickerController {
     
     /** 选择图片 */
-    public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerProtocol? = nil) {
-        let photographVC = LPhotographController()
-        photographVC.imagePickerDelegate = delegate
-        self.init(rootViewController: photographVC)
-        self.maxImageCount = count
-        
-        
-        let status = PHPhotoLibrary.authorizationStatus()
-        if status == .notDetermined {
-            PHPhotoLibrary.requestAuthorization { (status) in
-                DispatchQueue.main.async {
-                    if status == .denied {
-                        photographVC.view.placeholderShow(true) { (promptView) in
-                            promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(LApp.appName)访问你的手机相册")
-                            promptView.imageName("icon_permissions")
-                            promptView.delegate = self
-                        }
-                    }else {
-                        photographVC.initData()
-                    }
-                }
-                
-            }
-        }else if status == .denied {
-//            photographVC.na
-            photographVC.view.placeholderShow(true) { (promptView) in
-                promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(LApp.appName)访问你的手机相册")
-                promptView.imageName("icon_permissions")
-                promptView.delegate = self
-            }
+    public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerProtocol? = nil, photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack) {
+        if photoAlbumType == .dropDown {
+            let photographVC = LPhotographController()
+            photographVC.imagePickerDelegate = delegate
+            self.init(rootViewController: photographVC)
+        }else {
+            let photoAlbumVC = LPhotoAlbumController()
+            self.init(rootViewController: photoAlbumVC)
+            let photographVC = LPhotographController()
+            photographVC.imagePickerDelegate = delegate
+            pushViewController(photographVC, animated: true)
         }
-        
-        
+        self.maxImageCount = count
+        self.photoAlbumType = photoAlbumType
     }
     
     /** 显示大图 */

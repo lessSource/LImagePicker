@@ -37,6 +37,7 @@ enum LImagePickerButtonType {
     case previewSelect
 }
 
+
 // HUD样式
 enum LProgressHUDStyle: Int {
     /** */
@@ -87,8 +88,14 @@ enum LProgressHUDStyle: Int {
             return .dark
         }
     }
-    
-    
+}
+
+// 相簿显示样式
+public enum LPhotoAlbumAccordingType {
+    /** 标题下拉 */
+    case dropDown
+    /** 相册返回 */
+    case photoAlbumBack
 }
 
 
