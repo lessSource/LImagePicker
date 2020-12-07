@@ -96,6 +96,11 @@ extension UIColor {
         return UIColor.withHex(hexString: "#B1BDCB")
     }
     
+    // 分割线颜色
+    class var dividerLineColor: UIColor {
+        return UIColor.withHex(hexString: "#F7F9FC")
+    }
+    
     
     class func withHex(hexString hex: String, alpha: CGFloat = 1) -> UIColor {
         // 去除空格

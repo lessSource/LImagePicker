@@ -8,7 +8,7 @@
 
 import UIKit
 import Photos
-import PhotosUI
+//import PhotosUI
 
 class LPhotographController: UIViewController {
     
@@ -38,6 +38,13 @@ class LPhotographController: UIViewController {
         bottomView.delegate = self
         bottomView.isHidden = true
         return bottomView
+    }()
+    
+    fileprivate lazy var photoAlbumView: LPhotoAlbumView = {
+        let photoAlbumView = LPhotoAlbumView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar))
+        photoAlbumView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
+        photoAlbumView.isHidden = true
+        return photoAlbumView
     }()
     
     fileprivate lazy var collectionView: UICollectionView = {
@@ -89,6 +96,7 @@ class LPhotographController: UIViewController {
         }else {
             collectionView.l_height = LConstant.screenHeight - LConstant.navbarAndStatusBar
         }
+        view.addSubview(photoAlbumView)
     }
     
     // MARK: - initData
@@ -219,14 +227,13 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if dataArray[indexPath.item].type == .shooting {
             if allowSelect {
-                if #available(iOS 14, *) {
-                    PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
-                } else {
-                    // Fallback on earlier versions
-                }
-                
-//                let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
-//                present(imagePicker, animated: true, completion: nil)
+//                if #available(iOS 14, *) {
+//                    PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
+//                } else {
+//                    // Fallback on earlier versions
+//                }
+                let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
+                present(imagePicker, animated: true, completion: nil)
             }else {
                 guard let imageNavPicker = navigationController as? LImagePickerController else { return }
                 let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imageNavPicker.maxImageCount)张照片")
@@ -334,6 +341,12 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
             present(previeVC, animated: true, completion: nil)
         }else if buttonType == .cancle {
             dismiss(animated: true, completion: nil)
+        }else if buttonType == .title {
+            if photoAlbumView.isHidden {
+                photoAlbumView.showView()
+            }else {
+                photoAlbumView.hideView()
+            }
         }
     }
     

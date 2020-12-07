@@ -116,6 +116,9 @@ class LImagePickerNavView: UIView {
         
         cancleButton.addTarget(self, action: #selector(cancleButtonClick), for: .touchUpInside)
         selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
+        let titleTap = UITapGestureRecognizer(target: self, action: #selector(titleTapClick))
+        titleLabel.isUserInteractionEnabled = true
+        titleLabel.addGestureRecognizer(titleTap)
     }
     
     public func selectSerialNumber(index: Int) {
@@ -140,4 +143,10 @@ extension LImagePickerNavView {
     fileprivate func selectButtonClick() {
         delegate?.buttonView(view: self, buttonType: .previewSelect)
     }
+    
+    fileprivate func titleTapClick() {
+        delegate?.buttonView(view: self, buttonType: .title)
+    }
+    
 }
+
