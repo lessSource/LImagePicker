@@ -8,7 +8,7 @@
 
 import UIKit
 import Photos
-//import PhotosUI
+
 
 class LPhotographController: UIViewController {
     
@@ -131,6 +131,7 @@ class LPhotographController: UIViewController {
         collectionView.placeholderShow(true) { (promptView) in
             promptView.title("请在iPhone的\'设置-隐私-照片'选项中\r允许\(LApp.appName)访问你的手机相册")
             promptView.imageName("icon_permissions")
+            promptView.delegate = self
         }
     }
     
@@ -172,7 +173,7 @@ class LPhotographController: UIViewController {
     
 }
 
-extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol, PHPhotoLibraryChangeObserver, LImagePickerButtonProtocl {
+extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol, PHPhotoLibraryChangeObserver, LImagePickerButtonProtocl, LPromptViewDelegate {
     
     // MARK: -  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -227,11 +228,6 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if dataArray[indexPath.item].type == .shooting {
             if allowSelect {
-//                if #available(iOS 14, *) {
-//                    PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
-//                } else {
-//                    // Fallback on earlier versions
-//                }
                 let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
                 present(imagePicker, animated: true, completion: nil)
             }else {
@@ -392,6 +388,14 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
                     initData()
                 }
             }
+        }
+    }
+    
+    // MARK: - LPromptViewDelegate
+    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
+        let urlStr = UIApplication.openSettingsURLString
+        if let url = URL(string: urlStr), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [: ], completionHandler: nil)
         }
     }
     

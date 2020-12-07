@@ -64,40 +64,48 @@ class LTakingPicturesController: UIViewController {
     // MARK: - initView
     fileprivate func initView() {
         view.addSubview(takingPicturesView)
-        view.addSubview(operationView)
-        let videoStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        let aideoStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+        guard let imageNavPicker = navigationController as? LImagePickerController else { return }
         
-        
-        
-        if videoStatus == .authorized || videoStatus == .notDetermined {
-            takingPicturesView.setUpSession()
-            takingPicturesView.captureSession.startRunning()
-        }else {
-            view.placeholderShow(true) { (promptView) in
-                promptView.title("请在iPhone的\'设置-隐私-相机'选项中\r允许\(LApp.appName)访问你的手机相机")
-                promptView.imageName("icon_permissions")
-                promptView.delegate = self
+        LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .video) { (videoAuthorized) in
+            if videoAuthorized {
+                if imageNavPicker.allowTakeVideo {
+                    LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .audio) { (audioAuthorized) in
+                        if audioAuthorized {
+                            // 允许
+                            print("允许麦克风")
+                            self.view.addSubview(self.operationView)
+                        }else {
+                            self.placeholderShow(mediaType: .audio)
+                        }
+                    }
+                }else {
+                    // 允许
+                    print("允许相机")
+                    self.view.addSubview(self.operationView)
+                }
+            }else {
+                self.placeholderShow(mediaType: .video)
             }
         }
-
     }
     
     // MARK: - fileprivate
     fileprivate func imageCameraCompleteShooting() {
         operationView.shootingComplete()
     }
+    
+    // 提示
+    fileprivate func placeholderShow(mediaType: AVMediaType) {
+        view.placeholderShow(true) { (promptView) in
+            promptView.title("请在iPhone的\'设置-隐私-\(mediaType == .video ? "相机" : "麦克风")'选项中\r允许\(LApp.appName)访问你的\(mediaType == .video ? "相机" : "麦克风")")
+            promptView.imageName("icon_permissions")
+            promptView.delegate = self
+        }
+    }
 }
 
 extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOperationDelegate, LPromptViewDelegate {
 
-    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
-        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [: ], completionHandler: nil)
-        }
-    }
-    
-    
     func imageCameraCaptureDeviceDidChange() {
         print("有变化")
     }
@@ -180,5 +188,10 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
         return takingPicturesView.isRecording
     }
     
+    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
+        if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [: ], completionHandler: nil)
+        }
+    }
     
 }

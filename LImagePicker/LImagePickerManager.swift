@@ -47,34 +47,23 @@ extension LImagePickerManager {
         }
     }
     
-    // 获取相机权限、获取麦克风权限
-    func requestsCameraAuthorization(mediaType: AVMediaType) -> Bool {
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            var status = AVCaptureDevice.authorizationStatus(for: mediaType)
-            if status == .notDetermined {
-                let semaphore = DispatchSemaphore(value: 0)
-                self.requestCameraAuthorizationWithCompletion(mediaType) { (success) in
-                    status = success ? .authorized : .denied
-                    semaphore.signal()
+    // 获取相机、麦克风权限
+    func requestsCameraAuthorization(mediaType: AVMediaType, allow: @escaping ((Bool) -> ())) {
+        let states = AVCaptureDevice.authorizationStatus(for: mediaType)
+        if states == .notDetermined {
+            AVCaptureDevice.requestAccess(for: mediaType) { (success) in
+                DispatchQueue.main.async {
+                    allow(success)
                 }
-                semaphore.wait()
-                return status == .authorized
-            }else {
-                return status == .authorized
             }
+        }else if states == .authorized {
+            allow(true)
         }else {
-            return false
+            allow(false)
         }
+        
     }
-    
-    func requestCameraAuthorizationWithCompletion(_ mediaType: AVMediaType, completion: ((Bool) -> ())?) {
-        AVCaptureDevice.requestAccess(for: mediaType) { (success) in
-            if let closure = completion {
-                closure(success)
-            }
-        }
-    }
+ 
 }
 
 extension LImagePickerManager {

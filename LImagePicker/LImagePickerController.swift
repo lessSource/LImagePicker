@@ -24,6 +24,11 @@ public class LImagePickerController: LImagePickerNavigationController {
     internal var photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack
     /** 是否允许拍摄照片 */
     public var allowTakePicture: Bool = true
+    /** 默认为YES，如果设置为NO, 用户将不能拍摄视频 */
+    public var allowTakeVideo: Bool = true
+    /** 视频最大拍摄时间，默认是10分钟，单位是秒 */
+    public var videoMaximumDuration: TimeInterval = 10
+    
     /** 获取图片的超时时间 */
     public var timeout: TimeInterval = 15.0
     /** 默认为NO，如果设置为YES，代理方法里photos中没有数据 */
