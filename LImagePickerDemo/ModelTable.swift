@@ -2,7 +2,7 @@
 ////  ModelTable.swift
 ////  LImagePickerDemo
 ////
-////  Created by HY.Ltd on 2020/9/16.
+////  Created by L. on 2020/9/16.
 ////  Copyright © 2020 L. All rights reserved.
 ////
 //

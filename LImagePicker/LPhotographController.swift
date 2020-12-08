@@ -2,7 +2,7 @@
 //  LPhotographController.swift
 //  LImagePicker
 //
-//  Created by HY.Ltd on 2020/11/30.
+//  Created by L. on 2020/11/30.
 //  Copyright © 2020 L. All rights reserved.
 //
 
@@ -226,9 +226,11 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let imageNavPicker = navigationController as? LImagePickerController else { return }
+
         if dataArray[indexPath.item].type == .shooting {
             if allowSelect {
-                let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
+                let imagePicker = LImagePickerController(allowPickingVideo: imageNavPicker.allowTakeVideo, maxDuration: imageNavPicker.videoMaximumDuration , delegate: self)
                 present(imagePicker, animated: true, completion: nil)
             }else {
                 guard let imageNavPicker = navigationController as? LImagePickerController else { return }
@@ -237,7 +239,6 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
             }
             return
         }
-        guard let imageNavPicker = navigationController as? LImagePickerController else { return }
         if !imageNavPicker.showSelectBtn && imageNavPicker.maxImageCount == 1 {
             // 剪切
             let editPicturesVC = LEditPicturesController(mediaProtocol: dataArray[indexPath.item].media)

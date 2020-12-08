@@ -2,7 +2,7 @@
 //  LTakingPicturesOperationView.swift
 //  LImagePicker
 //
-//  Created by HY.Ltd on 2020/12/1.
+//  Created by L. on 2020/12/1.
 //  Copyright © 2020 L. All rights reserved.
 //
 
@@ -65,10 +65,14 @@ class LTakingPicturesOperationView: UIView {
         
         cancleButton.addTarget(self, action: #selector(cancleButtonClick(_ :)), for: .touchUpInside)
         completeButton.addTarget(self, action: #selector(completeButtonClick(_ :)), for: .touchUpInside)
+        self.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureClick))
         takingView.addGestureRecognizer(tapGesture)
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureClick(_ :)))
         takingView.addGestureRecognizer(longGesture)
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureClick(_ :)))
+        addGestureRecognizer(pinchGesture)
+
         
     }
     
@@ -139,6 +143,10 @@ extension LTakingPicturesOperationView {
             delegate?.operationViewDidSelect(buttonType: .suspended)
         default: break
         }
+    }
+    
+    fileprivate func pinchGestureClick(_ gesture: UIPinchGestureRecognizer) {
+        print(gesture.scale)
     }
     
 }

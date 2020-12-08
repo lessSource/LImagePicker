@@ -2,7 +2,7 @@
 //  LTakingPicturesController.swift
 //  LImagePicker
 //
-//  Created by HY.Ltd on 2020/11/30.
+//  Created by L. on 2020/11/30.
 //  Copyright © 2020 L. All rights reserved.
 //
 
@@ -31,7 +31,7 @@ class LTakingPicturesController: UIViewController {
     // 操作
     fileprivate lazy var operationView: LTakingPicturesOperationView = {
         let view = LTakingPicturesOperationView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.screenHeight))
-        view.backgroundColor = UIColor(white: 1, alpha: 0)
+        view.backgroundColor = UIColor.clear
         view.delegate = self
         return view
     }()
@@ -59,39 +59,32 @@ class LTakingPicturesController: UIViewController {
         // Do any additional setup after loading the view.
         LImagePickerManager.shared.shouldFixOrientation = true
         initView()
+        
     }
 
     // MARK: - initView
     fileprivate func initView() {
         view.addSubview(takingPicturesView)
-        guard let imageNavPicker = navigationController as? LImagePickerController else { return }
-        
-        LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .video) { (videoAuthorized) in
-            if videoAuthorized {
-                if imageNavPicker.allowTakeVideo {
-                    LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .audio) { (audioAuthorized) in
-                        if audioAuthorized {
-                            // 允许
-                            print("允许麦克风")
-                            self.view.addSubview(self.operationView)
-                        }else {
-                            self.placeholderShow(mediaType: .audio)
-                        }
-                    }
-                }else {
-                    // 允许
-                    print("允许相机")
-                    self.view.addSubview(self.operationView)
-                }
-            }else {
-                self.placeholderShow(mediaType: .video)
-            }
+        cameraAuthorization {
+            self.view.addSubview(self.operationView)
+            self.takingPicturesView.setUpSession()
+            self.takingPicturesView.captureSession.startRunning()
         }
+ 
     }
     
-    // MARK: - fileprivate
-    fileprivate func imageCameraCompleteShooting() {
-        operationView.shootingComplete()
+    // MARK: - 权限
+    fileprivate func cameraAuthorization(allow: @escaping (() -> ())) {
+        LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .video) { (videoAuthorized) in
+            if videoAuthorized {
+                if self.allowPickingVideo {
+                    LImagePickerManager.shared.requestsCameraAuthorization(mediaType: .audio) { (audioAuthorized) in
+                        if audioAuthorized { allow()
+                        }else { self.placeholderShow(mediaType: .audio) }
+                    }
+                }else { allow() }
+            }else { self.placeholderShow(mediaType: .video) }
+        }
     }
     
     // 提示
@@ -101,6 +94,12 @@ class LTakingPicturesController: UIViewController {
             promptView.imageName("icon_permissions")
             promptView.delegate = self
         }
+    }
+    
+    
+    // MARK: - fileprivate
+    fileprivate func imageCameraCompleteShooting() {
+        operationView.shootingComplete()
     }
 }
 
@@ -150,8 +149,9 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
         case .suspended:
             takingPicturesView.stopVideoRecoding()
         case .taking:
-            takingPicturesView.startRecordPhoto()
+//            takingPicturesView.startRecordPhoto()
 //            takingPicturesView.startRecordVideo(filePath: "122")
+            takingPicturesView.focusModeLocked(lensPosition: 0.1)
         case .remake:
             takingPicturesView.captureSession.startRunning()
 //            tabBarView.isHidden = true
@@ -181,11 +181,16 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
             }
             imagePickerDelegate?.takingPictures(viewController: self, image: contentImage)
             dismiss(animated: true, completion: nil)
+        case .flash:
+            break
+        case .switchCamera:
+            break
         }
     }
     
     func operationViewPlayStatus() -> Bool {
-        return takingPicturesView.isRecording
+//        return takingPicturesView.isRecording
+        return true
     }
     
     func promptViewImageClick(_ promptView: LImagePickerPromptView) {

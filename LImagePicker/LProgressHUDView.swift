@@ -2,7 +2,7 @@
 //  LProgressHUDView.swift
 //  LImagePicker
 //
-//  Created by HY.Ltd on 2020/12/2.
+//  Created by L. on 2020/12/2.
 //  Copyright © 2020 L. All rights reserved.
 //
 

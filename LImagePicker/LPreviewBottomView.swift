@@ -2,7 +2,7 @@
 //  LPreviewBottomView.swift
 //  LImagePicker
 //
-//  Created by HY.Ltd on 2020/12/3.
+//  Created by L. on 2020/12/3.
 //  Copyright © 2020 L. All rights reserved.
 //
 

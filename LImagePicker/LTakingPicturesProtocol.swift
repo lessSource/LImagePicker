@@ -2,7 +2,7 @@
 //  LTakingPicturesProtocol.swift
 //  LImagePicker
 //
-//  Created by HY.Ltd on 2020/12/1.
+//  Created by L. on 2020/12/1.
 //  Copyright © 2020 L. All rights reserved.
 //
 
@@ -54,15 +54,8 @@ enum LTakingPicturesOperationType: String {
     case remake = "重拍"
     case cancle = "取消"
     case complete = "完成"
-}
-
-enum LDirectionSenseType {
-    /** 不识别方向 */
-    case none
-    /** 根据系统方向开关识别方向 */
-    case system
-    /** 根据重力感应识别方向 */
-    case motion
+    case flash = "闪光灯"
+    case switchCamera = "切换相机"
 }
 
 
