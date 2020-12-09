@@ -117,20 +117,17 @@ extension LImagePickerManager {
                     allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: self.sortAscendingByModificationDate)]
                 }
                 
-                
                 let fetchResult: PHFetchResult = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
                 if collection.assetCollectionSubtype == .smartAlbumAllHidden { return }
                 if collection.assetCollectionSubtype.rawValue == 1000000201 { return } // [最近删除] 相册
                 
                 if fetchResult.count > 0 {
-                    let model = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0)
-                    
+                    let model = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: fetchResult.lastObject, fetchResult: fetchResult, selectCount: 0, isAllPhotos: collection.assetCollectionSubtype == .smartAlbumUserLibrary)
                     if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
                         array.insert(model, at: 0)
                     }else {
                         array.append(model)
                     }
-                    
                 }
             }
             
@@ -155,7 +152,6 @@ extension LImagePickerManager {
                     array.append(model)
                 }
             }
-            
             DispatchQueue.main.async {
                 complete(array)
             }
@@ -183,7 +179,7 @@ extension LImagePickerManager {
                     if self.isCameraRollAlbm(metadata: collection) {
                         mediaTypePhAsset = PHAsset.fetchAssets(in: collection, options: allPhotosOptions)
                         DispatchQueue.main.async {
-                            let albumModel = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: mediaTypePhAsset.lastObject, fetchResult: mediaTypePhAsset, selectCount: 0)
+                            let albumModel = LPhotoAlbumModel(title: collection.localizedTitle ?? "", asset: mediaTypePhAsset.lastObject, fetchResult: mediaTypePhAsset, selectCount: 0, isAllPhotos: true)
                             successPHAsset(albumModel)
                         }
                         

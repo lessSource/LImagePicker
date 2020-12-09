@@ -10,6 +10,8 @@ import UIKit
 
 class LPhotoAlbumView: UIView {
 
+    public weak var delegate: LPhotoAlbumViewProtocol?
+    
     // 动画时间
     fileprivate let animationTimeInterval: TimeInterval = 0.3
     
@@ -107,7 +109,7 @@ extension LPhotoAlbumView: UITableViewDelegate, UITableViewDataSource, UIGesture
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        didSelectClosure?(dataArray[indexPath.row])
+        delegate?.photoAlbumView(view: self, albumModel: dataArray[indexPath.row])
         hideView()
     }
     

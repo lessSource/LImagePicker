@@ -104,6 +104,7 @@ class LTakingPicturesController: UIViewController {
 }
 
 extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOperationDelegate, LPromptViewDelegate {
+    
 
     func imageCameraCaptureDeviceDidChange() {
         print("有变化")
@@ -149,9 +150,9 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
         case .suspended:
             takingPicturesView.stopVideoRecoding()
         case .taking:
-//            takingPicturesView.startRecordPhoto()
+            takingPicturesView.startRecordPhoto()
 //            takingPicturesView.startRecordVideo(filePath: "122")
-            takingPicturesView.focusModeLocked(lensPosition: 0.1)
+//            takingPicturesView.focusModeLocked(lensPosition: 0.1)
         case .remake:
             takingPicturesView.captureSession.startRunning()
 //            tabBarView.isHidden = true
@@ -192,6 +193,11 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
 //        return takingPicturesView.isRecording
         return true
     }
+    
+    func operationViewPinch(view: LTakingPicturesOperationView, value: CGFloat) {
+        takingPicturesView.videoZoomFactor(value: value)
+    }
+    
     
     func promptViewImageClick(_ promptView: LImagePickerPromptView) {
         if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {

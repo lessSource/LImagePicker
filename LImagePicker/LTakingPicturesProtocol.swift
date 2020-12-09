@@ -65,4 +65,6 @@ protocol LTakingPicturesOperationDelegate: LImagePickerProtocol {
     
     func operationViewPlayStatus() -> Bool
     
+    func operationViewPinch(view: LTakingPicturesOperationView, value: CGFloat)
+    
 }

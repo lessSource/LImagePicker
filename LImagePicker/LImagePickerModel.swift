@@ -133,6 +133,8 @@ struct LPhotoAlbumModel {
     var fetchResult: PHFetchResult<PHAsset>?
     /** 选中数量 */
     var selectCount: Int = 0
+    /** 所有照片 */
+    var isAllPhotos: Bool = false
 }
 
 // 图片模型

@@ -146,7 +146,7 @@ extension LTakingPicturesOperationView {
     }
     
     fileprivate func pinchGestureClick(_ gesture: UIPinchGestureRecognizer) {
-        print(gesture.scale)
+        delegate?.operationViewPinch(view: self, value: gesture.scale)
     }
     
 }

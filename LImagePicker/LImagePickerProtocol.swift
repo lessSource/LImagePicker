@@ -63,6 +63,10 @@ protocol LPreviewBottomProtocol: class {
     
 }
 
-
+protocol LPhotoAlbumViewProtocol: class {
+    
+    func photoAlbumView(view: LPhotoAlbumView, albumModel: LPhotoAlbumModel)
+    
+}
 
 

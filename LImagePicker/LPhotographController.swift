@@ -44,12 +44,12 @@ class LPhotographController: UIViewController {
         let photoAlbumView = LPhotoAlbumView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar))
         photoAlbumView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
         photoAlbumView.isHidden = true
+        photoAlbumView.delegate = self
         return photoAlbumView
     }()
     
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        
         let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
@@ -71,11 +71,8 @@ class LPhotographController: UIViewController {
         PHPhotoLibrary.shared().register(self)
         initView()
         LImagePickerManager.shared.requestsPhotosAuthorization { (authorized) in
-            if authorized {
-                self.initData()
-            }else {
-                self.placeholderShow()
-            }
+            if authorized { self.initData()
+            }else { self.placeholderShow() }
             self.bottomView.isHidden = !authorized
             self.lateralSpreadsReturn(isSideslipping: authorized)
         }
@@ -111,7 +108,7 @@ class LPhotographController: UIViewController {
                         self.dataArray[index] = item
                     }
                 }
-                if imagePicker.allowTakePicture {
+                if imagePicker.allowTakePicture && albumModel.isAllPhotos {
                     let photographModel = LPhotographModel(media: PHAsset(), type: .shooting, isSelect: false, selectIndex: 0)
                     self.dataArray.insert(photographModel, at: 0)
                 }
@@ -173,7 +170,7 @@ class LPhotographController: UIViewController {
     
 }
 
-extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol, PHPhotoLibraryChangeObserver, LImagePickerButtonProtocl, LPromptViewDelegate {
+extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol, PHPhotoLibraryChangeObserver, LImagePickerButtonProtocl, LPromptViewDelegate, LPhotoAlbumViewProtocol {
     
     // MARK: -  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -250,20 +247,17 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         guard let cell = collectionView.cellForItem(at: indexPath) as? LPhotographImageCell else { return }
         if imageNavPicker.maxImageCount == imageNavPicker.selectArray.count { return }
         animationDelegate = LPreviewAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
-        let mediaArray = dataArray.filter { $0.type != .shooting }
-        let imageModel = LPreviewImageModel(currentIndex: indexPath.item - 1, dataArray: mediaArray)
+        let isOffset = imageNavPicker.allowTakePicture && albumModel?.isAllPhotos == true
+        var mediaArray: [LPhotographModel] = dataArray
+        if isOffset { mediaArray = dataArray.filter { $0.type != .shooting } }
+        let imageModel = LPreviewImageModel(currentIndex: isOffset ? indexPath.item - 1 : indexPath.item, dataArray: mediaArray)
         let imagePicker = LImagePickerController(configuration: imageModel, delegate: self)
-        imagePicker.correctionNumber = 1
+        if isOffset { imagePicker.correctionNumber = 1 }
         imagePicker.transitioningDelegate = animationDelegate
         present(imagePicker, animated: true, completion: nil)
     }
     
-    // MARK: - LImagePickerProtocol
-    func takingPicturesSaveImage(viewController: UIViewController, asset: PHAsset) {
-        dataArray.insert(LPhotographModel(media: asset, type: .photo, isSelect: false, selectIndex: 0), at: 1)
-        collectionView.reloadData()
-    }
-    
+    // MARK: - LImagePickerProtocol    
     func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) {
         guard let imagePicker = navigationController as? LImagePickerController, let photographModel = mediaProtocol as? LPhotographModel else { return }
         if photographModel.isSelect {
@@ -280,7 +274,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     
-    // MARK: - LImagePickerBottomProtocl
+    // MARK: - LImagePickerButtonProtocl
     func buttonView(view: UIView, buttonType: LImagePickerButtonType) {
         guard let imagePicker = navigationController as? LImagePickerController else { return }
         if buttonType == .confirm {
@@ -398,6 +392,12 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         if let url = URL(string: urlStr), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [: ], completionHandler: nil)
         }
+    }
+    
+    // MARK: - LPhotoAlbumViewProtocol
+    func photoAlbumView(view: LPhotoAlbumView, albumModel: LPhotoAlbumModel) {
+        self.albumModel = albumModel
+        initData()
     }
     
 }

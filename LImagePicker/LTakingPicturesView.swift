@@ -257,8 +257,10 @@ class LTakingPicturesView: UIView {
     // 焦距
     public func focusModeLocked(lensPosition: CGFloat) {
         guard let device = self.captureDevice else { return }
+        var lens: Float = Float(lensPosition)
+        if lens > 1.0 { lens = 1.0 }
         changeDevice(captureDevice: device) { (changeDevice) in
-            changeDevice.setFocusModeLocked(lensPosition: Float(lensPosition), completionHandler: nil)
+            changeDevice.setFocusModeLocked(lensPosition: lens, completionHandler: nil)
         }
     }
     
@@ -277,6 +279,20 @@ class LTakingPicturesView: UIView {
             }
             changeDevice.isSubjectAreaChangeMonitoringEnabled = true
         }
+        
+    }
+    
+    public func videoZoomFactor(value: CGFloat) {
+        guard let device = self.captureDevice else { return }
+//        let maxScale = device.videoMaxZoomFactor
+        
+        changeDevice(captureDevice: device) { (changeDevice) in
+//            changeDevice.videoZoomFactor = value
+            changeDevice.videoZoomFactor = value
+            print(value)
+//            changeDevice.activeFormat.videoMaxZoomFactor
+        }
+        
         
     }
     

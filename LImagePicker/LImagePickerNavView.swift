@@ -63,6 +63,12 @@ class LImagePickerNavView: UIView {
         return button
     }()
     
+    fileprivate lazy var dropDownImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage.lImageNamedFromMyBundle(name: "photo_select_down")
+        return image
+    }()
+    
     public var isPreviewButton: Bool = false {
         didSet {
             selectButton.isHidden = !isPreviewButton
@@ -74,6 +80,8 @@ class LImagePickerNavView: UIView {
     public var title: String = "" {
         didSet {
             titleLabel.text = title
+            titleLabel.l_width = titleLabel.intrinsicContentSize.width
+            dropDownImage.l_x = titleLabel.frame.maxX + 3
         }
     }
     
@@ -102,6 +110,7 @@ class LImagePickerNavView: UIView {
     fileprivate func initView() {
         cancleButton.frame = CGRect(x: 16, y: l_height - 35, width: 26, height: 26)
         titleLabel.frame = CGRect(x: l_width/2 - 50, y: LConstant.statusHeight, width: 100, height: LConstant.topBarHeight)
+        dropDownImage.frame = CGRect(x: titleLabel.frame.maxX, y: LConstant.statusHeight + 16, width: 12, height: 12)
         selectImageView.frame = CGRect(x: l_width - 40, y: l_height - 34, width: 24, height: 24)
         indexLabel.frame = selectImageView.frame
         selectButton.frame = CGRect(x: l_width - 44, y: l_height - 44, width: 44, height: 44)
@@ -109,6 +118,7 @@ class LImagePickerNavView: UIView {
         
         addSubview(cancleButton)
         addSubview(titleLabel)
+        addSubview(dropDownImage)
         addSubview(selectImageView)
         addSubview(indexLabel)
         addSubview(selectButton)
@@ -146,6 +156,16 @@ extension LImagePickerNavView {
     
     fileprivate func titleTapClick() {
         delegate?.buttonView(view: self, buttonType: .title)
+ 
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationCurve(.easeInOut)
+        UIView.setAnimationDuration(0.6)
+        dropDownImage.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
+        let imageTransform = dropDownImage.transform
+        transform.scaledBy(x: 1, y: 1)
+        dropDownImage.transform = imageTransform
+        
+        
     }
     
 }
