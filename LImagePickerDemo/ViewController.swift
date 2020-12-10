@@ -92,6 +92,8 @@ extension ViewController {
         let imagePicker = LImagePickerController(withMaxImage: 5, delegate: self, photoAlbumType: .dropDown)
         imagePicker.sortAscendingByModificationDate = false
         imagePicker.cropCircle = true
+//        imagePicker.allowTakeVideo = false
+//        imagePicker.allowSystemCamera = false
         present(imagePicker, animated: true, completion: nil)
         print(111)
         

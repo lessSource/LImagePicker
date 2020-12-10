@@ -24,7 +24,6 @@ final class LImagePickerManager {
             let margin: CGFloat = 4.0
             let itemWH = (LScreenWidth - 2.0 * margin - 4.0) / CGFloat(columnNumber) - margin
             AssetGridThumbnailSize = CGSize(width: itemWH * LScreenScale, height: itemWH * LScreenScale)
-            
         }
     }
     
@@ -129,7 +128,6 @@ extension LImagePickerManager {
     
     // 获取相册
     func getAlbumResources(_ mediaType: PHAssetMediaType = .unknown, duration: Int = Int.max, complete: @escaping (_ dataArray: [LAlbumPickerModel]) -> ()) {
-        
         DispatchQueue.global().async {
             var array: Array = [LAlbumPickerModel]()
             let options = PHFetchOptions()
@@ -481,6 +479,34 @@ extension LImagePickerManager {
 
 
 extension LImagePickerManager {
+    // 创建相册
+
+//    eqweqwelj
+    
+//    static func getCreatPhotoAlbum() -> PHAssetCollection? {
+//        let collections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: nil)
+//        var assetCollection: PHAssetCollection?
+//        collections.enumerateObjects { (collection, i, objc) in
+//            if collection.localizedTitle == appName {
+//                assetCollection = collection
+//            }
+//        }
+//        if let collection = assetCollection {
+//            return collection
+//        }
+//        var createID: String = ""
+//        do {
+//            try PHPhotoLibrary.shared().performChangesAndWait {
+//                let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: appName)
+//                createID = request.placeholderForCreatedAssetCollection.localIdentifier
+//            }
+//            return PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [createID], options: nil).firstObject
+//        } catch {
+//            return nil
+//        }
+//    }
+    
+    
     
     // 保存图片
     fileprivate func savePhotoWithImage(image: UIImage, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
@@ -504,6 +530,10 @@ extension LImagePickerManager {
         }
         
     }
+    
+//    static func savePhotoCustomAlbum(image: UIImage) {
+//        
+//    }
     
     fileprivate func savePhotoWithImage(image: UIImage, meta: Dictionary<String, String>, location: CLLocation?, completion: @escaping ((PHAsset, Error?) -> ())) {
         

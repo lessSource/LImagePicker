@@ -8,7 +8,7 @@
 
 import UIKit
 import Photos
-
+import MobileCoreServices
 
 class LPhotographController: UIViewController {
     
@@ -170,7 +170,7 @@ class LPhotographController: UIViewController {
     
 }
 
-extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol, PHPhotoLibraryChangeObserver, LImagePickerButtonProtocl, LPromptViewDelegate, LPhotoAlbumViewProtocol {
+extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PHPhotoLibraryChangeObserver, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: -  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -227,8 +227,21 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
 
         if dataArray[indexPath.item].type == .shooting {
             if allowSelect {
-                let imagePicker = LImagePickerController(allowPickingVideo: imageNavPicker.allowTakeVideo, maxDuration: imageNavPicker.videoMaximumDuration , delegate: self)
-                present(imagePicker, animated: true, completion: nil)
+                if imageNavPicker.allowSystemCamera {
+                    let pickerVC = UIImagePickerController()
+                    pickerVC.sourceType = .camera
+                    pickerVC.mediaTypes.append(kUTTypeImage as String)
+                    pickerVC.delegate = self
+                    if imageNavPicker.allowTakeVideo {
+                        pickerVC.mediaTypes.append(kUTTypeMovie as String)
+                        pickerVC.videoQuality = .typeHigh
+                        pickerVC.videoMaximumDuration = imageNavPicker.videoMaximumDuration
+                    }
+                    present(pickerVC, animated: true, completion: nil)
+                }else {
+                    let imagePicker = LImagePickerController(allowPickingVideo: imageNavPicker.allowTakeVideo, maxDuration: imageNavPicker.videoMaximumDuration , delegate: self)
+                    present(imagePicker, animated: true, completion: nil)
+                }
             }else {
                 guard let imageNavPicker = navigationController as? LImagePickerController else { return }
                 let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imageNavPicker.maxImageCount)张照片")
@@ -257,7 +270,67 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         present(imagePicker, animated: true, completion: nil)
     }
     
-    // MARK: - LImagePickerProtocol    
+    // MARK: - PHPhotoLibraryChangeObserver
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        guard var fetchResult = albumModel?.fetchResult else { return }
+        DispatchQueue.main.sync {
+            if let changes = changeInstance.changeDetails(for: fetchResult) {
+                fetchResult = changes.fetchResultAfterChanges
+                if changes.hasIncrementalChanges {
+                    collectionView.performBatchUpdates({
+                        if let removed = changes.removedIndexes, removed.count > 0 {
+                            let deleteIndexs = removed.map { IndexPath(item: $0 + 1, section: 0) }
+                            for index in deleteIndexs {
+                                dataArray.remove(at: index.item)
+                            }
+                            collectionView.deleteItems(at: deleteIndexs)
+                        }
+                        if let inserted = changes.insertedIndexes, inserted.count > 0 {
+                            let insertIndexs = inserted.map { IndexPath(item: $0 + 1, section: 0) }
+                            for index in insertIndexs {
+                                let photographModel = LPhotographModel(media: fetchResult.object(at: index.item - 1), type: .photo, isSelect: false, selectIndex: 0)
+                                dataArray.insert(photographModel, at: index.item)
+                            }
+                            collectionView.insertItems(at: insertIndexs)
+                        }
+                        if let changed = changes.changedIndexes, changed.count > 0 {
+                            let changedIndexs = changed.map { IndexPath(item: $0 + 1, section: 0) }
+                            for index in changedIndexs {
+                                let photographModel = LPhotographModel(media: fetchResult.object(at: index.item - 1), type: .photo, isSelect: false, selectIndex: 0)
+                                dataArray[index.item] = photographModel
+                            }
+                            collectionView.reloadItems(at: changedIndexs)
+                        }
+                        changes.enumerateMoves { fromIndex, toIndex in
+                            self.collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0),
+                                                         to: IndexPath(item: toIndex, section: 0))
+                        }
+                    })
+                } else {
+                    albumModel?.fetchResult = fetchResult
+                    initData()
+                }
+            }
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if info[UIImagePickerController.InfoKey.mediaType] as! CFString == kUTTypeMovie {
+            print("视频")
+        }else if info[UIImagePickerController.InfoKey.mediaType] as! CFString == kUTTypeImage {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                LImagePickerManager.shared.savePhotoWithImage(image: image)
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+
+}
+
+extension LPhotographController: LImagePickerProtocol, LImagePickerButtonProtocl, LPromptViewDelegate, LPhotoAlbumViewProtocol {
+    
+    // MARK: - LImagePickerProtocol
     func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) {
         guard let imagePicker = navigationController as? LImagePickerController, let photographModel = mediaProtocol as? LPhotographModel else { return }
         if photographModel.isSelect {
@@ -342,49 +415,6 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     
-    // MARK: - PHPhotoLibraryChangeObserver
-    func photoLibraryDidChange(_ changeInstance: PHChange) {
-        guard var fetchResult = albumModel?.fetchResult else { return }
-        DispatchQueue.main.sync {
-            if let changes = changeInstance.changeDetails(for: fetchResult) {
-                fetchResult = changes.fetchResultAfterChanges
-                if changes.hasIncrementalChanges {
-                    collectionView.performBatchUpdates({
-                        if let removed = changes.removedIndexes, removed.count > 0 {
-                            let deleteIndexs = removed.map { IndexPath(item: $0 + 1, section: 0) }
-                            for index in deleteIndexs {
-                                dataArray.remove(at: index.item)
-                            }
-                            collectionView.deleteItems(at: deleteIndexs)
-                        }
-                        if let inserted = changes.insertedIndexes, inserted.count > 0 {
-                            let insertIndexs = inserted.map { IndexPath(item: $0 + 1, section: 0) }
-                            for index in insertIndexs {
-                                let photographModel = LPhotographModel(media: fetchResult.object(at: index.item - 1), type: .photo, isSelect: false, selectIndex: 0)
-                                dataArray.insert(photographModel, at: index.item)
-                            }
-                            collectionView.insertItems(at: insertIndexs)
-                        }
-                        if let changed = changes.changedIndexes, changed.count > 0 {
-                            let changedIndexs = changed.map { IndexPath(item: $0 + 1, section: 0) }
-                            for index in changedIndexs {
-                                let photographModel = LPhotographModel(media: fetchResult.object(at: index.item - 1), type: .photo, isSelect: false, selectIndex: 0)
-                                dataArray[index.item] = photographModel
-                            }
-                            collectionView.reloadItems(at: changedIndexs)
-                        }
-                        changes.enumerateMoves { fromIndex, toIndex in
-                            self.collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0),
-                                                         to: IndexPath(item: toIndex, section: 0))
-                        }
-                    })
-                } else {
-                    albumModel?.fetchResult = fetchResult
-                    initData()
-                }
-            }
-        }
-    }
     
     // MARK: - LPromptViewDelegate
     func promptViewImageClick(_ promptView: LImagePickerPromptView) {
@@ -398,6 +428,10 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func photoAlbumView(view: LPhotoAlbumView, albumModel: LPhotoAlbumModel) {
         self.albumModel = albumModel
         initData()
+    }
+    
+    func photoAlbumAnimation(view: LPhotoAlbumView, isShow: Bool) {
+        navView.dropDownImageAnimation(isShow: isShow)
     }
     
 }

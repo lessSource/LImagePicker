@@ -87,28 +87,4 @@ struct LApp {
         return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
     }
     
-    static func getCreatPhotoAlbum() -> PHAssetCollection? {
-        let collections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: nil)
-        var assetCollection: PHAssetCollection?
-        collections.enumerateObjects { (collection, i, objc) in
-            if collection.localizedTitle == appName {
-                assetCollection = collection
-            }
-        }
-        if let collection = assetCollection {
-            return collection
-        }
-        var createID: String = ""
-        do {
-            try PHPhotoLibrary.shared().performChangesAndWait {
-                let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: appName)
-                createID = request.placeholderForCreatedAssetCollection.localIdentifier
-            }
-            return PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [createID], options: nil).firstObject
-        } catch {
-            return nil
-        }
-    }
-    
-    
 }

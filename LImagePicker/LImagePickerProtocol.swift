@@ -67,6 +67,8 @@ protocol LPhotoAlbumViewProtocol: class {
     
     func photoAlbumView(view: LPhotoAlbumView, albumModel: LPhotoAlbumModel)
     
+    func photoAlbumAnimation(view: LPhotoAlbumView, isShow: Bool)
+    
 }
 
 

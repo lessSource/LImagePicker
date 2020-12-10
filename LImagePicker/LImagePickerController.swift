@@ -22,6 +22,8 @@ public class LImagePickerController: LImagePickerNavigationController {
     internal var selectArray: [LPhotographModel] = []
     /** 相簿显示样式 */
     internal var photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack
+    /** 是否使用UIImagePickerController进行拍照 */
+    public var allowSystemCamera: Bool = true
     /** 是否允许拍摄照片 */
     public var allowTakePicture: Bool = true
     /** 默认为YES，如果设置为NO, 用户将不能拍摄视频 */

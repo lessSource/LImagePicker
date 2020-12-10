@@ -12,6 +12,8 @@ class LImagePickerNavView: UIView {
     
     public weak var delegate: LImagePickerButtonProtocl?
     
+    fileprivate let animationTimeInterval: TimeInterval = 0.3
+    
     fileprivate lazy var cancleButton: UIButton = {
         let button = UIButton(type: .custom)
         return button
@@ -140,6 +142,14 @@ class LImagePickerNavView: UIView {
         }
     }
     
+    public func dropDownImageAnimation(isShow: Bool) {
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationCurve(.easeInOut)
+        UIView.setAnimationDuration(animationTimeInterval)
+        let transform = dropDownImage.transform
+        dropDownImage.transform =  transform.rotated(by: isShow ? CGFloat.pi : -CGFloat.pi) 
+        UIView.commitAnimations()
+    }
 
 }
 
@@ -156,16 +166,6 @@ extension LImagePickerNavView {
     
     fileprivate func titleTapClick() {
         delegate?.buttonView(view: self, buttonType: .title)
- 
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationCurve(.easeInOut)
-        UIView.setAnimationDuration(0.6)
-        dropDownImage.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
-        let imageTransform = dropDownImage.transform
-        transform.scaledBy(x: 1, y: 1)
-        dropDownImage.transform = imageTransform
-        
-        
     }
     
 }
