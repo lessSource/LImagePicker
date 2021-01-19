@@ -83,6 +83,12 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         resizeSubviews()
     }
     
+    public func getPhotoString(imageStr: String) {
+        currentImage.image = UIImage(named: imageStr)
+        resizeSubviews()
+    }
+    
+    
     func requestPhotoSize(asset: PHAsset) -> CGSize {
         let scale = 2
         let w = min(Int(UIScreen.main.bounds.width), Int(LImagePickerManager.shared.photoPreviewMaxWidth)) * scale
@@ -97,7 +103,6 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         representedAssetIdentifier = asset.localIdentifier
         imageRequestID = LImagePickerManager.shared.getPhotoWithAsset(asset, size: requestPhotoSize(asset: asset), resizeMode: .fast, progress: { (progress, _, _, _) in
             print(progress)
-            
         }, completion: { [weak self] (image, isDegraded) in
             guard self?.representedAssetIdentifier == asset.localIdentifier else { return }
             self?.currentImage.image = image
@@ -108,13 +113,10 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         })
     }
     
-    fileprivate func resizeSubviews() {
+    public func resizeSubviews() {
         imageContainerView.frame.origin = .zero
         imageContainerView.l_width = scrollView.l_width
-        
-        guard let image = currentImage.image else {
-            return
-        }
+        guard let image = currentImage.image else { return }
         if image.size.height / image.size.width > l_height / l_width {
             imageContainerView.l_height = floor(image.size.height / (image.size.width / scrollView.l_width))
         }else {
@@ -135,7 +137,6 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         scrollView.scrollRectToVisible(bounds, animated: false)
         scrollView.alwaysBounceVertical = imageContainerView.l_height <= l_height ? false : true
         currentImage.frame = imageContainerView.bounds
-        
     }
     
     fileprivate func _addGestureRecognizer() {

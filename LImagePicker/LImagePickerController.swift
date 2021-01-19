@@ -34,7 +34,7 @@ public class LImagePickerController: LImagePickerNavigationController {
     /** 获取图片的超时时间 */
     public var timeout: TimeInterval = 15.0
     /** 默认为NO，如果设置为YES，代理方法里photos中没有数据 */
-    public var onlyReturnAsset: Bool = false    
+    public var onlyReturnAsset: Bool = false
     
     /** 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个 */
     public var sortAscendingByModificationDate: Bool = true {
@@ -44,6 +44,8 @@ public class LImagePickerController: LImagePickerNavigationController {
     }
     /** 是否是查看大图 */
     public var isViewLargerImage: Bool = true
+    /** 查看大图编辑 */
+    public var isViewLargerEditorImage: Bool = true
     /** 查看大图返回时需要修改定位的数量，例如前面过滤一个拍照按钮 */
     public var correctionNumber: Int = 0
     

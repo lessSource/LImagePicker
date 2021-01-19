@@ -55,7 +55,7 @@ class LImagePickerNavView: UIView {
         return label
     }()
     
-    fileprivate lazy var completeButton: UIButton = {
+    public lazy var completeButton: UIButton = {
         let button = UIButton()
         button.setTitle("完成", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -65,9 +65,9 @@ class LImagePickerNavView: UIView {
         return button
     }()
     
-    fileprivate lazy var dropDownImage: UIImageView = {
+    public lazy var dropDownImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage.lImageNamedFromMyBundle(name: "photo_select_down")
+        image.image = UIImage.lImageNamedFromMyBundle(name: "icon_album_arrow")
         return image
     }()
     
@@ -84,6 +84,10 @@ class LImagePickerNavView: UIView {
             titleLabel.text = title
             titleLabel.l_width = titleLabel.intrinsicContentSize.width
             dropDownImage.l_x = titleLabel.frame.maxX + 3
+            if dropDownImage.isHidden {
+                titleLabel.l_x = LConstant.screenWidth/2 - titleLabel.l_width/2
+            }
+            
         }
     }
     
@@ -128,6 +132,7 @@ class LImagePickerNavView: UIView {
         
         cancleButton.addTarget(self, action: #selector(cancleButtonClick), for: .touchUpInside)
         selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeButtonClick), for: .touchUpInside)
         let titleTap = UITapGestureRecognizer(target: self, action: #selector(titleTapClick))
         titleLabel.isUserInteractionEnabled = true
         titleLabel.addGestureRecognizer(titleTap)
@@ -147,7 +152,7 @@ class LImagePickerNavView: UIView {
         UIView.setAnimationCurve(.easeInOut)
         UIView.setAnimationDuration(animationTimeInterval)
         let transform = dropDownImage.transform
-        dropDownImage.transform =  transform.rotated(by: isShow ? CGFloat.pi : -CGFloat.pi) 
+        dropDownImage.transform =  transform.rotated(by: isShow ? CGFloat.pi : -CGFloat.pi)
         UIView.commitAnimations()
     }
 
@@ -166,6 +171,10 @@ extension LImagePickerNavView {
     
     fileprivate func titleTapClick() {
         delegate?.buttonView(view: self, buttonType: .title)
+    }
+    
+    fileprivate func completeButtonClick() {
+        delegate?.buttonView(view: self, buttonType: .confirm)
     }
     
 }
