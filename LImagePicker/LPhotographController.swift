@@ -354,8 +354,9 @@ extension LPhotographController: LImagePickerProtocol, LImagePickerButtonProtocl
             // 不请求UIImage
             if imagePicker.onlyReturnAsset {
                 let assets = imagePicker.selectArray.compactMap { $0.media }
-                imagePickerDelegate?.photographSelectImage(viewController: self, photos: [], assets: assets)
-                dismiss(animated: true, completion: nil)
+                dismiss(animated: true) {
+                    self.imagePickerDelegate?.photographSelectImage(viewController: self, photos: [], assets: assets)
+                }
                 return
             }
                         
@@ -392,8 +393,9 @@ extension LPhotographController: LImagePickerProtocol, LImagePickerButtonProtocl
                     let sucImages = images.compactMap { $0 }
                     let sucAssets = assets.compactMap { $0 }
                     hud.hide()
-                    self.imagePickerDelegate?.photographSelectImage(viewController: self, photos: sucImages, assets: sucAssets)
-                    self.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true) {
+                        self.imagePickerDelegate?.photographSelectImage(viewController: self, photos: sucImages, assets: sucAssets)
+                    }
                 }
                 imageQueue.addOperation(operation)
             }
