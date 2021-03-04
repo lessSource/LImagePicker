@@ -14,15 +14,19 @@ private let cellMargin: CGFloat = 20
 class LPreviewImageController: UICollectionViewController {
 
     public weak var imagePickerDelegate: LImagePickerProtocol?
+    /** 预览 */
+    public var isPreview: Bool = true
+    /** 查看大图返回时需要修改定位的数量，例如前面过滤一个拍照按钮 */
+    public var correctionNumber: Int = 0
+    
+    
     
     /** 数据模型 */
     fileprivate(set) var configuration = LPreviewImageModel()
-    
     /** 当前序号 */
     fileprivate(set) var currentIndex: Int = 0
     
-    /** 有拍照按钮时需要重新定位 */
-    fileprivate(set) var correctionNumber: Int = 0
+
     
     fileprivate lazy var navView: LImagePickerNavView = {
         let navView = LImagePickerNavView(frame: CGRect(x: 0, y: -LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
@@ -74,8 +78,7 @@ class LPreviewImageController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard let imagePicker = navigationController as? LImagePickerController else { return }
-        if imagePicker.isViewLargerImage {
+        if isPreview {
             UIView.animate(withDuration: 0.3) {
                 self.navView.l_y = 0
                 self.bottomView.l_y = LConstant.screenHeight - LConstant.bottomBarHeight
@@ -111,8 +114,7 @@ class LPreviewImageController: UICollectionViewController {
         }
         view.addSubview(navView)
         guard let imagePicker = navigationController as? LImagePickerController else { return }
-        correctionNumber = imagePicker.correctionNumber
-        if imagePicker.isViewLargerImage {
+        if isPreview {
             navView.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
             navView.title = "\(currentIndex + 1)/\(configuration.dataArray.count)"
             navView.isPreviewButton = false
@@ -165,7 +167,7 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         currentIndex = Int(scrollView.contentOffset.x / scrollView.l_width)
         guard let imagePicker = navigationController as? LImagePickerController else { return }
-        if imagePicker.isViewLargerImage {
+        if isPreview {
             navView.title = "\(currentIndex + 1)/\(configuration.dataArray.count)"
         }else {
             if let photographModel = configuration.dataArray[safe: currentIndex] as? LPhotographModel {
@@ -199,7 +201,7 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
     func previewImageDidSelect(cell: UICollectionViewCell) {
 //        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         guard let imagePicker = navigationController as? LImagePickerController else { return }
-        if imagePicker.isViewLargerImage {
+        if isPreview {
             UIView.animate(withDuration: 0.3) {
                 self.navView.l_y = self.navView.l_y == 0 ? -LConstant.navbarAndStatusBar : 0
             }

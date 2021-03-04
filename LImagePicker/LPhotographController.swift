@@ -251,8 +251,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         var mediaArray: [LPhotographModel] = dataArray
         if isOffset { mediaArray = dataArray.filter { $0.type != .shooting } }
         let imageModel = LPreviewImageModel(currentIndex: isOffset ? indexPath.item - 1 : indexPath.item, dataArray: mediaArray)
-        let imagePicker = LImagePickerController(configuration: imageModel, delegate: self)
-        if isOffset { imagePicker.correctionNumber = 1 }
+        let imagePicker = LImagePickerController(configuration: imageModel, delegate: self, correctionNumber: isOffset ? 1 : 0)
         imagePicker.transitioningDelegate = animationDelegate
         present(imagePicker, animated: true, completion: nil)
     }
@@ -325,8 +324,7 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
                 imageQueue.addOperation(operation)
             }
         }else if buttonType == .preview {
-            let previeVC = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: imagePicker.selectArray), delegate: self)
-            previeVC.isViewLargerImage = false
+            let previeVC = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: imagePicker.selectArray), delegate: self, isPreview: false)
             animationDelegate = LPreviewAnimationDelegate()
             previeVC.transitioningDelegate = animationDelegate
             present(previeVC, animated: true, completion: nil)

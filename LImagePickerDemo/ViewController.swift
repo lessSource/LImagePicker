@@ -50,12 +50,12 @@ class ViewController: UIViewController {
         
 //        https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1606815366947&amp;di=8024e218b3d4a26d15869fcfb60a639e&amp;imgtype=0&amp;src=http%3A%2F%2Fa4.att.hudong.com%2F27%2F67%2F01300000921826141299672233506.jpg
         
-        let originalImageViewTap = UITapGestureRecognizer(target: self, action: #selector(originalImageViewTapClick))
-        originalImageView.isUserInteractionEnabled = true
-        originalImageView.addGestureRecognizer(originalImageViewTap)
-        
-        
-        originalImageView.kf.setImage(with: ImageResource(downloadURL: URL(string: "https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg")!))
+//        let originalImageViewTap = UITapGestureRecognizer(target: self, action: #selector(originalImageViewTapClick))
+//        originalImageView.isUserInteractionEnabled = true
+//        originalImageView.addGestureRecognizer(originalImageViewTap)
+//
+//
+//        originalImageView.kf.setImage(with: ImageResource(downloadURL: URL(string: "https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg")!))
         
     }
 
@@ -89,9 +89,9 @@ extension ViewController {
 //
     // 图库
     func galleryButtonClick() {
-        let imagePicker = LImagePickerController(withMaxImage: 5, delegate: self, photoAlbumType: .dropDown)
+        let imagePicker = LImagePickerController(withMaxImage: 5, delegate: self, photoAlbumType: .photoAlbumBack)
         imagePicker.sortAscendingByModificationDate = false
-        imagePicker.cropCircle = true
+//        imagePicker.cropCircle = true        
         present(imagePicker, animated: true, completion: nil)
         print(111)
         

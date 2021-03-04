@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-//import l
 
 class LEditPicturesController: UIViewController {
 

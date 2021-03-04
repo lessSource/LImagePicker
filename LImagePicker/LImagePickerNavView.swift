@@ -8,9 +8,25 @@
 
 import UIKit
 
+enum ImagePickerNavType {
+    /** 图片 */
+    case photograph
+    /** 相册 */
+    case photoAlbum
+    /** 预览 */
+    case preview
+    /** 选择 */
+    case select
+}
+
+
+
 class LImagePickerNavView: UIView {
     
     public weak var delegate: LImagePickerButtonProtocl?
+    
+    fileprivate(set) var navType: ImagePickerNavType = .photograph
+    
     
     fileprivate lazy var cancleButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -76,6 +92,14 @@ class LImagePickerNavView: UIView {
             completeButton.isHidden = isPreviewButton
         }
     }
+    
+    convenience init(frame: CGRect, navType: ImagePickerNavType) {
+        self.init(frame: frame)
+        self.navType = navType
+    }
+    
+    
+    
     
     public var title: String = "" {
         didSet {
@@ -155,17 +179,15 @@ extension LImagePickerNavView {
     }
     
     fileprivate func titleTapClick() {
-        delegate?.buttonView(view: self, buttonType: .title)
- 
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationCurve(.easeInOut)
-        UIView.setAnimationDuration(0.6)
-        dropDownImage.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
-        let imageTransform = dropDownImage.transform
-        transform.scaledBy(x: 1, y: 1)
-        dropDownImage.transform = imageTransform
-        
-        
+//        delegate?.buttonView(view: self, buttonType: .title)
+// 
+//        UIView.beginAnimations(nil, context: nil)
+//        UIView.setAnimationCurve(.easeInOut)
+//        UIView.setAnimationDuration(0.6)
+//        dropDownImage.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
+//        let imageTransform = dropDownImage.transform
+//        transform.scaledBy(x: 1, y: 1)
+//        dropDownImage.transform = imageTransform
     }
     
 }
