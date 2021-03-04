@@ -33,18 +33,12 @@ extension LImagePickerManager {
         if status == .notDetermined {
             PHPhotoLibrary.requestAuthorization { (authorizationStatus) in
                 DispatchQueue.main.async {
-                    if authorizationStatus == .denied || status == .restricted {
-                        allow(false)
-                    }else {
-                        allow(true)
-                    }
+                    if authorizationStatus == .denied || status == .restricted { allow(false)
+                    }else { allow(true) }
                 }
             }
-        }else if status == .denied || status == .restricted {
-            allow(false)
-        }else {
-            allow(true)
-        }
+        }else if status == .denied || status == .restricted { allow(false)
+        }else { allow(true) }
     }
     
     // 获取相机、麦克风权限
@@ -52,16 +46,10 @@ extension LImagePickerManager {
         let states = AVCaptureDevice.authorizationStatus(for: mediaType)
         if states == .notDetermined {
             AVCaptureDevice.requestAccess(for: mediaType) { (success) in
-                DispatchQueue.main.async {
-                    allow(success)
-                }
+                DispatchQueue.main.async { allow(success) }
             }
-        }else if states == .authorized {
-            allow(true)
-        }else {
-            allow(false)
-        }
-        
+        }else if states == .authorized { allow(true)
+        }else { allow(false) }
     }
  
 }
@@ -277,18 +265,13 @@ extension LImagePickerManager {
         case .leftMirrored, .rightMirrored:
             transform = transform.translatedBy(x: aImage.size.height, y: 0)
             transform = transform.scaledBy(x: -1, y: 1)
-            
         default: break
-            
         }
         
         guard let cgImage = aImage.cgImage, let colorSpace = cgImage.colorSpace, let ctx: CGContext = CGContext(data: nil, width: Int(aImage.size.width), height: Int(aImage.size.height), bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0, space: colorSpace, bitmapInfo: cgImage.bitmapInfo.rawValue) else {
             return aImage
         }
-        
-        
         ctx.concatenate(transform)
-        
         switch aImage.imageOrientation {
         case .leftMirrored, .left, .rightMirrored, .right:
             ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: aImage.size.height, height: aImage.size.width))
@@ -494,4 +477,45 @@ extension LImagePickerManager {
     
 }
 
+// 保存视频 和图片
+extension LImagePickerManager {
+    public func savePhotoWithImage(image: UIImage) {
+        let assetAlbum = getCreatPhotoAlbum()
+        PHPhotoLibrary.shared().performChanges {
+            let result = PHAssetChangeRequest.creationRequestForAsset(from: image)
+            if let saveAlbum = assetAlbum {
+                let albumChangeRequset = PHAssetCollectionChangeRequest(for: saveAlbum)
+                if let assetPlaceholder = result.placeholderForCreatedAsset {
+                    albumChangeRequset?.addAssets([assetPlaceholder] as NSArray)
+                }                
+            }
+        } completionHandler: { (isSuccess, error) in
+            
+        }
+    }
+    
+    
+    fileprivate func getCreatPhotoAlbum() -> PHAssetCollection? {
+        let collections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: nil)
+        var assetCollection: PHAssetCollection?
+        collections.enumerateObjects { (collection, index, objc) in
+            if collection.localizedTitle == LApp.appName {
+                assetCollection = collection
+            }
+        }
+        if let collection = assetCollection { return collection }
+        var createId: String = ""
+        do {
+            try PHPhotoLibrary.shared().performChangesAndWait {
+                let request = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: LApp.appName)
+                createId = request.placeholderForCreatedAssetCollection.localIdentifier
+            }
+            return PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [createId], options: nil).firstObject
+        } catch {
+            return nil
+        }
+        
+    }
+    
+}
 

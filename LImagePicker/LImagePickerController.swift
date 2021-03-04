@@ -17,6 +17,11 @@ public class LImagePickerController: LImagePickerNavigationController {
     public var minImageCount: Int = 1
     /** 让完成按钮一直可以点击，无须至少选一张图片 */
     public var alwaysEnableDoneBtn: Bool = false
+    /** 相簿显示样式 */
+    internal var photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack
+    /** 是否使用UIImagePickerController进行拍照 */
+    public var allowSystemCamera: Bool = true
+    
     /** 对照片排序，按修改时间升序，默认是YES。如果设置为NO,最新的照片会显示在最前面，内部的拍照按钮会排在第一个 */
     public var sortAscendingByModificationDate: Bool = true {
         didSet {
@@ -63,6 +68,12 @@ public class LImagePickerController: LImagePickerNavigationController {
     public var needFixComposition: Bool = false
     /** 选中资源 */
     internal var selectArray: [LPhotographModel] = []
+    /** 是否是查看大图 */
+    public var isViewLargerImage: Bool = true
+    /** 查看大图编辑 */
+    public var isViewLargerEditorImage: Bool = true
+    /** 查看大图返回时需要修改定位的数量，例如前面过滤一个拍照按钮 */
+    public var correctionNumber: Int = 0
     
     // MARK: - 裁剪
     // 单选模式，maxImagesCount为1时才生效
@@ -86,9 +97,7 @@ public class LImagePickerController: LImagePickerNavigationController {
     public var circleCropRadius: CGFloat = LConstant.screenWidth/2
     
     
-    // MARK: -
-    /** 相簿显示样式 */
-    internal var photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack
+
 
     
     public override func viewDidLoad() {

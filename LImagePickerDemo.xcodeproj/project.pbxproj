@@ -123,11 +123,6 @@
 
 /* Begin PBXFileReference section */
 		2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
-		2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraViewController.swift; sourceTree = "<group>"; };
-		2A271AFC24B36CC2009239EA /* LImageCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraView.swift; sourceTree = "<group>"; };
-		2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraOperationView.swift; sourceTree = "<group>"; };
-		2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraTabBarView.swift; sourceTree = "<group>"; };
-		2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraPlayerView.swift; sourceTree = "<group>"; };
 		2A2AECBE24E1712700DF26EA /* SplitScreen9.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen9.fsh; sourceTree = "<group>"; };
 		2A2AECC024E1713900DF26EA /* SplitScreen9.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen9.vsh; sourceTree = "<group>"; };
 		2A2AECC624E1766500DF26EA /* UpsideDown.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = UpsideDown.fsh; sourceTree = "<group>"; };
@@ -224,10 +219,6 @@
 		2AEEED8D249BAF850009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AEEED99249BAFE40009AAE1 /* LAlbumPickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAlbumPickerModel.swift; sourceTree = "<group>"; };
 		2AEEED9B249BB32A0009AAE1 /* LAboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAboutApp.swift; sourceTree = "<group>"; };
-		2AEEEDB7249C91E60009AAE1 /* LImageCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LImageCamera.h; sourceTree = "<group>"; };
-		2AEEEDB8249C91E60009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AEEEDC4249C91E60009AAE1 /* LImageCameraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageCameraTests.swift; sourceTree = "<group>"; };
-		2AEEEDC6249C91E60009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AEEEDD9249C92160009AAE1 /* LImageShow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LImageShow.h; sourceTree = "<group>"; };
 		2AEEEDDA249C92160009AAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AEEEDE6249C92160009AAE1 /* LImageShowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImageShowTests.swift; sourceTree = "<group>"; };
@@ -351,17 +342,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		2A271AFB24B36C99009239EA /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2A271AFC24B36CC2009239EA /* LImageCameraView.swift */,
-				2A271AFE24B4224E009239EA /* LImageCameraOperationView.swift */,
-				2A271B0024B4B1C9009239EA /* LImageCameraTabBarView.swift */,
-				2A271B0224B4C7E7009239EA /* LImageCameraPlayerView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		2A2AECBD24E170EC00DF26EA /* SplitScreen9 */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,13 +439,6 @@
 				2A2AECF224E4291D00DF26EA /* Burr.vsh */,
 			);
 			path = Burr;
-			sourceTree = "<group>";
-		};
-		2A2AED8A24F7869B00DF26EA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		2A2AED9424F89A3400DF26EA /* LImagePickerController */ = {
@@ -590,8 +563,6 @@
 				2AEE0D5924626D16008D5179 /* LImagePickerTests */,
 				2AEEED7D249BAF850009AAE1 /* LPublicImageParameter */,
 				2AEEED8A249BAF850009AAE1 /* LPublicImageParameterTests */,
-				2AEEEDB6249C91E60009AAE1 /* LImageCamera */,
-				2AEEEDC3249C91E60009AAE1 /* LImageCameraTests */,
 				2AEEEDD8249C92160009AAE1 /* LImageShow */,
 				2AEEEDE5249C92160009AAE1 /* LImageShowTests */,
 				2A2AED9424F89A3400DF26EA /* LImagePickerController */,
@@ -728,27 +699,6 @@
 				2AEEED8D249BAF850009AAE1 /* Info.plist */,
 			);
 			path = LPublicImageParameterTests;
-			sourceTree = "<group>";
-		};
-		2AEEEDB6249C91E60009AAE1 /* LImageCamera */ = {
-			isa = PBXGroup;
-			children = (
-				2A2AED8A24F7869B00DF26EA /* Model */,
-				2A271AFB24B36C99009239EA /* View */,
-				2AEEEDB7249C91E60009AAE1 /* LImageCamera.h */,
-				2AEEEDB8249C91E60009AAE1 /* Info.plist */,
-				2A271AF924B33BAC009239EA /* LImageCameraViewController.swift */,
-			);
-			path = LImageCamera;
-			sourceTree = "<group>";
-		};
-		2AEEEDC3249C91E60009AAE1 /* LImageCameraTests */ = {
-			isa = PBXGroup;
-			children = (
-				2AEEEDC4249C91E60009AAE1 /* LImageCameraTests.swift */,
-				2AEEEDC6249C91E60009AAE1 /* Info.plist */,
-			);
-			path = LImageCameraTests;
 			sourceTree = "<group>";
 		};
 		2AEEEDD8249C92160009AAE1 /* LImageShow */ = {

@@ -28,10 +28,13 @@ class LPreviewImageController: UICollectionViewController {
     
 
     
+    fileprivate var deleteArray: [LImagePickerMediaProtocol] = []
+    
     fileprivate lazy var navView: LImagePickerNavView = {
         let navView = LImagePickerNavView(frame: CGRect(x: 0, y: -LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
         navView.cancleImageStr = "icon_close_white"
         navView.isPreviewButton = true
+        navView.dropDownImage.isHidden = true
         navView.delegate = self
         navView.titleColor = UIColor.previewNavTitleColor
         return navView
@@ -41,6 +44,7 @@ class LPreviewImageController: UICollectionViewController {
         let bottomView = LImagePickerBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
         bottomView.isPreviewHidden = true
         bottomView.isConfirmSelect = true
+        bottomView.delegate = self
         return bottomView
     }()
     
@@ -72,6 +76,9 @@ class LPreviewImageController: UICollectionViewController {
         }
     }
     
+    deinit {
+        print(self, "++++++释放")
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,6 +125,21 @@ class LPreviewImageController: UICollectionViewController {
             navView.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
             navView.title = "\(currentIndex + 1)/\(configuration.dataArray.count)"
             navView.isPreviewButton = false
+            navView.completeButton.isHidden = imagePicker.isViewLargerEditorImage
+            if !imagePicker.isViewLargerEditorImage {
+                // 下载
+                let downloadButton = UIButton(frame: CGRect(x: LConstant.screenWidth - 50, y: LConstant.screenHeight - LConstant.barHeight - 50, width: 34, height: 34))
+                downloadButton.setImage(UIImage.lImageNamedFromMyBundle(name: "icon_down_pic"), for: .normal)
+                downloadButton.addTarget(self, action: #selector(downloadButtonClick), for: .touchUpInside)
+                view.addSubview(downloadButton)
+                
+                // 删除
+                let deleteButton = UIButton(frame: CGRect(x: 16, y: LConstant.screenHeight - LConstant.barHeight - 50, width: 34, height: 34))
+                deleteButton.setImage(UIImage.lImageNamedFromMyBundle(name: "icon_delete_pic"), for: .normal)
+                deleteButton.addTarget(self, action: #selector(deleteButtonClcik), for: .touchUpInside)
+                view.addSubview(deleteButton)
+                
+            }
         }else {
             navView.l_y = 0
             bottomView.l_y = LConstant.screenHeight - LConstant.bottomBarHeight
@@ -153,6 +175,12 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
             cell.getPhotoImage(image: image)
         }else if let photographModel = configuration.dataArray[indexPath.section] as? LPhotographModel {
             cell.getPhotoAsset(asset: photographModel.media)
+        }else if let string = configuration.dataArray[indexPath.section] as? String {
+            if string.hasPrefix("http") {
+                imagePickerDelegate?.previewImageLoading(viewController: self, urlStr: string, imageView: cell.currentImage, completionHandler: { cell.resizeSubviews() })
+            }else {
+                cell.getPhotoString(imageStr: string)
+            }
         }
         return cell
     }
@@ -179,12 +207,29 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
     
     func buttonView(view: UIView, buttonType: LImagePickerButtonType) {
         if buttonType == .cancle {
+            guard let imagePicker = navigationController as? LImagePickerController else { return }
+            if imagePicker.isViewLargerImage {
+                
+            }else {
+                for (i, itme) in configuration.dataArray.enumerated() {
+                    guard let photographModel = itme as? LPhotographModel else { continue }
+                    if !photographModel.isSelect {
+                        photographModel.isSelect = true
+                        imagePickerDelegate?.previewImageState(viewController: self, mediaProtocol: photographModel)
+                    }
+                }
+            }
             dismiss(animated: true, completion: nil)
         }else if buttonType == .confirm {
-            
+            guard let imagePicker = navigationController as? LImagePickerController else { return }
+            if !imagePicker.isViewLargerEditorImage {
+                imagePickerDelegate?.previewImageDeleteImages(viewController: self, images: deleteArray)
+                dismiss(animated: true, completion: nil)
+            }else {
+                dismiss(animated: true, completion: nil)
+            }
         }else if buttonType == .previewSelect {
             guard let photographModel = configuration.dataArray[safe: currentIndex] as? LPhotographModel else { return }
-            
             photographModel.isSelect = !photographModel.isSelect
             if !photographModel.isSelect {
                 photographModel.selectIndex = 0
@@ -211,6 +256,39 @@ extension LPreviewImageController: LImagePickerButtonProtocl, LPreviewImageProto
     func previewBottomView(view: UIView, didSelect index: Int) {
         currentIndex = index
         collectionView.scrollToItem(at: IndexPath(item: 0, section: currentIndex), at: .left, animated: false)
+    }
+    
+}
+
+@objc
+extension LPreviewImageController {
+    
+    fileprivate func downloadButtonClick() {
+        let index = IndexPath(item: currentIndex, section: 0)
+        guard let cell = collectionView.cellForItem(at: index) as? LPreviewImageCell, let image = cell.currentImage.image else {
+            return
+        }
+        PHPhotoLibrary.shared().performChanges {
+            let _ = PHAssetChangeRequest.creationRequestForAsset(from: image)
+        } completionHandler: { (success, error) in
+            if success {
+                DispatchQueue.main.async {
+                    let hub = LProgressHUDView(style: .dark, prompt: "下载成功")
+                    hub.showPromptInfo(showView: self.view)
+                }
+            }
+        }
+    }
+    
+    fileprivate func deleteButtonClcik() {
+        if configuration.dataArray.count > 0 {
+            let deleteMedia = configuration.dataArray.remove(at: currentIndex)
+            deleteArray.append(deleteMedia)
+            currentIndex = 0
+            navView.title = "0/\(configuration.dataArray.count)"
+            collectionView.reloadData()
+        }
+
     }
     
 }

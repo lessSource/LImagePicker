@@ -161,23 +161,23 @@ extension LTakingPicturesController: LTakingPicturesProtocol, LTakingPicturesOpe
             dismiss(animated: true, completion: nil)
         case .complete:
             if let image = contentImage {
-                
+                LImagePickerManager.shared.savePhotoWithImage(image: image)
                 
 //                LImagePickerManager.shared.savePhotoWithImage(image: image, location: nil) { (asset) in
 //                    self.imagePickerDelegate?.takingPicturesSaveImage(viewController: self, asset: asset)
 //                } failureClosure: { (error) in
 //                    print(error ?? "")
 //                }
-                var localIdentifier = ""
-                PHPhotoLibrary.shared().performChanges {
-                    print("111111")
-                    let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
-                    localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
-                    reuqest.location = nil
-                    reuqest.creationDate = Date()
-                } completionHandler: { (success, error) in
-
-                }
+//                var localIdentifier = ""
+//                PHPhotoLibrary.shared().performChanges {
+//                    print("111111")
+//                    let reuqest = PHAssetChangeRequest.creationRequestForAsset(from: image)
+//                    localIdentifier = reuqest.placeholderForCreatedAsset?.localIdentifier ?? ""
+//                    reuqest.location = nil
+//                    reuqest.creationDate = Date()
+//                } completionHandler: { (success, error) in
+//
+//                }
                 print(image)
             }
             imagePickerDelegate?.takingPictures(viewController: self, image: contentImage)

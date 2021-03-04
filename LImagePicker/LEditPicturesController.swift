@@ -216,23 +216,22 @@ class LEditPicturesController: UIViewController {
     }
     
     fileprivate func refreshScrollViewContentSize() {
-//        // 裁剪
-//        let cropRect = CGRect(x: 0, y: 0, width: 200, height: 200)
-//
-//        let contentWidthAdd = scrollView.l_width - cropRect.maxX
-//        let contentHeightAdd = (min(imageContainerView.l_height, l_height) - cropRect.height)/2
-//
-//        let newSizeW = scrollView.contentSize.width + contentWidthAdd
-//        let newSizeH = max(scrollView.contentSize.height, l_height) + contentHeightAdd
-//        scrollView.contentSize = CGSize(width: newSizeW, height: newSizeH)
-//        scrollView.alwaysBounceVertical = true
-//
-//        // 让scrollView新增滑动区域（裁剪框左上角的图片部分）
-//        if contentHeightAdd > 0 || contentWidthAdd > 0 {
-//            scrollView.contentInset = UIEdgeInsets(top: contentHeightAdd, left: cropRect.origin.x, bottom: 0, right: 0)
-//        }else {
-//            scrollView.contentInset = .zero
-//        }
+        // 裁剪
+
+        let contentWidthAdd = scrollView.l_width - croppingView.cropRect.maxX
+        let contentHeightAdd = (min(imageContainerView.l_height, view.l_height) - croppingView.cropRect.height)/2
+
+        let newSizeW = scrollView.contentSize.width + contentWidthAdd
+        let newSizeH = max(scrollView.contentSize.height, view.l_height) + contentHeightAdd
+        scrollView.contentSize = CGSize(width: newSizeW, height: newSizeH)
+        scrollView.alwaysBounceVertical = true
+
+        // 让scrollView新增滑动区域（裁剪框左上角的图片部分）
+        if contentHeightAdd > 0 || contentWidthAdd > 0 {
+            scrollView.contentInset = UIEdgeInsets(top: contentHeightAdd, left: croppingView.cropRect.origin.x, bottom: 0, right: 0)
+        }else {
+            scrollView.contentInset = .zero
+        }
     }
 }
 
@@ -262,7 +261,7 @@ extension LEditPicturesController: UIScrollViewDelegate {
 extension LEditPicturesController {
     
     // 点击
-    fileprivate func tapAction() {        
+    fileprivate func tapAction() {
   
     }
     

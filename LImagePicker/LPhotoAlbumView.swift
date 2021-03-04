@@ -15,6 +15,8 @@ class LPhotoAlbumView: UIView {
     // 动画时间
     fileprivate let animationTimeInterval: TimeInterval = 0.3
     
+    fileprivate var isAnimation: Bool = false
+    
     fileprivate lazy var backView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.screenHeight * 0.7))
         view.backgroundColor = UIColor.white
@@ -56,6 +58,7 @@ class LPhotoAlbumView: UIView {
         addSubview(backView)
         tableView.register(LPhotoAlbumTableViewCell.self, forCellReuseIdentifier: LPhotoAlbumTableViewCell.l_identifire)
         backView.addSubview(tableView)
+        backView.transform = CGAffineTransform(translationX: 0, y: -backView.l_height)
         
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backTapClick))
         backTap.delegate = self
@@ -72,21 +75,28 @@ class LPhotoAlbumView: UIView {
     }
     
     public func showView() {
+        if isAnimation { return }
         isHidden = false
-        backView.transform = CGAffineTransform(translationX: 0, y: -backView.l_height)
+        isAnimation = true
+        delegate?.photoAlbumAnimation(view: self, isShow: true)
         UIView.animate(withDuration: animationTimeInterval) {
             self.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
             self.backView.transform = CGAffineTransform(translationX: 0, y: 0)
+        } completion: { (finish) in
+            self.isAnimation = false
         }
     }
     
     public func hideView() {
+        if isAnimation { return }
+        isAnimation = true
+        delegate?.photoAlbumAnimation(view: self, isShow: false)
         UIView.animate(withDuration: animationTimeInterval) {
             self.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
             self.backView.transform = CGAffineTransform(translationX: 0, y: -self.backView.l_height)
         } completion: { (finish) in
             self.isHidden = true
-            self.backView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.isAnimation = false
         }
     }
     

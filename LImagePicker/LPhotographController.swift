@@ -8,7 +8,7 @@
 
 import UIKit
 import Photos
-
+import MobileCoreServices
 
 class LPhotographController: UIViewController {
     
@@ -170,7 +170,7 @@ class LPhotographController: UIViewController {
     
 }
 
-extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, LImagePickerProtocol, PHPhotoLibraryChangeObserver, LImagePickerButtonProtocl, LPromptViewDelegate, LPhotoAlbumViewProtocol {
+extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, PHPhotoLibraryChangeObserver, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: -  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -227,8 +227,21 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
 
         if dataArray[indexPath.item].type == .shooting {
             if allowSelect {
-                let imagePicker = LImagePickerController(allowPickingVideo: imageNavPicker.allowTakeVideo, maxDuration: imageNavPicker.videoMaximumDuration , delegate: self)
-                present(imagePicker, animated: true, completion: nil)
+                if imageNavPicker.allowSystemCamera {
+                    let pickerVC = UIImagePickerController()
+                    pickerVC.sourceType = .camera
+                    pickerVC.mediaTypes.append(kUTTypeImage as String)
+                    pickerVC.delegate = self
+                    if imageNavPicker.allowTakeVideo {
+                        pickerVC.mediaTypes.append(kUTTypeMovie as String)
+                        pickerVC.videoQuality = .typeHigh
+                        pickerVC.videoMaximumDuration = imageNavPicker.videoMaximumDuration
+                    }
+                    present(pickerVC, animated: true, completion: nil)
+                }else {
+                    let imagePicker = LImagePickerController(allowPickingVideo: imageNavPicker.allowTakeVideo, maxDuration: imageNavPicker.videoMaximumDuration , delegate: self)
+                    present(imagePicker, animated: true, completion: nil)
+                }
             }else {
                 guard let imageNavPicker = navigationController as? LImagePickerController else { return }
                 let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imageNavPicker.maxImageCount)张照片")
@@ -255,90 +268,6 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         imagePicker.transitioningDelegate = animationDelegate
         present(imagePicker, animated: true, completion: nil)
     }
-    
-    // MARK: - LImagePickerProtocol    
-    func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) {
-        guard let imagePicker = navigationController as? LImagePickerController, let photographModel = mediaProtocol as? LPhotographModel else { return }
-        if photographModel.isSelect {
-            imagePicker.selectArray.append(photographModel)
-        }else {
-            imagePicker.selectArray.removeAll(where: { $0 == photographModel } )
-        }
-        for (i, item) in imagePicker.selectArray.enumerated() {
-            item.selectIndex = i + 1
-        }
-        bottomView.isConfirmSelect = imagePicker.selectArray.count > 0
-        allowSelect = imagePicker.selectArray.count != imagePicker.maxImageCount
-        collectionView.reloadData()
-    }
-    
-    
-    // MARK: - LImagePickerButtonProtocl
-    func buttonView(view: UIView, buttonType: LImagePickerButtonType) {
-        guard let imagePicker = navigationController as? LImagePickerController else { return }
-        if buttonType == .confirm {
-            // 不请求UIImage
-            if imagePicker.onlyReturnAsset {
-                let assets = imagePicker.selectArray.compactMap { $0.media }
-                imagePickerDelegate?.photographSelectImage(viewController: self, photos: [], assets: assets)
-                dismiss(animated: true, completion: nil)
-                return
-            }
-                        
-            let hud = LProgressHUDView(style: .darkBlur)
-            var timeout = false
-            hud.timeoutBlock = { [weak self] in
-                // 请求超时
-                print("请求超时")
-                self?.imageQueue.cancelAllOperations()
-                timeout = true
-            }
-            hud.show(timeout: imagePicker.timeout, showView: self.view)
-            
-            var images: [UIImage?] = Array(repeating: nil, count: imagePicker.selectArray.count)
-            var assets: [PHAsset?] = Array(repeating: nil, count: imagePicker.selectArray.count)
-            var errorAssets: [PHAsset] = []
-            var errorIndexs: [Int] = []
-            
-            var sucCount = 0
-            let totalCount = imagePicker.selectArray.count
-            for (i, item) in imagePicker.selectArray.enumerated() {
-                let operation = LImagePickerOperation(photographModel: item, isOriginal: true) { [weak self] (image, asset) in
-                    guard !timeout, let `self` = self else { return }
-                    sucCount += 1
-                    
-                    if let image = image {
-                        images[i] = image
-                        assets[i] = asset ?? item.media
-                    }else {
-                        errorAssets[i] = item.media
-                        errorIndexs[i] = i
-                    }
-                    guard sucCount >= totalCount else { return }
-                    let sucImages = images.compactMap { $0 }
-                    let sucAssets = assets.compactMap { $0 }
-                    hud.hide()
-                    self.imagePickerDelegate?.photographSelectImage(viewController: self, photos: sucImages, assets: sucAssets)
-                    self.dismiss(animated: true, completion: nil)
-                }
-                imageQueue.addOperation(operation)
-            }
-        }else if buttonType == .preview {
-            let previeVC = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: imagePicker.selectArray), delegate: self, isPreview: false)
-            animationDelegate = LPreviewAnimationDelegate()
-            previeVC.transitioningDelegate = animationDelegate
-            present(previeVC, animated: true, completion: nil)
-        }else if buttonType == .cancle {
-            dismiss(animated: true, completion: nil)
-        }else if buttonType == .title {
-            if photoAlbumView.isHidden {
-                photoAlbumView.showView()
-            }else {
-                photoAlbumView.hideView()
-            }
-        }
-    }
-    
     
     // MARK: - PHPhotoLibraryChangeObserver
     func photoLibraryDidChange(_ changeInstance: PHChange) {
@@ -384,6 +313,109 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if info[UIImagePickerController.InfoKey.mediaType] as! CFString == kUTTypeMovie {
+            print("视频")
+        }else if info[UIImagePickerController.InfoKey.mediaType] as! CFString == kUTTypeImage {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                LImagePickerManager.shared.savePhotoWithImage(image: image)
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+
+}
+
+extension LPhotographController: LImagePickerProtocol, LImagePickerButtonProtocl, LPromptViewDelegate, LPhotoAlbumViewProtocol {
+    
+    // MARK: - LImagePickerProtocol
+    func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) {
+        guard let imagePicker = navigationController as? LImagePickerController, let photographModel = mediaProtocol as? LPhotographModel else { return }
+        if photographModel.isSelect {
+            imagePicker.selectArray.append(photographModel)
+        }else {
+            imagePicker.selectArray.removeAll(where: { $0 == photographModel } )
+        }
+        for (i, item) in imagePicker.selectArray.enumerated() {
+            item.selectIndex = i + 1
+        }
+        bottomView.isConfirmSelect = imagePicker.selectArray.count > 0
+        allowSelect = imagePicker.selectArray.count != imagePicker.maxImageCount
+        collectionView.reloadData()
+    }
+    
+    
+    // MARK: - LImagePickerButtonProtocl
+    func buttonView(view: UIView, buttonType: LImagePickerButtonType) {
+        guard let imagePicker = navigationController as? LImagePickerController else { return }
+        if buttonType == .confirm {
+            // 不请求UIImage
+            if imagePicker.onlyReturnAsset {
+                let assets = imagePicker.selectArray.compactMap { $0.media }
+                dismiss(animated: true) {
+                    self.imagePickerDelegate?.photographSelectImage(viewController: self, photos: [], assets: assets)
+                }
+                return
+            }
+                        
+            let hud = LProgressHUDView(style: .darkBlur)
+            var timeout = false
+            hud.timeoutBlock = { [weak self] in
+                // 请求超时
+                print("请求超时")
+                self?.imageQueue.cancelAllOperations()
+                timeout = true
+            }
+            hud.show(timeout: imagePicker.timeout, showView: self.view)
+            
+            var images: [UIImage?] = Array(repeating: nil, count: imagePicker.selectArray.count)
+            var assets: [PHAsset?] = Array(repeating: nil, count: imagePicker.selectArray.count)
+            var errorAssets: [PHAsset] = []
+            var errorIndexs: [Int] = []
+            
+            var sucCount = 0
+            let totalCount = imagePicker.selectArray.count
+            for (i, item) in imagePicker.selectArray.enumerated() {
+                let operation = LImagePickerOperation(photographModel: item, isOriginal: true) { [weak self] (image, asset) in
+                    guard !timeout, let `self` = self else { return }
+                    sucCount += 1
+                    
+                    if let image = image {
+                        images[i] = image
+                        assets[i] = asset ?? item.media
+                    }else {
+                        errorAssets[i] = item.media
+                        errorIndexs[i] = i
+                    }
+                    guard sucCount >= totalCount else { return }
+                    let sucImages = images.compactMap { $0 }
+                    let sucAssets = assets.compactMap { $0 }
+                    hud.hide()
+                    self.dismiss(animated: true) {
+                        self.imagePickerDelegate?.photographSelectImage(viewController: self, photos: sucImages, assets: sucAssets)
+                    }
+                }
+                imageQueue.addOperation(operation)
+            }
+        }else if buttonType == .preview {
+            let previeVC = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: imagePicker.selectArray), delegate: self, isPreview: false)
+            animationDelegate = LPreviewAnimationDelegate()
+            previeVC.transitioningDelegate = animationDelegate
+            present(previeVC, animated: true, completion: nil)
+        }else if buttonType == .cancle {
+            dismiss(animated: true, completion: nil)
+        }else if buttonType == .title {
+            if photoAlbumView.isHidden {
+                photoAlbumView.showView()
+            }else {
+                photoAlbumView.hideView()
+            }
+        }
+    }
+    
+    
+    
     // MARK: - LPromptViewDelegate
     func promptViewImageClick(_ promptView: LImagePickerPromptView) {
         let urlStr = UIApplication.openSettingsURLString
@@ -396,6 +428,10 @@ extension LPhotographController: UICollectionViewDelegate, UICollectionViewDataS
     func photoAlbumView(view: LPhotoAlbumView, albumModel: LPhotoAlbumModel) {
         self.albumModel = albumModel
         initData()
+    }
+    
+    func photoAlbumAnimation(view: LPhotoAlbumView, isShow: Bool) {
+        navView.dropDownImageAnimation(isShow: isShow)
     }
     
 }

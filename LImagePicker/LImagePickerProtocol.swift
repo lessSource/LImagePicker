@@ -26,7 +26,17 @@ public protocol LImagePickerProtocol: class {
     // 预览图片状态改变
     func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol)
     
+    // 预览图片加载
+    func previewImageLoading(viewController: UIViewController, urlStr: String, imageView: UIImageView, completionHandler: @escaping (() -> Void))
+    
+    // 删除图片
+    func previewImageDelete(viewController: UIViewController, index: Int)
+    
+    // 删除图片
+    func previewImageDeleteImages(viewController: UIViewController, images: [LImagePickerMediaProtocol])
+    
 }
+
 
 public extension LImagePickerProtocol {
     
@@ -40,7 +50,11 @@ public extension LImagePickerProtocol {
     
     func previewImageState(viewController: UIViewController, mediaProtocol: LImagePickerMediaProtocol) { }
     
+    func previewImageLoading(viewController: UIViewController, urlStr: String, imageView: UIImageView, completionHandler: @escaping (() -> Void)) { }
+
+    func previewImageDelete(viewController: UIViewController, index: Int) { }
     
+    func previewImageDeleteImages(viewController: UIViewController, images: [LImagePickerMediaProtocol]) { }
 }
 
 
@@ -66,6 +80,8 @@ protocol LPreviewBottomProtocol: class {
 protocol LPhotoAlbumViewProtocol: class {
     
     func photoAlbumView(view: LPhotoAlbumView, albumModel: LPhotoAlbumModel)
+    
+    func photoAlbumAnimation(view: LPhotoAlbumView, isShow: Bool)
     
 }
 
