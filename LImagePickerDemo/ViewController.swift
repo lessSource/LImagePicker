@@ -91,13 +91,10 @@ extension ViewController {
     func galleryButtonClick() {
         let imagePicker = LImagePickerController(withMaxImage: 5, delegate: self, photoAlbumType: .photoAlbumBack)
         imagePicker.sortAscendingByModificationDate = false
-<<<<<<< HEAD
-//        imagePicker.cropCircle = true        
-=======
+//        imagePicker.cropCircle = true
         imagePicker.cropCircle = true
 //        imagePicker.allowTakeVideo = false
 //        imagePicker.allowSystemCamera = false
->>>>>>> 183d5b8b50a0ea138c26dd9d01a6da434598ec2a
         present(imagePicker, animated: true, completion: nil)
         print(111)
         
