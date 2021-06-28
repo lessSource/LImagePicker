@@ -30,7 +30,10 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         scrollView.scrollsToTop = false
         scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         scrollView.delaysContentTouches = true
-        scrollView.alwaysBounceVertical = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.alwaysBounceHorizontal = true
+        
+        scrollView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
         } else {
@@ -50,6 +53,14 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
     }()
     
     public lazy var currentImage: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.frame = self.scrollView.bounds
+        image.isUserInteractionEnabled = true
+        return image
+    }()
+    
+    public lazy var copyCurrentImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         image.frame = self.scrollView.bounds
@@ -151,9 +162,16 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         currentImage.addGestureRecognizer(doubleGesture)
         tapGesture.require(toFail: doubleGesture)
         
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureClick(_ :)))
-        swipeGesture.direction = [.up, .down]
-        currentImage.addGestureRecognizer(swipeGesture)
+        let swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureClick(_ :)))
+        swipeUpGesture.direction = .up
+        currentImage.addGestureRecognizer(swipeUpGesture)
+        
+        let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureClick(_:)))
+        swipeDownGesture.direction = .down
+        currentImage.addGestureRecognizer(swipeDownGesture)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureClick(_ :)))
+        currentImage.addGestureRecognizer(panGesture)
         
     }
     
@@ -179,6 +197,10 @@ extension LPreviewCollectionViewCell: UIScrollViewDelegate {
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         refreshImageContainerViewCenter()
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        panGestureClick(scrollView.panGestureRecognizer)
+//    }
 }
 
 @objc
@@ -186,12 +208,19 @@ extension LPreviewCollectionViewCell {
     
     // 点击
     fileprivate func tapAction() {
-        delegate?.previewImageDidSelect(cell: self)
+//        delegate?.previewImageDidSelect(cell: self)
+        copyCurrentImage.frame = currentImage.frame
+        copyCurrentImage.l_y = LConstant.screenHeight/2 - copyCurrentImage.l_height/2
+        viewController()?.dismiss(animated: true, completion: nil)
     }
     
     // 长按
     fileprivate func longGetstureAction(_ gestureRecognizer: UILongPressGestureRecognizer) {
 //        didSelectClosure?(.longGetsture)
+        
+        self.backgroundColor = UIColor.clear
+        imageContainerView.backgroundColor = UIColor.clear
+//        didse
     }
     
     // 双击
@@ -206,16 +235,75 @@ extension LPreviewCollectionViewCell {
             let sizeY = scrollView.frame.height / newZoomScale
             scrollView.zoom(to: CGRect(x: touchPoint.x - sizeX / 2, y: touchPoint.y - sizeY / 2, width: sizeX, height: sizeY), animated: true)
         }
+        if scrollView.zoomScale == 1 {
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureClick(_ :)))
+            currentImage.addGestureRecognizer(panGesture)
+        }else {
+            
+            
+            currentImage.gestureRecognizers?.removeLast()
+        }
+        
+        
+//        scrollView.panGestureRecognizer
+        
     }
     
     // 上下滑动
     fileprivate func swipeGestureClick(_ gestureRecognizer: UISwipeGestureRecognizer) {
+        let point: CGPoint = gestureRecognizer.location(in: currentImage)
         
         switch gestureRecognizer.direction {
-        case [.up, .down]:
-            print("up, down")
+        case .down:
+            print("down\(point)")
+        case .up:
+            print("up")
         default: break
         }
+    }
+    
+    // 移动
+    fileprivate func panGestureClick(_ gestureRecognizer: UIPanGestureRecognizer) {
+        let point: CGPoint = gestureRecognizer.translation(in: currentImage)
+        print("\(point)")
+        if scrollView.zoomScale != 1 {
+            return
+            
+        }
+        
+        switch gestureRecognizer.state {
+        case .began:
+            print("began")
+            copyCurrentImage.image = currentImage.image
+            copyCurrentImage.frame = currentImage.frame
+            copyCurrentImage.l_y = LConstant.screenHeight/2 - copyCurrentImage.l_height/2
+            currentImage.isHidden = true
+            copyCurrentImage.isHidden = false
+            scrollView.addSubview(copyCurrentImage)
+        case .changed:
+            print("changeed")
+            copyCurrentImage.l_y = point.y + LConstant.screenHeight/2 - copyCurrentImage.l_height/2
+            copyCurrentImage.l_width = LConstant.screenWidth - point.y/3
+            copyCurrentImage.l_x = point.x
+            
+            scrollView.backgroundColor = UIColor(white: 0.0, alpha: point.y < 0 ? 1 : 70/point.y)
+
+        default:
+            print("end")
+            if point.y < 50 {
+                UIView.animate(withDuration: 0.2) {
+                    self.copyCurrentImage.frame = self.currentImage.frame
+                    self.copyCurrentImage.l_y = LConstant.screenHeight/2 - self.copyCurrentImage.l_height/2
+                } completion: { finish in
+                    self.currentImage.isHidden = false
+                    self.copyCurrentImage.isHidden = true
+                }
+            }else {
+                viewController()?.dismiss(animated: true, completion: nil)
+            }
+        }
+        
         
     }
+    
 }

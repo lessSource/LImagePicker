@@ -152,19 +152,20 @@ extension LPreviewAnimationDelegate {
         // 过渡view
         guard let fromeView = transitionContext.view(forKey: .from) else { return }
         let formeBackView = UIView(frame: fromeView.bounds)
-        formeBackView.backgroundColor = UIColor.black
+//        formeBackView.backgroundColor = cell.scrollView.backgroundColor
         fromeView.addSubview(formeBackView)
         // 容器view
         let containerView = transitionContext.containerView
 
         // 新建过渡动画imageView
         let animateImageView = UIImageView()
-        animateImageView.frame = cell.imageContainerView.frame
+        animateImageView.frame = cell.copyCurrentImage.frame
         animateImageView.image = image
         animateImageView.contentMode = .scaleAspectFill
         animateImageView.clipsToBounds = true
         containerView.addSubview(animateImageView)
         let endFrame: CGRect = endView!.convert(endView!.bounds, to: toView)
+        cell.copyCurrentImage.isHidden = true
 
         UIView.animate(withDuration: animatTime, animations: {
             animateImageView.frame = endFrame

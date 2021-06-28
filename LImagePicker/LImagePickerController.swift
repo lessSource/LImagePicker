@@ -13,6 +13,18 @@ public class LImagePickerController: LImagePickerNavigationController {
 
     /** 最多可选数量，默认9 */
     fileprivate(set) var maxImageCount: Int = 9
+    /** 默认配置 */
+    fileprivate(set) var configuration: LImagePickerConfiguration = LImagePickerConfiguration()
+    /** 选中资源 */
+    internal var selectArray: [LPhotographModel] = []
+    
+    
+    
+    
+    
+    
+    
+    
     /** 最少可选数量，默认1 */
     public var minImageCount: Int = 1
     /** 让完成按钮一直可以点击，无须至少选一张图片 */
@@ -66,8 +78,7 @@ public class LImagePickerController: LImagePickerNavigationController {
     public var notScaleImage: Bool = true
     /** 默认是false，如果设置为true，导出视频时会修正转向（慎重设为true，可能导致部分安卓下拍的视频导出失败） */
     public var needFixComposition: Bool = false
-    /** 选中资源 */
-    internal var selectArray: [LPhotographModel] = []
+
     /** 是否是查看大图 */
     public var isViewLargerImage: Bool = true
     /** 查看大图编辑 */
@@ -132,6 +143,25 @@ public class LImagePickerController: LImagePickerNavigationController {
 extension LImagePickerController {
     
     /** 选择图片 */
+    public convenience init(withMaxImage conut: Int = 9, delegate: LImageSelectProtocol? = nil, configuration: LImagePickerConfiguration) {
+        if configuration.photoAlbumType == .dropDown {
+            let photographVC = LPhotographController()
+//            photographVC.imagePickerDelegate = delegate
+            self.init(rootViewController: photographVC)
+        }else {
+            let photoAlbumVC = LPhotoAlbumController()
+            self.init(rootViewController: photoAlbumVC)
+            let photographVC = LPhotographController()
+//            photographVC.imagePickerDelegate = delegate
+            pushViewController(photographVC, animated: true)
+        }
+        self.maxImageCount = conut
+        self.configuration = configuration
+        
+    }
+    
+    
+    /** 选择图片 */
     public convenience init(withMaxImage count: Int = 9, delegate: LImagePickerProtocol? = nil, photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack) {
         if photoAlbumType == .dropDown {
             let photographVC = LPhotographController()
@@ -154,7 +184,10 @@ extension LImagePickerController {
         previewImageVC.imagePickerDelegate = delegate
         previewImageVC.isPreview = isPreview
         previewImageVC.correctionNumber = correctionNumber
+        previewImageVC.modalPresentationStyle = .currentContext
         self.init(rootViewController: previewImageVC)
+        view.backgroundColor = UIColor.clear
+
     }
     
     /** 拍照 */

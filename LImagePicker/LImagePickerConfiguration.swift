@@ -25,7 +25,8 @@ public class LImagePickerConfiguration {
     public var cannotSelectLayerColor: UIColor = UIColor(white: 1.0, alpha: 0.8)
     /** 查看大图返回时需要修改定位的数量，例如前面过滤一个拍照按钮 */
     public var correctionNumber: Int = 0
-    
+    /** 相簿显示样式 */
+    public var photoAlbumType: LPhotoAlbumAccordingType = .photoAlbumBack
     
     // MARK：- 权限
     /** 默认为false, 如果设置为false，原图按钮将隐藏，用户不能选择发送原图 */

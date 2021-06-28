@@ -69,6 +69,7 @@ class LPreviewImageController: UICollectionViewController {
         layout.scrollDirection = .horizontal
         self.init(collectionViewLayout: layout)
         self.configuration = configuration
+        self.modalPresentationStyle = .currentContext
         assert(!(configuration.currentIndex >= configuration.dataArray.count || configuration.currentIndex < 0), "请输入正确的序号")
         self.currentIndex = configuration.currentIndex
         if configuration.currentIndex < 0 || configuration.currentIndex >= configuration.dataArray.count {
@@ -97,6 +98,8 @@ class LPreviewImageController: UICollectionViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         initView()
+        collectionView.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.clear
     }
     
     // MARK: - initView
@@ -119,7 +122,7 @@ class LPreviewImageController: UICollectionViewController {
         if let photographModel = configuration.dataArray[currentIndex] as? LPhotographModel {
             navView.selectSerialNumber(index: photographModel.selectIndex)
         }
-        view.addSubview(navView)
+//        view.addSubview(navView)
         guard let imagePicker = navigationController as? LImagePickerController else { return }
         if isPreview {
             navView.backgroundColor = UIColor(white: 0.0, alpha: 0.3)

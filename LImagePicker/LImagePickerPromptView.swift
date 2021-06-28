@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LPromptViewDelegate: class {
+protocol LPromptViewDelegate: AnyObject {
     
     func promptViewButtonClick(_ promptView: LImagePickerPromptView)
     
