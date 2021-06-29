@@ -9,9 +9,11 @@
 import UIKit
 
 
-protocol LImagePickerButtonProtocl: class {
+protocol LImagePickerButtonProtocl: AnyObject {
     
     func buttonView(view: UIView, buttonType: LImagePickerButtonType)
     
 }
+
+
 
