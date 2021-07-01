@@ -100,26 +100,16 @@ extension ViewController {
 //
     // 图库
     func galleryButtonClick() {
-//        let imagePicker = LImagePickerController(withMaxImage: 5, delegate: self, photoAlbumType: .photoAlbumBack)
-//        imagePicker.sortAscendingByModificationDate = false
-////        imagePicker.cropCircle = true
-//        imagePicker.cropCircle = true
-////        imagePicker.allowTakeVideo = false
-////        imagePicker.allowSystemCamera = false
-//        present(imagePicker, animated: true, completion: nil)
-//        print(111)
+        var configuration = ImagePickerConfiguration()
+        // 排序
+        configuration.sortAscendingByModificationDate = false
+        // 拍照、拍视频
+        configuration.allowTakePicture = false
+//        configuration.allowTakeVideo = false
         
-//        let imagePicker = LImagePickerController(contentMedia: "https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg", delegate: self)
-//        present(imagePicker, animated: true, completion: nil)
         
-//        let imagePicker = LImagePickerController(allowPickingVideo: false, delegate: self)
-//        present(imagePicker, animated: true, completion: nil)
-        
-        let previewImageModel = LPreviewImageModel(currentIndex: 0, dataArray: ["https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg", "https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg"])
-        
-        let imagePicker = LImagePickerController(configuration: previewImageModel, delegate: self, isPreview: true, correctionNumber: 0)
+        let imagePicker = ImagePickerController(withMaxImage: 5, photographDelegate: self, configuration: configuration)
         present(imagePicker, animated: true, completion: nil)
-        
         
     }
     
@@ -158,4 +148,14 @@ extension ViewController {
 ////
 ////    }
 ////
+}
+
+
+// 自定义
+extension ViewController: ImagePhotographProtocol {
+    
+    func imagePickerCustomPhotograph(navView: PhotographNavView) {
+        navView.backgroundColor = UIColor.red
+    }
+    
 }

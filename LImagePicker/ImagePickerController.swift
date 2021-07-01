@@ -2,18 +2,21 @@
 //  ImagePickerController.swift
 //  LImagePicker
 //
-//  Created by 陈其山 on 2021/6/29.
+//  Created by L on 2021/6/29.
 //  Copyright © 2021 L. All rights reserved.
 //
 
 import UIKit
 
-class ImagePickerController: ImagePickerNavigationController {
+public class ImagePickerController: ImagePickerNavigationController {
 
     /** 最多可选数量，默认9 */
-    fileprivate var maxCoumt: Int = 9
+    fileprivate var maxCount: Int = 9
     
-    override func viewDidLoad() {
+    /** 配置 */
+    fileprivate(set) var configuration: ImagePickerConfiguration = ImagePickerConfiguration()
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
@@ -44,10 +47,23 @@ class ImagePickerController: ImagePickerNavigationController {
 
 extension ImagePickerController {
     
-    /** 选择图片 */
-    // PhotographViewController
-    /** 相册 */
-    // PhotoAlbumViewController
+    /** 选择图片/相册 */
+    public convenience init(withMaxImage count: Int = 9, photographDelegate: ImagePhotographProtocol? = nil, configuration: ImagePickerConfiguration = ImagePickerConfiguration()) {
+        if configuration.photoAlbumType == .dropDown {
+            let photographVC = PhotographViewController()
+            photographVC.imagePickerDelegate = photographDelegate
+            self.init(rootViewController: photographVC)
+        }else {
+            let photoAlbumVC = PhotoAlbumViewController()
+            self.init(rootViewController: photoAlbumVC)
+            let photographVC = PhotographViewController()
+            photographVC.imagePickerDelegate = photographDelegate
+            pushViewController(photographVC, animated: true)
+        }
+        self.maxCount = count
+        self.configuration = configuration
+    }
+
 
     /** 显示大图 */
     // PreviewViewController

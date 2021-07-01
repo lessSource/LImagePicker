@@ -2,15 +2,15 @@
 //  ImagePickerNavigationController.swift
 //  LImagePicker
 //
-//  Created by 陈其山 on 2021/6/29.
+//  Created by L on 2021/6/29.
 //  Copyright © 2021 L. All rights reserved.
 //
 
 import UIKit
 
-class ImagePickerNavigationController: UINavigationController {
+public class ImagePickerNavigationController: UINavigationController {
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
