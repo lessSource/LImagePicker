@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import FHHFPSIndicator
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -21,9 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         window?.makeKeyAndVisible()
         window?.backgroundColor = .white
-        window?.rootViewController = ViewController()
+        let navVC = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = navVC
+        
         return true
     }
+    
 
     // MARK: - Core Data stack
 
@@ -70,5 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    
 }
+
+
 

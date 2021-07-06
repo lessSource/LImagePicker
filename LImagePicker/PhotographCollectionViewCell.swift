@@ -11,15 +11,41 @@ import Photos
 
 class PhotographCollectionViewCell: UICollectionViewCell {
     
+    typealias DidButtonSelect = () -> (Bool)
+    
+    public var didSelectClosure: DidButtonSelect?
+    
     fileprivate var imageRequestID: PHImageRequestID = 0
     
     fileprivate var requestAssetIdentifier: String = ""
     
-    public lazy var imageView: UIImageView = {
+    fileprivate var mediaModel: PhotographModel?
+    
+    fileprivate lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
+    }()
+    
+    fileprivate lazy var selectImageView: UIImageView = {
+        let selectImageView = UIImageView()
+        selectImageView.contentMode = .scaleAspectFit
+        selectImageView.clipsToBounds = true
+        return selectImageView
+    }()
+    
+    fileprivate lazy var imageMaskView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+        view.isHidden = true
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    
+    fileprivate lazy var selectButton: UIButton = {
+        let button = UIButton(type: .custom)
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -31,15 +57,29 @@ class PhotographCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        selectButton.frame = CGRect(x: l_width - 44, y: 0, width: 44, height: 44)
+        selectImageView.frame = CGRect(x: l_width - 26, y: 6, width: 20, height: 20)
+    }
+    
+    
     // MARK:- initView
     fileprivate func initView() {
         imageView.frame = contentView.bounds
+        imageMaskView.frame = contentView.bounds
         contentView.addSubview(imageView)
+        contentView.addSubview(selectImageView)
+        contentView.addSubview(selectButton)
+        contentView.addSubview(imageMaskView)
+        
+        selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
+        
     }
     
     public func loadingResourcesModel(_ mediaModel: PhotographModel) {
         requestAssetIdentifier = mediaModel.media.localIdentifier
-        
+        selectImageView.image = UIImage.lImageNamedFromMyBundle(name: mediaModel.isSelect ? "icon_photograph_sel" : "icon_photograph_nor")
+        self.mediaModel = mediaModel
         let resquestID = ImagePickerManager.shared.getPhotoWithAsset(mediaModel.media, size: CGSize(width: l_width * UIScreen.main.scale, height: l_height * UIScreen.main.scale)) { image, isDegraded in
             if self.requestAssetIdentifier == mediaModel.media.localIdentifier {
                 self.imageView.image = image
@@ -58,6 +98,24 @@ class PhotographCollectionViewCell: UICollectionViewCell {
         setNeedsLayout()
     }
     
+    public func selectSerialNumber(index: Int, allowSelect: Bool) {
+        if index == 0 {
+            imageMaskView.isHidden = allowSelect
+        }else {
+            imageMaskView.isHidden = true
+            
+        }
+    }
+    
+    
+    @objc fileprivate func selectButtonClick() {
+        guard let model = mediaModel else { return }
+        if didSelectClosure?() == true {
+            model.isSelect = !model.isSelect
+            selectImageView.image = UIImage.lImageNamedFromMyBundle(name: model.isSelect ? "icon_photograph_sel" : "icon_photograph_nor")
+            selectImageView.l_showOscillatoryAnimation()
+        }
+    }
 }
 
 
@@ -118,7 +176,7 @@ class PhotographShootingCell: UICollectionViewCell {
     }
     
     public func selectSerialNumber(allowSelect: Bool) {
-        imageMaskView.isHidden = allowSelect
+//        imageMaskView.isHidden = allowSelect
         iconName.text = allowSelect ? "拍摄" : "无法拍摄"
         iconImage.image = UIImage.lImageNamedFromMyBundle(name: allowSelect ? "icon_photo_shoot" : "icon_photo_cant_shoot")
     }

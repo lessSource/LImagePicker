@@ -20,6 +20,8 @@ public struct ImagePickerConfiguration {
             ImagePickerManager.shared.sortAscendingByModificationDate = sortAscendingByModificationDate
         }
     }
+    /** 默认为false，如果设置为true，代理方法里photos中没有数据 */
+    public var onlyReturnAsset: Bool = false
     
     
     // MARK：- 权限
@@ -28,7 +30,9 @@ public struct ImagePickerConfiguration {
     /** 默认为true，如果设置为false, 用户将不能拍摄视频 */
     public var allowTakeVideo: Bool = true
     
-    
+    // MARK:- 裁剪 (单选模式，maxCount为1时才生效)
+    /** 默认是false，如果设置为ture，照片列表显示选择按钮 */
+    public var showSelectBtn: Bool = false
     
     public init() { }
     

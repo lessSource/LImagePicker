@@ -11,10 +11,11 @@ import UIKit
 public class ImagePickerController: ImagePickerNavigationController {
 
     /** 最多可选数量，默认9 */
-    fileprivate var maxCount: Int = 9
-    
+    fileprivate(set) var maxCount: Int = 9
     /** 配置 */
-    fileprivate(set) var configuration: ImagePickerConfiguration = ImagePickerConfiguration()
+    fileprivate(set) var configuration = ImagePickerConfiguration()
+    /** 选中资源 */
+    internal var selectArray: [PhotographModel] = []
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,7 @@ extension ImagePickerController {
             self.init(rootViewController: photographVC)
         }else {
             let photoAlbumVC = PhotoAlbumViewController()
+            photoAlbumVC.imagePickerDelegate = photographDelegate
             self.init(rootViewController: photoAlbumVC)
             let photographVC = PhotographViewController()
             photographVC.imagePickerDelegate = photographDelegate

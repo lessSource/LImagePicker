@@ -77,6 +77,12 @@ extension ImagePickerManager {
         }
     }
     
+    // 获取原图
+    @discardableResult
+    func getOriginalPhotoWithAsset(asset: PHAsset, progressHandler: PHAssetImageProgressHandler?, completion: @escaping (UIImage?, Bool) -> ()) -> PHImageRequestID {
+        return getPhotoWithAsset(asset, size: PHImageManagerMaximumSize, resizeMode: .fast, progress: progressHandler, completion: completion)
+    }
+    
     // 获取相册
     func getAlbumResources(_ mediaType: PHAssetMediaType = .unknown, duration: Int = Int.max, complete: @escaping(_ dataArray: [PhotoAlbumModel]) -> ()) {
         

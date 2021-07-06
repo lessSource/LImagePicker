@@ -39,6 +39,9 @@
 		786D00D6268C07E0002B865D /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D00D5268C07E0002B865D /* PhotoAlbumViewController.swift */; };
 		786D00D8268C0ABC002B865D /* ImagePickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D00D7268C0ABC002B865D /* ImagePickerModel.swift */; };
 		786D00DA268C0E19002B865D /* PhotographCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D00D9268C0E19002B865D /* PhotographCollectionViewCell.swift */; };
+		787F245A268ECC9400D14C2D /* PhotoAlbumContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787F2459268ECC9400D14C2D /* PhotoAlbumContentView.swift */; };
+		787F245C268EED9B00D14C2D /* PhotoAlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787F245B268EED9B00D14C2D /* PhotoAlbumTableViewCell.swift */; };
+		78F4C43D269465450028A323 /* ImagePickerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F4C43C269465450028A323 /* ImagePickerOperation.swift */; };
 		CA8061092578907300C95E97 /* LPreviewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8061082578907300C95E97 /* LPreviewBottomView.swift */; };
 		CA9367C725121EDE00324C50 /* ModelTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9367C625121EDE00324C50 /* ModelTable.swift */; };
 		CACA0E8E25749DC20008F7BE /* LImagePickerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */; };
@@ -256,12 +259,15 @@
 		786D00D5268C07E0002B865D /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 		786D00D7268C0ABC002B865D /* ImagePickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerModel.swift; sourceTree = "<group>"; };
 		786D00D9268C0E19002B865D /* PhotographCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotographCollectionViewCell.swift; sourceTree = "<group>"; };
+		787F2459268ECC9400D14C2D /* PhotoAlbumContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContentView.swift; sourceTree = "<group>"; };
+		787F245B268EED9B00D14C2D /* PhotoAlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumTableViewCell.swift; sourceTree = "<group>"; };
+		787F2461268F0D8600D14C2D /* MobileRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileRTC.framework; path = LImagePickerDemo/lib/MobileRTC.framework; sourceTree = "<group>"; };
+		78F4C43C269465450028A323 /* ImagePickerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerOperation.swift; sourceTree = "<group>"; };
 		9EE72F3B60D8ABA4C27E033F /* Pods-LImagePicker-LImagePickerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker-LImagePickerTests.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker-LImagePickerTests/Pods-LImagePicker-LImagePickerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B488418D5BFCCEC424D6A28C /* Pods_LImagePickerDemo_LImagePickerDemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LImagePickerDemo_LImagePickerDemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1A9ECADFED227E90A273D9 /* Pods-LImagePickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePickerDemo.release.xcconfig"; path = "Target Support Files/Pods-LImagePickerDemo/Pods-LImagePickerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		CA8061082578907300C95E97 /* LPreviewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPreviewBottomView.swift; sourceTree = "<group>"; };
 		CA9367C625121EDE00324C50 /* ModelTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTable.swift; sourceTree = "<group>"; };
-		CACA0E7125749BCB0008F7BE /* LPublicImageParameter copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LPublicImageParameter copy-Info.plist"; path = "/Users/hy.ltd/Desktop/svn/LImagePicker/LPublicImageParameter copy-Info.plist"; sourceTree = "<absolute>"; };
 		CACA0E8D25749DC20008F7BE /* LImagePickerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerNavigationController.swift; sourceTree = "<group>"; };
 		CACA0E9225749DF70008F7BE /* LImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LImagePickerController.swift; sourceTree = "<group>"; };
 		CACA0E9725749E3D0008F7BE /* LPhotographController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LPhotographController.swift; sourceTree = "<group>"; };
@@ -590,7 +596,6 @@
 				2AEE0D1F24626C87008D5179 /* Products */,
 				23192FF879ABADA43BE2E2F6 /* Pods */,
 				5C038BAF68630AD9CE8F1587 /* Frameworks */,
-				CACA0E7125749BCB0008F7BE /* LPublicImageParameter copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -696,6 +701,9 @@
 				CACA0F0A25749FE30008F7BE /* UIColor+LImagePicker.swift */,
 				CACA0F0F25749FEC0008F7BE /* UIImage+LImagePicker.swift */,
 				7854D1D5268DC8A000689C8D /* PhotographContentView.swift */,
+				787F2459268ECC9400D14C2D /* PhotoAlbumContentView.swift */,
+				787F245B268EED9B00D14C2D /* PhotoAlbumTableViewCell.swift */,
+				78F4C43C269465450028A323 /* ImagePickerOperation.swift */,
 			);
 			path = LImagePicker;
 			sourceTree = "<group>";
@@ -758,6 +766,7 @@
 		5C038BAF68630AD9CE8F1587 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				787F2461268F0D8600D14C2D /* MobileRTC.framework */,
 				6DC2D23AF78BF62EC9A0FA0B /* Pods_LImagePicker.framework */,
 				7597E7FDDDF881C524BF756F /* Pods_LImagePicker_LImagePickerTests.framework */,
 				466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */,
@@ -868,7 +877,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = L;
 				TargetAttributes = {
 					2AEE0D1D24626C87008D5179 = {
@@ -1141,6 +1150,7 @@
 				CACA0FB625762ECF0008F7BE /* LTakingPicturesOperationView.swift in Sources */,
 				786D00D8268C0ABC002B865D /* ImagePickerModel.swift in Sources */,
 				CACA0F1F25749FFF0008F7BE /* LImagePickerOperation.swift in Sources */,
+				78F4C43D269465450028A323 /* ImagePickerOperation.swift in Sources */,
 				CACA0F4F2574A0690008F7BE /* LImagePickerButtonProtocl.swift in Sources */,
 				786D00DA268C0E19002B865D /* PhotographCollectionViewCell.swift in Sources */,
 				786D00D6268C07E0002B865D /* PhotoAlbumViewController.swift in Sources */,
@@ -1153,8 +1163,10 @@
 				CACA0F1A25749FF90008F7BE /* LImagePickerManager.swift in Sources */,
 				CACA0E9325749DF70008F7BE /* LImagePickerController.swift in Sources */,
 				CACA0F1025749FEC0008F7BE /* UIImage+LImagePicker.swift in Sources */,
+				787F245A268ECC9400D14C2D /* PhotoAlbumContentView.swift in Sources */,
 				CACA0FB1257624D30008F7BE /* LTakingPicturesProtocol.swift in Sources */,
 				CACA0ECF25749F3C0008F7BE /* LPreviewImageCell.swift in Sources */,
+				787F245C268EED9B00D14C2D /* PhotoAlbumTableViewCell.swift in Sources */,
 				CACA0F0B25749FE30008F7BE /* UIColor+LImagePicker.swift in Sources */,
 				CACA0EF725749F9A0008F7BE /* LEditPicturesController.swift in Sources */,
 				CACA0EDE25749F590008F7BE /* LPreviewLivePhoteCell.swift in Sources */,
@@ -1256,6 +1268,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1280,7 +1293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1318,6 +1331,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1336,7 +1350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1356,8 +1370,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZM26TJN7U;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LImagePickerDemo/lib",
+					"$(PROJECT_DIR)/LImagePickerDemo",
+				);
 				INFOPLIST_FILE = LImagePickerDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1380,8 +1400,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZM26TJN7U;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LImagePickerDemo/lib",
+					"$(PROJECT_DIR)/LImagePickerDemo",
+				);
 				INFOPLIST_FILE = LImagePickerDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1450,7 +1476,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LImagePicker/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1482,7 +1508,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LImagePicker/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

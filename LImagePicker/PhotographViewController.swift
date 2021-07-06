@@ -18,9 +18,15 @@ class PhotographViewController: UIViewController {
 
     fileprivate var dataArray: [PhotographModel] = []
     
+    /** 是否允许选择 */
+    fileprivate var allowSelect: Bool = true
+    
+    fileprivate var imageQueue: OperationQueue = OperationQueue()
+
+    
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight), collectionViewLayout: flowLayout)
+        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = UIColor.backColor
@@ -38,6 +44,7 @@ class PhotographViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        PHPhotoLibrary.shared().register(self)
         initView()
         ImagePickerManager.shared.requestsPhotosAuthorization { authorized in
             if authorized {
@@ -71,6 +78,14 @@ extension PhotographViewController {
         collectionView.register(PhotographShootingCell.self, forCellWithReuseIdentifier: PhotographShootingCell.l_identifire)
         view.addSubview(collectionView)
         view.addSubview(navView)
+        if let imagePickerVC = navigationController as? ImagePickerController {
+            if imagePickerVC.configuration.photoAlbumType == .dropDown {
+                navView.cancleButton.setImage(UIImage.lImageNamedFromMyBundle(name: "icon_close_white"), for: .normal)
+            }else {
+                navView.cancleButton.setImage(UIImage.lImageNamedFromMyBundle(name: "icon_back_white"), for: .normal)
+            }
+        }
+        
         imagePickerDelegate?.imagePickerCustomPhotograph(navView: navView)
         initData()
     }
@@ -90,9 +105,13 @@ extension PhotographViewController {
         ImagePickerManager.shared.getAssetsFromFetchResult(albumModel.fetchResult) { [weak self] array in
             guard let `self` = self, let imagePicker = navigationController as? ImagePickerController else { return }
             self.dataArray = array
+            for item in imagePicker.selectArray {
+                if let index = array.firstIndex(of: item) {
+                    self.dataArray[index] = item
+                }
+            }
             
             let configuration = imagePicker.configuration
-            
             if (configuration.allowTakeVideo || configuration.allowTakePicture) && albumModel.isAllPhotos {
                 let photographModel = PhotographModel(media: PHAsset(), type: .shooting)
                 if configuration.sortAscendingByModificationDate {
@@ -101,6 +120,7 @@ extension PhotographViewController {
                     self.dataArray.append(photographModel)
                 }
             }
+            self.allowSelect = imagePicker.selectArray.count != imagePicker.maxCount
             self.collectionView.reloadData()
         }
     }
@@ -126,6 +146,29 @@ extension PhotographViewController {
         }
     }
     
+    fileprivate func collectionViewDidSelectImage(indexPath: IndexPath) -> Bool {
+        guard let imagePicker = navigationController as? ImagePickerController else { return false }
+        
+        if imagePicker.selectArray.count == imagePicker.maxCount && !imagePicker.selectArray.contains(dataArray[indexPath.item]) {
+            let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imagePicker.maxCount)张照片")
+            hub.showPromptInfo(showView: self.view)
+            return false
+        }
+        if dataArray[indexPath.row].isSelect {
+            imagePicker.selectArray.remove(at: dataArray[indexPath.item].selectIndex - 1)
+            dataArray[indexPath.row].selectIndex = 0
+            for (i, item) in imagePicker.selectArray.enumerated() {
+                item.selectIndex = i + 1
+            }
+        }else {
+            imagePicker.selectArray.append(dataArray[indexPath.item])
+            dataArray[indexPath.item].selectIndex = imagePicker.selectArray.count
+        }
+        allowSelect = imagePicker.selectArray.count != imagePicker.maxCount
+        collectionView.reloadData()
+        return true
+    }
+    
 }
 
 
@@ -148,11 +191,21 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
             return cell
         case .shooting:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographShootingCell.l_identifire, for: indexPath) as! PhotographShootingCell
-            cell.selectSerialNumber(allowSelect: true)
+            cell.selectSerialNumber(allowSelect: allowSelect)
             return cell
         case .photo:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographImageCell.l_identifire, for: indexPath) as! PhotographImageCell
             cell.loadingResourcesModel(dataArray[indexPath.row])
+            if let imagePicker = navigationController as? ImagePickerController {
+                if imagePicker.maxCount != 1 || imagePicker.configuration.showSelectBtn {
+                    cell.selectSerialNumber(index: dataArray[indexPath.row].selectIndex, allowSelect: allowSelect)
+                    cell.didSelectClosure =  { [weak self] in
+                        guard let `self` = self else { return false }
+                        return self.collectionViewDidSelectImage(indexPath: indexPath)
+                    }
+                }
+            }
+            cell.selectSerialNumber(index: dataArray[indexPath.item].selectIndex, allowSelect: allowSelect)
             return cell
         }
     }
@@ -174,7 +227,13 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        dismiss(animated: true, completion: nil)
+        guard let imagePicker = navigationController as? ImagePickerController else { return }
+
+        if imagePicker.configuration.onlyReturnAsset {
+            
+        }
+        
+        
     }
     
 }

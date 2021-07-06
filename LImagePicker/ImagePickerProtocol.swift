@@ -13,11 +13,15 @@ public protocol ImagePickerProtocol: AnyObject {
     
     func imagePickerCustomPhotograph(navView: PhotographNavView)
     
+    func imagePickerCustomPhotoAlbum(navView: PhotoAlbumNavView)
+
 }
 
 public extension ImagePickerProtocol {
     
     func imagePickerCustomPhotograph(navView: PhotographNavView) { }
+    
+    func imagePickerCustomPhotoAlbum(navView: PhotoAlbumNavView) { }
 }
 
 

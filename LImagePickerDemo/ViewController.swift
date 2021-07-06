@@ -10,11 +10,16 @@ import UIKit
 import LImagePicker
 import Kingfisher
 import Photos
+import WebKit
+
+
 
 class ViewController: UIViewController {
     
     fileprivate var delegate: LPreviewAnimationDelegate = LPreviewAnimationDelegate()
 
+    fileprivate var number: Int = 1
+    
     fileprivate lazy var contentImage: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 100, y: 300, width: 200, height: 200))
         image.backgroundColor = UIColor.orange
@@ -60,6 +65,7 @@ class ViewController: UIViewController {
 //        originalImageView.kf.setImage(with: ImageResource(downloadURL: URL(string: "https://pic4.zhimg.com/v2-827a81b70a2d6bd3b683f4006a1e0938_1200x500.jpg")!))
         
     }
+    
 
 }
 //
@@ -92,8 +98,10 @@ extension ViewController: LImagePickerProtocol {
         
     }
     
-    
 }
+
+
+
 
 @objc
 extension ViewController {
@@ -101,25 +109,28 @@ extension ViewController {
     // 图库
     func galleryButtonClick() {
         var configuration = ImagePickerConfiguration()
-        // 排序
+//        // 排序
         configuration.sortAscendingByModificationDate = false
-        // 拍照、拍视频
+//        // 拍照、拍视频
         configuration.allowTakePicture = false
 //        configuration.allowTakeVideo = false
-        
-        
-        let imagePicker = ImagePickerController(withMaxImage: 5, photographDelegate: self, configuration: configuration)
+//        configuration.photoAlbumType = .dropDown
+//
+        let imagePicker = ImagePickerController(withMaxImage: 2, photographDelegate: self, configuration: configuration)
         present(imagePicker, animated: true, completion: nil)
+
         
     }
     
     func originalImageViewTapClick() {
-        delegate = LPreviewAnimationDelegate(contentImage: originalImageView, superView: originalImageView.superview)
-        let imagePicker = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: [originalImageView.image!]), delegate: self)
-        imagePicker.transitioningDelegate = delegate
-        present(imagePicker, animated: true, completion: nil)
+//        delegate = LPreviewAnimationDelegate(contentImage: originalImageView, superView: originalImageView.superview)
+//        let imagePicker = LImagePickerController(configuration: LPreviewImageModel(currentIndex: 0, dataArray: [originalImageView.image!]), delegate: self)
+//        imagePicker.transitioningDelegate = delegate
+//        present(imagePicker, animated: true, completion: nil)
         
-    }
+
+    
+
     
 ////
 ////    // 相机
@@ -146,8 +157,9 @@ extension ViewController {
 ////        editPhotosVC.contentImage = contentImage.image
 ////        present(editPhotosVC, animated: true, completion: nil)
 ////
-////    }
+    }
 ////
+    
 }
 
 
@@ -158,4 +170,11 @@ extension ViewController: ImagePhotographProtocol {
         navView.backgroundColor = UIColor.red
     }
     
+    func imagePickerCustomPhotoAlbum(navView: PhotoAlbumNavView) {
+        navView.backgroundColor = UIColor.green
+    }
+    
 }
+
+
+
