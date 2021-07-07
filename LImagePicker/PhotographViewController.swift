@@ -26,7 +26,7 @@ class PhotographViewController: UIViewController {
     
     fileprivate lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
-        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar), collectionViewLayout: flowLayout)
+        let collection = UICollectionView(frame: CGRect(x: 0, y: LConstant.navbarAndStatusBar, width: LConstant.screenWidth, height: LConstant.screenHeight - LConstant.navbarAndStatusBar - LConstant.bottomBarHeight), collectionViewLayout: flowLayout)
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = UIColor.backColor
@@ -39,6 +39,13 @@ class PhotographViewController: UIViewController {
         let navView = PhotographNavView(frame: CGRect(x: 0, y: 0, width: LConstant.screenWidth, height: LConstant.navbarAndStatusBar))
         navView.backgroundColor = UIColor.white
         return navView
+    }()
+    
+    fileprivate lazy var bottomView: PhotographBottomView = {
+        let bottomView = PhotographBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - LConstant.bottomBarHeight, width: LConstant.screenWidth, height: LConstant.bottomBarHeight))
+        bottomView.backgroundColor = .white
+        bottomView.delegate = self
+        return bottomView
     }()
     
     override func viewDidLoad() {
@@ -78,15 +85,17 @@ extension PhotographViewController {
         collectionView.register(PhotographShootingCell.self, forCellWithReuseIdentifier: PhotographShootingCell.l_identifire)
         view.addSubview(collectionView)
         view.addSubview(navView)
-        if let imagePickerVC = navigationController as? ImagePickerController {
-            if imagePickerVC.configuration.photoAlbumType == .dropDown {
-                navView.cancleButton.setImage(UIImage.lImageNamedFromMyBundle(name: "icon_close_white"), for: .normal)
-            }else {
-                navView.cancleButton.setImage(UIImage.lImageNamedFromMyBundle(name: "icon_back_white"), for: .normal)
-            }
-        }
+        view.addSubview(bottomView)
         
+        if let imagePickerVC = navigationController as? ImagePickerController {
+            navView.backButton.setImage(UIImage.lImageNamedFromMyBundle(name: imagePickerVC.configuration.photoAlbumType == .dropDown ? "icon_close_white" : "icon_back_white"), for: .normal)
+            navView.cancleButton.isHidden = imagePickerVC.configuration.photoAlbumType == .dropDown
+            bottomView.alwaysEnableDoneBtn = imagePickerVC.configuration.alwaysEnableDoneBtn
+            bottomView.previewButton.isHidden = !imagePickerVC.configuration.allowPreview
+            bottomView.originalView.isHidden = !imagePickerVC.configuration.allowPickingOriginalPhoto
+        }
         imagePickerDelegate?.imagePickerCustomPhotograph(navView: navView)
+        imagePickerDelegate?.imagePickerCustomPhotograph(bottomView: bottomView)
         initData()
     }
     
@@ -165,6 +174,7 @@ extension PhotographViewController {
             dataArray[indexPath.item].selectIndex = imagePicker.selectArray.count
         }
         allowSelect = imagePicker.selectArray.count != imagePicker.maxCount
+        bottomView.number = imagePicker.selectArray.count
         collectionView.reloadData()
         return true
     }
@@ -228,9 +238,12 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let imagePicker = navigationController as? ImagePickerController else { return }
-
-        if imagePicker.configuration.onlyReturnAsset {
-            
+        
+        switch dataArray[indexPath.item].type {
+        case .shooting:
+            print("shooting")
+        default:
+            break
         }
         
         
@@ -252,7 +265,69 @@ extension PhotographViewController: UIImagePickerControllerDelegate, UINavigatio
     
 }
 
-extension PhotographViewController: LPromptViewDelegate {
+extension PhotographViewController: LPromptViewDelegate, PhotographViewDelegate {
+    
+    func photographView(_ view: UIView, didSelect type: PhotographButtonType) {
+        guard let imagePicker = navigationController as? ImagePickerController else { return }
+        switch type {
+        case .preview:
+            break
+        default:
+            if imagePicker.selectArray.count == 0 {
+                self.dismiss(animated: true, completion: nil)
+                return
+            }
+            
+            if imagePicker.configuration.onlyReturnAsset {
+                let assets = imagePicker.selectArray.compactMap { $0.media }
+                dismiss(animated: true) {
+                    self.imagePickerDelegate?.imagePickerPhotograph(viewController: self, photos: [], assets: assets)
+                }
+                return
+            }
+            let hud = LProgressHUDView(style: .darkBlur)
+            var timeout = false
+            hud.timeoutBlock = { [weak self] in
+                print("请求超时")
+                self?.imageQueue.cancelAllOperations()
+                timeout = true
+            }
+            hud.show(timeout: imagePicker.configuration.timeout, showView: self.view)
+            var images: [UIImage?] = Array(repeating: nil, count: imagePicker.selectArray.count)
+            var assets: [PHAsset?] = Array(repeating: nil, count: imagePicker.selectArray.count)
+            var errorAssets: [PHAsset] = []
+            var errorIndexs: [Int] = []
+            
+            var sucCount = 0
+            let totalCount = imagePicker.selectArray.count
+            for (i, item) in imagePicker.selectArray.enumerated() {
+                let operation = ImagePickerOperation(photographModel: item, isOriginal: bottomView.originalView.isSelect) { [weak self] image, asset in
+                    guard !timeout, let `self` = self else { return }
+                    sucCount += 1
+                    
+                    if let img = image {
+                        images[i] = img
+                        assets[i] = asset ?? item.media
+                    }else {
+                        errorAssets[i] = item.media
+                        errorIndexs[i] = i
+                    }
+                    guard sucCount >= totalCount else { return }
+                    let sucImages = images.compactMap { $0 }
+                    let sucAssets = assets.compactMap { $0 }
+                    hud.hide()
+                    self.dismiss(animated: true) {
+                        self.imagePickerDelegate?.imagePickerPhotograph(viewController: self, photos: sucImages, assets: sucAssets)
+                    }
+                }
+                imageQueue.addOperation(operation)
+            }
+            
+            
+        }
+        
+        
+    }
     
     func promptViewImageClick(_ promptView: LImagePickerPromptView) {
         let urlStr = UIApplication.openSettingsURLString

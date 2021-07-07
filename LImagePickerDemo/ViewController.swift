@@ -115,6 +115,8 @@ extension ViewController {
         configuration.allowTakePicture = false
 //        configuration.allowTakeVideo = false
 //        configuration.photoAlbumType = .dropDown
+//        configuration.alwaysEnableDoneBtn = true
+        configuration.allowPickingOriginalPhoto = true
 //
         let imagePicker = ImagePickerController(withMaxImage: 2, photographDelegate: self, configuration: configuration)
         present(imagePicker, animated: true, completion: nil)
@@ -170,8 +172,18 @@ extension ViewController: ImagePhotographProtocol {
         navView.backgroundColor = UIColor.red
     }
     
+    func imagePickerCustomPhotograph(bottomView: PhotographBottomView) {
+        bottomView.backgroundColor = .red
+    }
+    
     func imagePickerCustomPhotoAlbum(navView: PhotoAlbumNavView) {
         navView.backgroundColor = UIColor.green
+    }
+    
+    
+    
+    func imagePickerPhotograph(viewController: UIViewController, photos: [UIImage], assets: [PHAsset]) {
+        self.originalImageView.image = photos[0]
     }
     
 }

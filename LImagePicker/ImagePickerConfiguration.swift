@@ -22,13 +22,20 @@ public struct ImagePickerConfiguration {
     }
     /** 默认为false，如果设置为true，代理方法里photos中没有数据 */
     public var onlyReturnAsset: Bool = false
-    
+    /** 获取图片的超时时间, 当取图片时间超过15.0秒还没有取成功时，会自动dismiss HUD */
+    public var timeout: TimeInterval = 15.0
     
     // MARK：- 权限
     /** 默认为true，如果为false，用户将不能拍摄照片 */
     public var allowTakePicture: Bool = true
     /** 默认为true，如果设置为false, 用户将不能拍摄视频 */
     public var allowTakeVideo: Bool = true
+    /** 默认为false, 如果设置为true,完成按钮一直可以点击，无须至少选一张图片 */
+    public var alwaysEnableDoneBtn: Bool = false
+    /** 默认为true，如果设置为false, 预览按钮将隐藏，用户将不能去预览照片 */
+    public var allowPreview: Bool = true
+    /** 默认为false, 如果设置为false，原图按钮将隐藏，用户不能选择发送原图 */
+    public var allowPickingOriginalPhoto: Bool = false
     
     // MARK:- 裁剪 (单选模式，maxCount为1时才生效)
     /** 默认是false，如果设置为ture，照片列表显示选择按钮 */
