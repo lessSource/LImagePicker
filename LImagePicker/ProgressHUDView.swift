@@ -1,5 +1,5 @@
 //
-//  LProgressHUDView.swift
+//  ProgressHUDView.swift
 //  LImagePicker
 //
 //  Created by L. on 2020/12/2.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class LProgressHUDView: UIView {
+class ProgressHUDView: UIView {
     
-    fileprivate var style: LProgressHUDStyle
+    fileprivate var style: ProgressHUDStyle
     
     public var timeoutBlock = { }
     
@@ -40,7 +40,7 @@ class LProgressHUDView: UIView {
         print(self, "+++++释放")
     }
     
-    init(style: LProgressHUDStyle, prompt: String = "") {
+    init(style: ProgressHUDStyle, prompt: String = "") {
         self.style = style
         super.init(frame: UIScreen.main.bounds)
         initView(prompt: prompt)
@@ -117,7 +117,7 @@ class LProgressHUDView: UIView {
 }
 
 @objc
-extension LProgressHUDView {
+extension ProgressHUDView {
     func timeout(_ timer: Timer) {
         timeoutBlock()
         hide()

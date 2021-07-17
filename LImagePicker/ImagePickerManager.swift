@@ -62,7 +62,7 @@ extension ImagePickerManager {
     func getPhotoWithAsset(_ asset: PHAsset, size: CGSize, resizeMode: PHImageRequestOptionsResizeMode = .fast, progress: PHAssetImageProgressHandler? = nil, completion: @escaping (UIImage?, Bool) -> ()) -> PHImageRequestID {
         let option = PHImageRequestOptions()
         option.resizeMode = resizeMode;
-//        option.isNetworkAccessAllowed = true
+        option.isNetworkAccessAllowed = true
         option.progressHandler = progress
         return PHImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: option) { image, info in
             var downloadFinished = false
@@ -281,5 +281,94 @@ extension ImagePickerManager {
         return image
         
     }
+    
+    // MARK:- Get Video 获取视频
+    public func getVideoWithAsset(asset: PHAsset, progressHandler: PHAssetImageProgressHandler? = nil, resultHandler: @escaping (AVPlayerItem?, [AnyHashable: Any]?) -> ()) {
+        let option = PHVideoRequestOptions()
+        option.isNetworkAccessAllowed = true
+        option.progressHandler = { (progress, error, stop, info) in
+            DispatchQueue.main.async {
+                progressHandler?(progress, error, stop, info)
+            }
+        }
+        PHImageManager.default().requestPlayerItem(forVideo: asset, options: option, resultHandler: resultHandler)
+    }
+    
+    // MARK:- Export video
+//    public func getVideoOutputPathWithAsset(asset: PHAsset, success: (NSString, Error))
+    
+    
+    public func getVideoOutputPathWithAsset(asset: PHAsset, presetName: NSString, timeRange: CMTimeRange) {
+        
+        
+        
+    }
+    
+    public func requestVideoOutputPathWithAsset(asset: PHAsset, presetName: String, timeRange: CMTimeRange, success: ((String) -> ())?, failure: ((String, Error?) -> ())? = nil) {
+        var preset = presetName
+        if preset != "" {
+            preset = AVAssetExportPresetMediumQuality
+        }
+        PHImageManager.default().requestExportSession(forVideo: asset, options: getVideoRequestOptions(), exportPreset: preset) { exportSeccion, info in
+            let outputPath = self.getVideoOutputPath()
+//            var exportSeccion = exportSeccion
+            exportSeccion?.outputURL = URL(fileURLWithPath: outputPath)
+            exportSeccion?.shouldOptimizeForNetworkUse = false
+            exportSeccion?.outputFileType = .mp4
+            if !CMTimeRangeEqual(timeRange, CMTimeRange.zero) {
+                exportSeccion?.timeRange = timeRange
+            }
+            exportSeccion?.exportAsynchronously(completionHandler: {
+                self.handleVideoExportResult(session: exportSeccion, outputPath: outputPath, success: success, failure: failure)
+            })
+        }
+        
+    }
+    
+    fileprivate func handleVideoExportResult(session: AVAssetExportSession?, outputPath: String, success: ((String) -> ())?, failure: ((String, Error?) -> ())? = nil) {
+        DispatchQueue.main.async {
+            guard let `session` = session else {
+                failure?("视频导出失败", session?.error)
+                return
+            }
+            
+            switch session.status {
+            case .unknown:
+                print("unknown")
+            case .waiting:
+                print("waiting")
+            case .exporting:
+                print("exporting")
+            case .completed:
+                print("completed")
+                success?(outputPath)
+            case .failed:
+                print("failed")
+                failure?("视频导出失败", session.error)
+            case .cancelled:
+                print("cancelled")
+                failure?("导出任务已取消", session.error)
+            default: break
+            }
+        }
+    }
+    
+    
+    fileprivate func getVideoRequestOptions() -> PHVideoRequestOptions {
+        let options = PHVideoRequestOptions()
+        options.deliveryMode = .automatic
+        options.isNetworkAccessAllowed = true
+        return options
+    }
+    
+    fileprivate func getVideoOutputPath() -> String {
+        let formater = DateFormatter()
+        formater.dateFormat = "yyyy-MM-dd-HH-mm-ss-SSS"
+        let outputPath = NSHomeDirectory().appending("/tem/video-\(formater.string(from: Date()))-\(arc4random_uniform(1000000))")
+        return outputPath
+    }
+    
 }
+
+
 

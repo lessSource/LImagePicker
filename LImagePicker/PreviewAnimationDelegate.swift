@@ -1,14 +1,15 @@
 //
-//  LPreviewAnimation.swift
+//  PreviewAnimationDelegate.swift
 //  LImagePicker
 //
-//  Created by L. on 2020/11/30.
-//  Copyright © 2020 L. All rights reserved.
+//  Created by L on 2021/7/9.
+//  Copyright © 2021 L. All rights reserved.
 //
 
 import UIKit
 
-public class LPreviewAnimationDelegate: NSObject, UIViewControllerTransitioningDelegate {
+
+public class PreviewAnimationDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
     fileprivate var isPresentAnimatotion: Bool = true
     // 动画时间
@@ -30,7 +31,7 @@ public class LPreviewAnimationDelegate: NSObject, UIViewControllerTransitioningD
     
 }
 
-extension LPreviewAnimationDelegate: UIViewControllerAnimatedTransitioning {
+extension PreviewAnimationDelegate: UIViewControllerAnimatedTransitioning {
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         isPresentAnimatotion = true
         return self
@@ -50,7 +51,8 @@ extension LPreviewAnimationDelegate: UIViewControllerAnimatedTransitioning {
     }
 }
 
-extension LPreviewAnimationDelegate {
+
+extension PreviewAnimationDelegate {
     // 显示动画
     fileprivate func presentViewAnimation(transitionContext: UIViewControllerContextTransitioning) {
         // 获取view
@@ -126,13 +128,13 @@ extension LPreviewAnimationDelegate {
         // 获取一系列view
         var viewController: UIViewController?
         
-        if let navVC = transitionContext.viewController(forKey: .from) as? LImagePickerController, navVC.viewControllers.count > 0 {
+        if let navVC = transitionContext.viewController(forKey: .from) as? ImagePickerController, navVC.viewControllers.count > 0 {
             viewController = navVC.viewControllers[0]
         }else {
             viewController = transitionContext.viewController(forKey: .from)
         }
         
-        guard let formVC = viewController as? LPreviewImageController, let cell = formVC.collectionView?.visibleCells.first as? LPreviewCollectionViewCell,let image = cell.currentImage.image ,let toView = transitionContext.viewController(forKey: .to)?.view, let _ = contentImage else {
+        guard let formVC = viewController as? PreviewViewController, let cell = formVC.collectionView?.visibleCells.first as? PreviewCollectionViewCell,let image = cell.currentImage.image ,let toView = transitionContext.viewController(forKey: .to)?.view, let _ = contentImage else {
             dismissViewDefaultAnimation(transitionContext: transitionContext)
             return
         }
@@ -190,11 +192,3 @@ extension LPreviewAnimationDelegate {
         }
     }
 }
-
-
-
-
-
-
-
-

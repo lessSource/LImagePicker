@@ -9,7 +9,7 @@ target 'LImagePicker' do
   use_frameworks!
 
   # Pods for LImagePicker
-  pod 'Kingfisher'
+#  pod 'Kingfisher'
 
 
   target 'LImagePickerTests' do
@@ -24,6 +24,8 @@ target 'LImagePickerDemo' do
 
   # Pods for LImagePickerDemo
   pod 'FHHFPSIndicator'
+  pod 'Kingfisher'
+  pod 'AFNetworking'
 #  pod 'WCDB.swift'
 
 

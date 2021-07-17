@@ -21,7 +21,7 @@ class PhotographCollectionViewCell: UICollectionViewCell {
     
     fileprivate var mediaModel: PhotographModel?
     
-    fileprivate lazy var imageView: UIImageView = {
+    public lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -113,7 +113,7 @@ class PhotographCollectionViewCell: UICollectionViewCell {
         if didSelectClosure?() == true {
             model.isSelect = !model.isSelect
             selectImageView.image = UIImage.lImageNamedFromMyBundle(name: model.isSelect ? "icon_photograph_sel" : "icon_photograph_nor")
-            selectImageView.l_showOscillatoryAnimation()
+//            selectImageView.l_showOscillatoryAnimation()
         }
     }
 }

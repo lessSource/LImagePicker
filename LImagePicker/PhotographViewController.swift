@@ -18,6 +18,8 @@ class PhotographViewController: UIViewController {
 
     fileprivate var dataArray: [PhotographModel] = []
     
+    fileprivate var animationDelegate = PreviewAnimationDelegate()
+    
     /** 是否允许选择 */
     fileprivate var allowSelect: Bool = true
     
@@ -159,7 +161,7 @@ extension PhotographViewController {
         guard let imagePicker = navigationController as? ImagePickerController else { return false }
         
         if imagePicker.selectArray.count == imagePicker.maxCount && !imagePicker.selectArray.contains(dataArray[indexPath.item]) {
-            let hub = LProgressHUDView(style: .dark, prompt: "最多能选\(imagePicker.maxCount)张照片")
+            let hub = ProgressHUDView(style: .dark, prompt: "最多能选\(imagePicker.maxCount)张照片")
             hub.showPromptInfo(showView: self.view)
             return false
         }
@@ -238,15 +240,21 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let imagePicker = navigationController as? ImagePickerController else { return }
-        
-        switch dataArray[indexPath.item].type {
-        case .shooting:
+        if dataArray[indexPath.item].type == .shooting {
             print("shooting")
-        default:
-            break
+            return
         }
         
-        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PhotographCollectionViewCell else { return }
+        if imagePicker.maxCount == imagePicker.selectArray.count { return }
+        animationDelegate = PreviewAnimationDelegate(contentImage: cell.imageView, superView: cell.superview)
+        let isOffset = imagePicker.configuration.allowTakePicture && albumModel?.isAllPhotos == true && imagePicker.configuration.sortAscendingByModificationDate
+        var mediaArray: [PhotographModel] = dataArray
+        mediaArray = dataArray.filter { $0.type != .shooting }
+        let imageModel = PreviewImageModel(currentIndex: isOffset ? indexPath.item - 1 : indexPath.item, dataArray: mediaArray)
+        let imagePickerVC = ImagePickerController(previewModel: imageModel, delegate: nil, offset: isOffset ? 1 : 0)
+        imagePickerVC.transitioningDelegate = animationDelegate
+        present(imagePickerVC, animated: true, completion: nil)
     }
     
 }
@@ -265,7 +273,7 @@ extension PhotographViewController: UIImagePickerControllerDelegate, UINavigatio
     
 }
 
-extension PhotographViewController: LPromptViewDelegate, PhotographViewDelegate {
+extension PhotographViewController: PromptViewDelegate, PhotographViewDelegate {
     
     func photographView(_ view: UIView, didSelect type: PhotographButtonType) {
         guard let imagePicker = navigationController as? ImagePickerController else { return }
@@ -285,7 +293,7 @@ extension PhotographViewController: LPromptViewDelegate, PhotographViewDelegate 
                 }
                 return
             }
-            let hud = LProgressHUDView(style: .darkBlur)
+            let hud = ProgressHUDView(style: .darkBlur)
             var timeout = false
             hud.timeoutBlock = { [weak self] in
                 print("请求超时")
@@ -329,7 +337,7 @@ extension PhotographViewController: LPromptViewDelegate, PhotographViewDelegate 
         
     }
     
-    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
+    func promptViewImageClick(_ promptView: ImagePickerPromptView) {
         let urlStr = UIApplication.openSettingsURLString
         if let url = URL(string: urlStr), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [: ], completionHandler: nil)

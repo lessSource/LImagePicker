@@ -16,7 +16,7 @@ import WebKit
 
 class ViewController: UIViewController {
     
-    fileprivate var delegate: LPreviewAnimationDelegate = LPreviewAnimationDelegate()
+    fileprivate var delegate: PreviewAnimationDelegate = PreviewAnimationDelegate()
 
     fileprivate var number: Int = 1
     
@@ -53,6 +53,23 @@ class ViewController: UIViewController {
         view.addSubview(galleryButton)
 //
         
+        let zone = TimeZone.knownTimeZoneIdentifiers
+        let zone1 = TimeZone.abbreviationDictionary
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+//        let zza = TimeZone(identifier: "Asia/Baku")?.abbreviation()!
+//        
+//        let time = dateFormatter.string(from: Date()) + TimeZone.current.abbreviation()!
+//        
+//        
+//        let timeZone = TimeZone(abbreviation: "GMT")
+//        
+//        
+        print(zone, zone1)
+        
+        
 //        https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1606815366947&amp;di=8024e218b3d4a26d15869fcfb60a639e&amp;imgtype=0&amp;src=http%3A%2F%2Fa4.att.hudong.com%2F27%2F67%2F01300000921826141299672233506.jpg
         
         let originalImageViewTap = UITapGestureRecognizer(target: self, action: #selector(originalImageViewTapClick))
@@ -70,7 +87,7 @@ class ViewController: UIViewController {
 }
 //
 //
-extension ViewController: LImagePickerProtocol {
+extension ViewController: ImagePickerProtocol {
 
     
     func editPictures(viewConttroller: UIViewController, croppingImage: UIImage?, originalImage: UIImage?) {
@@ -93,7 +110,6 @@ extension ViewController: LImagePickerProtocol {
         
         imageView.kf.setImage(with: ImageResource(downloadURL: URL(string: urlStr)!), completionHandler:  { result in
             completionHandler()
-            
         })
         
     }
@@ -109,19 +125,28 @@ extension ViewController {
     // 图库
     func galleryButtonClick() {
         var configuration = ImagePickerConfiguration()
-//        // 排序
+////        // 排序
         configuration.sortAscendingByModificationDate = false
-//        // 拍照、拍视频
-        configuration.allowTakePicture = false
-//        configuration.allowTakeVideo = false
-//        configuration.photoAlbumType = .dropDown
-//        configuration.alwaysEnableDoneBtn = true
+////        // 拍照、拍视频
+//        configuration.allowTakePicture = false
+////        configuration.allowTakeVideo = false
+////        configuration.photoAlbumType = .dropDown
+////        configuration.alwaysEnableDoneBtn = true
         configuration.allowPickingOriginalPhoto = true
-//
+////
         let imagePicker = ImagePickerController(withMaxImage: 2, photographDelegate: self, configuration: configuration)
         present(imagePicker, animated: true, completion: nil)
 
-        
+//        let zoomVC = FSZoomViewController()
+//        let nav = UINavigationController(rootViewController: zoomVC)
+//        nav.modalPresentationStyle = .custom
+//        present(nav, animated: true, completion: nil)
+//
+//
+//        let ddd = TTTTTViewController()
+//        let nav = UINavigationController(rootViewController: ddd)
+//        nav.modalPresentationStyle = .custom
+//        present(nav, animated: false, completion: nil)
     }
     
     func originalImageViewTapClick() {
@@ -130,10 +155,14 @@ extension ViewController {
 //        imagePicker.transitioningDelegate = delegate
 //        present(imagePicker, animated: true, completion: nil)
         
+ 
+        delegate = PreviewAnimationDelegate(contentImage: originalImageView, superView: originalImageView.superview)
+        let array = [originalImageView.image!]
+        let imageModel = PreviewImageModel(currentIndex: 0, dataArray: array)
+        let imagePicker = ImagePickerController(previewModel: imageModel, delegate: nil)
+        imagePicker.transitioningDelegate = delegate
+        present(imagePicker, animated: true, completion: nil)
 
-    
-
-    
 ////
 ////    // 相机
 ////    func cameraButtonClick() {

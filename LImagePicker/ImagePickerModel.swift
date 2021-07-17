@@ -8,6 +8,31 @@
 
 import Foundation
 import Photos
+import UIKit
+
+public protocol ImagePickerMediaProtocol { }
+
+extension String: ImagePickerMediaProtocol { }
+
+extension PHAsset: ImagePickerMediaProtocol { }
+
+extension UIImage: ImagePickerMediaProtocol { }
+
+extension PhotographModel: ImagePickerMediaProtocol { }
+
+public struct PreviewImageModel {
+    /** 当前序号 */
+    var currentIndex: Int
+    /** 数据源 */
+    var dataArray: [ImagePickerMediaProtocol]
+    
+    public init(currentIndex: Int = 0, dataArray: [ImagePickerMediaProtocol] = []) {
+        self.currentIndex = currentIndex
+        self.dataArray = dataArray
+    }
+    
+}
+
 
 // 媒体类型
 enum ImagePickerMediaType {
@@ -57,4 +82,56 @@ class PhotographModel: Equatable {
 
 func == (lhs: PhotographModel, rhs: PhotographModel) -> Bool {
     return lhs.media.localIdentifier == rhs.media.localIdentifier
+}
+
+// HUD样式
+enum ProgressHUDStyle: Int {
+    /** */
+    case light
+    /** */
+    case lightBlur
+    /**  */
+    case dark
+    /** */
+    case darkBlur
+    
+    var backColor: UIColor {
+        switch self {
+        case .light:
+            return .white
+        case .dark:
+            return .darkGray
+        default:
+            return .clear
+        }
+    }
+    
+    var textColor: UIColor {
+        switch self {
+        case .light, .lightBlur:
+            return .black
+        default:
+            return .white
+        }
+    }
+    
+    var indicatorStyle: UIActivityIndicatorView.Style {
+        switch self {
+        case .light, .lightBlur:
+            return .gray
+        default:
+            return .white
+        }
+    }
+    
+    var blurEffectStyle: UIBlurEffect.Style? {
+        switch self {
+        case .light, .dark:
+            return nil
+        case .lightBlur:
+            return .extraLight
+        default:
+            return .dark
+        }
+    }
 }

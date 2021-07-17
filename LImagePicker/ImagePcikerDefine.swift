@@ -1,5 +1,5 @@
 //
-//  LImagePcikerDefine.swift
+//  ImagePcikerDefine.swift
 //  LImagePicker
 //
 //  Created by L. on 2020/11/30.

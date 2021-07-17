@@ -97,7 +97,7 @@ class ImagePickerOperation: Operation {
                 }
             }
         }else {
-            let w = min(UIScreen.main.bounds.width, LImagePickerManager.shared.photoPreviewMaxWidth) * 2
+            let w = min(UIScreen.main.bounds.width, ImagePickerManager.shared.photoPreviewMaxWidth) * 2
             let aspectRatio = CGFloat(photographModel.media.pixelHeight) / CGFloat(photographModel.media.pixelWidth)
             ImagePickerManager.shared.getPhotoWithAsset(photographModel.media, size: CGSize(width: w, height: w * aspectRatio), resizeMode: .fast, progress: self.progress) { [weak self] (image, isDegraded) in
                 if !isDegraded {

@@ -228,17 +228,16 @@ public class OriginalButtonView: UIView {
         addSubview(iconImage)
         addSubview(nameLabel)
         
-        iconImage.translatesAutoresizingMaskIntoConstraints = false
-        iconImage.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        iconImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
-        iconImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        iconImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: iconImage.rightAnchor, constant: 5).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         
+        iconImage.translatesAutoresizingMaskIntoConstraints = false
+        iconImage.heightAnchor.constraint(equalToConstant: 14).isActive = true
+        iconImage.widthAnchor.constraint(equalToConstant: 14).isActive = true
+        iconImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        iconImage.leftAnchor.constraint(equalTo: nameLabel.rightAnchor, constant: 2).isActive = true
+               
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureClick))
         addGestureRecognizer(tapGesture)
     }

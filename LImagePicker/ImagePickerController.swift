@@ -69,6 +69,13 @@ extension ImagePickerController {
 
     /** 显示大图 */
     // PreviewViewController
+    public convenience init(previewModel: PreviewImageModel, delegate: ImagePreviewProtocol? = nil, offset: Int = 0) {
+        let previewImageVC = PreviewViewController(previewModel: previewModel)
+        previewImageVC.imagePickerDelegate = delegate
+        previewImageVC.modalPresentationStyle = .currentContext
+        self.init(rootViewController: previewImageVC)
+        view.backgroundColor = UIColor.clear
+    }
     
     /** 拍照/拍视频 */
     // ShootingViewController
@@ -83,7 +90,7 @@ extension ImagePickerController {
 
 extension ImagePickerController: UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
-    func promptViewImageClick(_ promptView: LImagePickerPromptView) {
+    func promptViewImageClick(_ promptView: ImagePickerPromptView) {
         if let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [: ], completionHandler: nil)
         }

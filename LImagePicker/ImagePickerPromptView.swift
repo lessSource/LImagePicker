@@ -8,23 +8,23 @@
 
 import UIKit
 
-protocol LPromptViewDelegate: AnyObject {
+protocol PromptViewDelegate: AnyObject {
     
-    func promptViewButtonClick(_ promptView: LImagePickerPromptView)
+    func promptViewButtonClick(_ promptView: ImagePickerPromptView)
     
-    func promptViewImageClick(_ promptView: LImagePickerPromptView)
+    func promptViewImageClick(_ promptView: ImagePickerPromptView)
 }
 
-extension LPromptViewDelegate {
+extension PromptViewDelegate {
     
-    func promptViewButtonClick(_ promptView: LImagePickerPromptView) { }
+    func promptViewButtonClick(_ promptView: ImagePickerPromptView) { }
     
-    func promptViewImageClick(_ promptView: LImagePickerPromptView) { }
+    func promptViewImageClick(_ promptView: ImagePickerPromptView) { }
 }
 
-class LImagePickerPromptView: UIView {
+class ImagePickerPromptView: UIView {
 
-    public weak var delegate: LPromptViewDelegate?
+    public weak var delegate: PromptViewDelegate?
     
     public lazy var button: UIButton = {
         let button = UIButton(type: .custom)
@@ -159,7 +159,7 @@ class LImagePickerPromptView: UIView {
 
 extension UIView {
     
-    typealias PromptViewClosure = (_ promptView: LImagePickerPromptView) -> ()
+    typealias PromptViewClosure = (_ promptView: ImagePickerPromptView) -> ()
     
     func placeholderShow(_ show: Bool,_ promptViewClosure: PromptViewClosure? = nil) {
         if show {
@@ -190,9 +190,9 @@ extension UIView {
         static var PromptViewKey: String = "PromptViewKey"
     }
     
-    private var promptView: LImagePickerPromptView {
+    private var promptView: ImagePickerPromptView {
         get {
-            guard let view = objc_getAssociatedObject(self, &AssociatedKeys.PromptViewKey) as? LImagePickerPromptView else {
+            guard let view = objc_getAssociatedObject(self, &AssociatedKeys.PromptViewKey) as? ImagePickerPromptView else {
                 return generatePromptView()
             }
             return view
@@ -202,8 +202,8 @@ extension UIView {
         }
     }
     
-    private func generatePromptView() -> LImagePickerPromptView {
-        let view: LImagePickerPromptView = LImagePickerPromptView(frame: bounds)
+    private func generatePromptView() -> ImagePickerPromptView {
+        let view: ImagePickerPromptView = ImagePickerPromptView(frame: bounds)
         promptView = view
         return view
     }

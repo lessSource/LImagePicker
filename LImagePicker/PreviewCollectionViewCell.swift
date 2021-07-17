@@ -1,24 +1,26 @@
 //
-//  LPreviewCollectionViewCell.swift
+//  PreviewCollectionViewCell.swift
 //  LImagePicker
 //
-//  Created by L. on 2020/11/30.
-//  Copyright © 2020 L. All rights reserved.
+//  Created by L on 2021/7/9.
+//  Copyright © 2021 L. All rights reserved.
 //
 
 import UIKit
 import Photos
 
-class LPreviewCollectionViewCell: UICollectionViewCell {
+class PreviewCollectionViewCell: UICollectionViewCell {
     
-    public weak var delegate: LPreviewImageProtocol?
+    typealias MoveImageClosure = (CGPoint, UIPanGestureRecognizer) -> ()
+    
+    public var moveSelectClouse: MoveImageClosure?
     
     fileprivate lazy var imageRequestID: PHImageRequestID = PHInvalidImageRequestID
 
     fileprivate lazy var representedAssetIdentifier: String = ""
     
     fileprivate var mediaAsset: PHAsset?
-
+    
     public lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = contentView.bounds
@@ -99,10 +101,13 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         resizeSubviews()
     }
     
-    
     func requestPhotoSize(asset: PHAsset) -> CGSize {
-        let scale = 2
-        let w = min(Int(UIScreen.main.bounds.width), Int(LImagePickerManager.shared.photoPreviewMaxWidth)) * scale
+        let scale = UIScreen.main.scale
+        let w = min(UIScreen.main.bounds.width, ImagePickerManager.shared.photoPreviewMaxWidth) * scale
+        let size = CGSize(width: w, height: w * CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth))
+        if size.height.isNaN || size.height == 0 {
+            return CGSize(width: w, height: w)
+        }
         return CGSize(width: CGFloat(w), height: CGFloat(w) * CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth))
     }
     
@@ -112,7 +117,7 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
             PHImageManager.default().cancelImageRequest(imageRequestID)
         }
         representedAssetIdentifier = asset.localIdentifier
-        imageRequestID = LImagePickerManager.shared.getPhotoWithAsset(asset, size: requestPhotoSize(asset: asset), resizeMode: .fast, progress: { (progress, _, _, _) in
+        imageRequestID = ImagePickerManager.shared.getPhotoWithAsset(asset, size: requestPhotoSize(asset: asset), resizeMode: .fast, progress: { (progress, _, _, _) in
             print(progress)
         }, completion: { [weak self] (image, isDegraded) in
             guard self?.representedAssetIdentifier == asset.localIdentifier else { return }
@@ -146,7 +151,6 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         let contentSizeH = max(imageContainerView.l_height, l_height)
         scrollView.contentSize = CGSize(width: scrollView.l_width, height: contentSizeH)
         scrollView.scrollRectToVisible(bounds, animated: false)
-        scrollView.alwaysBounceVertical = imageContainerView.l_height <= l_height ? false : true
         currentImage.frame = imageContainerView.bounds
     }
     
@@ -169,12 +173,7 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureClick(_:)))
         swipeDownGesture.direction = .down
         currentImage.addGestureRecognizer(swipeDownGesture)
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureClick(_ :)))
-        currentImage.addGestureRecognizer(panGesture)
-        
     }
-    
     
     fileprivate func refreshImageContainerViewCenter() {
         let offsetX = (scrollView.l_width > scrollView.contentSize.width) ? ((scrollView.l_width - scrollView.contentSize.width) * 0.5) : 0.0
@@ -184,7 +183,8 @@ class LPreviewCollectionViewCell: UICollectionViewCell {
 }
 
 
-extension LPreviewCollectionViewCell: UIScrollViewDelegate {
+
+extension PreviewCollectionViewCell: UIScrollViewDelegate {
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageContainerView
@@ -198,29 +198,25 @@ extension LPreviewCollectionViewCell: UIScrollViewDelegate {
         refreshImageContainerViewCenter()
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        panGestureClick(scrollView.panGestureRecognizer)
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        panGestureClick(scrollView.panGestureRecognizer)
+    }
 }
 
 @objc
-extension LPreviewCollectionViewCell {
+extension PreviewCollectionViewCell {
     
     // 点击
     fileprivate func tapAction() {
-//        delegate?.previewImageDidSelect(cell: self)
-        copyCurrentImage.frame = currentImage.frame
-        copyCurrentImage.l_y = LConstant.screenHeight/2 - copyCurrentImage.l_height/2
-        viewController()?.dismiss(animated: true, completion: nil)
+        if scrollView.zoomScale == 1 {
+            copyCurrentImage.frame = currentImage.frame
+            copyCurrentImage.l_y = LConstant.screenHeight/2 - copyCurrentImage.l_height/2
+            viewController()?.dismiss(animated: true, completion: nil)
+        }
     }
     
     // 长按
     fileprivate func longGetstureAction(_ gestureRecognizer: UILongPressGestureRecognizer) {
-//        didSelectClosure?(.longGetsture)
-        
-        self.backgroundColor = UIColor.clear
-        imageContainerView.backgroundColor = UIColor.clear
-//        didse
     }
     
     // 双击
@@ -235,18 +231,6 @@ extension LPreviewCollectionViewCell {
             let sizeY = scrollView.frame.height / newZoomScale
             scrollView.zoom(to: CGRect(x: touchPoint.x - sizeX / 2, y: touchPoint.y - sizeY / 2, width: sizeX, height: sizeY), animated: true)
         }
-        if scrollView.zoomScale == 1 {
-            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureClick(_ :)))
-            currentImage.addGestureRecognizer(panGesture)
-        }else {
-            
-            
-            currentImage.gestureRecognizers?.removeLast()
-        }
-        
-        
-//        scrollView.panGestureRecognizer
-        
     }
     
     // 上下滑动
@@ -266,10 +250,8 @@ extension LPreviewCollectionViewCell {
     fileprivate func panGestureClick(_ gestureRecognizer: UIPanGestureRecognizer) {
         let point: CGPoint = gestureRecognizer.translation(in: currentImage)
         print("\(point)")
-        if scrollView.zoomScale != 1 {
-            return
-            
-        }
+        if scrollView.zoomScale != 1 { return }
+        moveSelectClouse?(point, gestureRecognizer)
         
         switch gestureRecognizer.state {
         case .began:
@@ -281,15 +263,11 @@ extension LPreviewCollectionViewCell {
             copyCurrentImage.isHidden = false
             scrollView.addSubview(copyCurrentImage)
         case .changed:
-            print("changeed")
             copyCurrentImage.l_y = point.y + LConstant.screenHeight/2 - copyCurrentImage.l_height/2
             copyCurrentImage.l_width = LConstant.screenWidth - point.y/3
             copyCurrentImage.l_x = point.x
-            
             scrollView.backgroundColor = UIColor(white: 0.0, alpha: point.y < 0 ? 1 : 70/point.y)
-
         default:
-            print("end")
             if point.y < 50 {
                 UIView.animate(withDuration: 0.2) {
                     self.copyCurrentImage.frame = self.currentImage.frame
@@ -302,8 +280,15 @@ extension LPreviewCollectionViewCell {
                 viewController()?.dismiss(animated: true, completion: nil)
             }
         }
-        
-        
     }
     
 }
+
+
+class PreviewImageCell: PreviewCollectionViewCell { }
+
+class PreviewVideoCell: PreviewCollectionViewCell { }
+
+class PreviewGifCell: PreviewCollectionViewCell { }
+
+class PreviewLivePhoteCell: PreviewCollectionViewCell { }

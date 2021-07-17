@@ -40,3 +40,15 @@ public extension ImagePhotographProtocol {
     func imagePickerPhotograph(viewController: UIViewController, photos: [UIImage], assets: [PHAsset]) { }
 }
 
+
+public protocol ImagePreviewProtocol: ImagePickerProtocol {
+    
+    func imagePickerPreview(viewController: UIViewController, urlStr: String, imageView: UIImageView, completionHandler: @escaping (() -> Void))
+    
+}
+
+public extension ImagePreviewProtocol {
+    
+    func imagePickerPreview(viewController: UIViewController, urlStr: String, imageView: UIImageView, completionHandler: @escaping (() -> Void)) { }
+
+}

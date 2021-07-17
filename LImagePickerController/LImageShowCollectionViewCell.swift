@@ -92,25 +92,27 @@ class LImageShowCollectionViewCell: UICollectionViewCell {
             PHImageManager.default().cancelImageRequest(imageRequest)
         }
         
-        self.imageRequestID = LImagePickerManager.shared.getPhotoWithAsset(asset, completion: { (photo, info, isDegraded) in
-            
-            if self.asset != asset { return }
-            self.currentImage.image = photo
-            
-            if !isDegraded {
-                self.imageRequestID = 0
-            }
-            
-            self.resizeSubviews()
-            
-        }, progressHandler: { (progress, error, objc, info) in
-            if self.asset != asset { return }
-            
-            if progress >= 1 {
-                self.imageRequestID = 0
-            }
-            
-        }, networkAccessAllowed: true)
+        self.imageRequestID = LImagePickerManager.shared.getPhotoWithAsset
+        
+//        self.imageRequestID = LImagePickerManager.shared.getPhotoWithAsset(asset,Cs completion: { (photo, info, isDegraded) in
+//            
+//            if self.asset != asset { return }
+//            self.currentImage.image = photo
+//            
+//            if !isDegraded {
+//                self.imageRequestID = 0
+//            }
+//            
+//            self.resizeSubviews()
+//            
+//        }, progressHandler: { (progress, error, objc, info) in
+//            if self.asset != asset { return }
+//            
+//            if progress >= 1 {
+//                self.imageRequestID = 0
+//            }
+//            
+//        }, networkAccessAllowed: true)
         
         
         
