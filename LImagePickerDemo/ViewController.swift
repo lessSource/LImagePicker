@@ -133,6 +133,7 @@ extension ViewController {
 ////        configuration.photoAlbumType = .dropDown
 ////        configuration.alwaysEnableDoneBtn = true
         configuration.allowPickingOriginalPhoto = true
+        configuration.allowPickingVideo = true
 ////
         let imagePicker = ImagePickerController(withMaxImage: 2, photographDelegate: self, configuration: configuration)
         present(imagePicker, animated: true, completion: nil)

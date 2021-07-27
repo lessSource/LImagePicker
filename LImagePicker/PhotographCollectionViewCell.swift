@@ -85,14 +85,14 @@ class PhotographCollectionViewCell: UICollectionViewCell {
                 self.imageView.image = image
                 self.setNeedsLayout()
             }else {
-//                PHImageManager.default().cancelImageRequest(self.imageRequestID)
+                PHImageManager.default().cancelImageRequest(self.imageRequestID)
             }
             if !isDegraded {
                 self.imageRequestID = 0
             }
         }
         if resquestID != self.imageRequestID {
-//            PHImageManager.default().cancelImageRequest(imageRequestID)
+            PHImageManager.default().cancelImageRequest(imageRequestID)
         }
         imageRequestID = resquestID
         setNeedsLayout()
@@ -128,6 +128,58 @@ class PhotographGifCell: PhotographCollectionViewCell {
 }
 
 class PhotographVideoCell: PhotographCollectionViewCell {
+    
+    fileprivate lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
+    fileprivate lazy var videoButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = UIColor.randomColor
+        return button
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK:- initView
+    override func initView() {
+        super.initView()
+        contentView.addSubview(timeLabel)
+        contentView.addSubview(videoButton)
+        videoButton.addTarget(self, action: #selector(videoButtonClick), for: .touchUpInside)
+        
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -6).isActive = true
+        timeLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6).isActive = true
+        
+        videoButton.translatesAutoresizingMaskIntoConstraints = false
+        videoButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        videoButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        videoButton.centerYAnchor.constraint(equalTo: timeLabel.centerYAnchor).isActive = true
+        videoButton.rightAnchor.constraint(equalTo: timeLabel.leftAnchor, constant: -5).isActive = true
+    }
+    
+    override func loadingResourcesModel(_ mediaModel: PhotographModel) {
+        super.loadingResourcesModel(mediaModel)
+        timeLabel.text = mediaModel.timeLength
+    }
+    
+    @objc fileprivate func videoButtonClick() {
+        let videoVC = VideoViewController()
+        videoVC.currentImage = imageView.image
+        videoVC.videoModel = mediaModel
+        videoVC.modalPresentationStyle = .currentContext
+        viewController()?.present(videoVC, animated: true, completion: nil)
+    }
     
 }
 

@@ -26,6 +26,7 @@ target 'LImagePickerDemo' do
   pod 'FHHFPSIndicator'
   pod 'Kingfisher'
   pod 'AFNetworking'
+  pod 'LookinServer', :configurations => ['Debug']
 #  pod 'WCDB.swift'
 
 

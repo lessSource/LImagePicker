@@ -198,7 +198,11 @@ extension ImagePickerManager {
         }
         var resourcesModelArr: [PhotographModel] = []
         result.enumerateObjects { asset, index, objc in
-            let resourceModel = PhotographModel(media: asset, type: self.getAssetType(asset))
+            var timeLength = ""
+            if self.getAssetType(asset) == .video {
+                timeLength = self.getNewTimeFromDurationSecond(duration: Int(asset.duration))
+            }
+            let resourceModel = PhotographModel(media: asset, type: self.getAssetType(asset), timeLength: timeLength)
             resourcesModelArr.append(resourceModel)
         }
         completion(resourcesModelArr)
@@ -311,7 +315,6 @@ extension ImagePickerManager {
         }
         PHImageManager.default().requestExportSession(forVideo: asset, options: getVideoRequestOptions(), exportPreset: preset) { exportSeccion, info in
             let outputPath = self.getVideoOutputPath()
-//            var exportSeccion = exportSeccion
             exportSeccion?.outputURL = URL(fileURLWithPath: outputPath)
             exportSeccion?.shouldOptimizeForNetworkUse = false
             exportSeccion?.outputFileType = .mp4
@@ -367,6 +370,34 @@ extension ImagePickerManager {
         let outputPath = NSHomeDirectory().appending("/tem/video-\(formater.string(from: Date()))-\(arc4random_uniform(1000000))")
         return outputPath
     }
+    
+    fileprivate func getNewTimeFromDurationSecond(duration: Int) -> String {
+        var newTime = "00:00"
+        switch duration {
+        case 0..<10:
+            newTime = "00:0\(duration)"
+        case 10...60:
+            newTime = "00:\(duration)"
+        default:
+            let min = duration/60
+            let sec = duration - (min * 60)
+            if min < 10 {
+                if sec < 10  {
+                    newTime = "0\(min):0\(sec)"
+                }else {
+                    newTime = "0\(min):\(sec)"
+                }
+            }else {
+                if sec < 10  {
+                    newTime = "\(min):0\(sec)"
+                }else {
+                    newTime = "\(min):\(sec)"
+                }
+            }
+        }
+        return newTime
+    }
+    
     
 }
 

@@ -13,6 +13,10 @@
 		0B03719926982BE00042B90A /* ImagePicker+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B03719826982BE00042B90A /* ImagePicker+Extension.swift */; };
 		0B03719B26982DE90042B90A /* ImagePickerPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B03719A26982DE90042B90A /* ImagePickerPromptView.swift */; };
 		0B03719D26982F530042B90A /* PreviewAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B03719C26982F530042B90A /* PreviewAnimationDelegate.swift */; };
+		0B2EAEA826AEA07F00965111 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2EAEA726AEA07F00965111 /* VideoViewController.swift */; };
+		0B2EAEAA26AEB4EA00965111 /* VideoAccordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2EAEA926AEB4EA00965111 /* VideoAccordingView.swift */; };
+		0B2EAEAC26AEBEA200965111 /* VideoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2EAEAB26AEBEA200965111 /* VideoContentView.swift */; };
+		0B2EAEAE26AEBF7C00965111 /* VideoOperationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2EAEAD26AEBF7C00965111 /* VideoOperationView.swift */; };
 		0B5FCD622696F4FF00D2FC4F /* Pods_LImagePickerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466BAFAAC5953C18583F1A65 /* Pods_LImagePickerDemo.framework */; };
 		2A47714F2508626000F9B839 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A47714E2508626000F9B839 /* TestViewController.swift */; };
 		2A477151250862AE00F9B839 /* LEditPickerNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A477150250862AE00F9B839 /* LEditPickerNavView.swift */; };
@@ -106,6 +110,10 @@
 		0B03719826982BE00042B90A /* ImagePicker+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker+Extension.swift"; sourceTree = "<group>"; };
 		0B03719A26982DE90042B90A /* ImagePickerPromptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerPromptView.swift; sourceTree = "<group>"; };
 		0B03719C26982F530042B90A /* PreviewAnimationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewAnimationDelegate.swift; sourceTree = "<group>"; };
+		0B2EAEA726AEA07F00965111 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		0B2EAEA926AEB4EA00965111 /* VideoAccordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAccordingView.swift; sourceTree = "<group>"; };
+		0B2EAEAB26AEBEA200965111 /* VideoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoContentView.swift; sourceTree = "<group>"; };
+		0B2EAEAD26AEBF7C00965111 /* VideoOperationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoOperationView.swift; sourceTree = "<group>"; };
 		2767F6AC369B16CC23B3C0A2 /* Pods-LImagePicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LImagePicker.debug.xcconfig"; path = "Target Support Files/Pods-LImagePicker/Pods-LImagePicker.debug.xcconfig"; sourceTree = "<group>"; };
 		2A2AECBE24E1712700DF26EA /* SplitScreen9.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen9.fsh; sourceTree = "<group>"; };
 		2A2AECC024E1713900DF26EA /* SplitScreen9.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = SplitScreen9.vsh; sourceTree = "<group>"; };
@@ -600,6 +608,10 @@
 				787921FA26958DFB0034DE9D /* PreviewViewController.swift */,
 				CACA0FEB257782C60008F7BE /* ProgressHUDView.swift */,
 				0B03719C26982F530042B90A /* PreviewAnimationDelegate.swift */,
+				0B2EAEA726AEA07F00965111 /* VideoViewController.swift */,
+				0B2EAEA926AEB4EA00965111 /* VideoAccordingView.swift */,
+				0B2EAEAB26AEBEA200965111 /* VideoContentView.swift */,
+				0B2EAEAD26AEBF7C00965111 /* VideoOperationView.swift */,
 			);
 			path = LImagePicker;
 			sourceTree = "<group>";
@@ -1011,10 +1023,13 @@
 				786D00D8268C0ABC002B865D /* ImagePickerModel.swift in Sources */,
 				0B03719926982BE00042B90A /* ImagePicker+Extension.swift in Sources */,
 				78F4C43D269465450028A323 /* ImagePickerOperation.swift in Sources */,
+				0B2EAEAE26AEBF7C00965111 /* VideoOperationView.swift in Sources */,
 				786D00DA268C0E19002B865D /* PhotographCollectionViewCell.swift in Sources */,
 				786D00D6268C07E0002B865D /* PhotoAlbumViewController.swift in Sources */,
+				0B2EAEA826AEA07F00965111 /* VideoViewController.swift in Sources */,
 				787921FB26958DFB0034DE9D /* PreviewViewController.swift in Sources */,
 				786D00D0268C0260002B865D /* ImagePickerManager.swift in Sources */,
+				0B2EAEAA26AEB4EA00965111 /* VideoAccordingView.swift in Sources */,
 				787F245A268ECC9400D14C2D /* PhotoAlbumContentView.swift in Sources */,
 				787F245C268EED9B00D14C2D /* PhotoAlbumTableViewCell.swift in Sources */,
 				786D00D2268C02E9002B865D /* PhotographViewController.swift in Sources */,
@@ -1023,6 +1038,7 @@
 				78558B05268B2C8200F03E03 /* ImagePickerController.swift in Sources */,
 				7854D1D6268DC8A000689C8D /* PhotographContentView.swift in Sources */,
 				0B03719B26982DE90042B90A /* ImagePickerPromptView.swift in Sources */,
+				0B2EAEAC26AEBEA200965111 /* VideoContentView.swift in Sources */,
 				0B03719D26982F530042B90A /* PreviewAnimationDelegate.swift in Sources */,
 				CACA0FEC257782C60008F7BE /* ProgressHUDView.swift in Sources */,
 			);
@@ -1217,7 +1233,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5P2JD4K827;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1230,7 +1246,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImagePickerDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.custom.ImagePickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LImagePickerDemo/LImagePickerDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1253,7 +1269,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5P2JD4K827;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1266,7 +1282,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.l.LImagePickerDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.custom.ImagePickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "LImagePickerDemo/LImagePickerDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

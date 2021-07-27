@@ -16,23 +16,27 @@ PODS:
     - AFNetworking/NSURLSession
   - FHHFPSIndicator (1.0.2)
   - Kingfisher (6.3.0)
+  - LookinServer (1.0.3)
 
 DEPENDENCIES:
   - AFNetworking
   - FHHFPSIndicator
   - Kingfisher
+  - LookinServer
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - FHHFPSIndicator
     - Kingfisher
+    - LookinServer
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   FHHFPSIndicator: 29d986402ea729a941a3cda184e3635d1def69ae
   Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
+  LookinServer: 5e1d44b7e4a2a98793f1eaf319c583e1e946b830
 
-PODFILE CHECKSUM: 6c34188b2ef044298a3311f32581b657d850767f
+PODFILE CHECKSUM: 4ddb5993a533a7a9277530f30442e18fec84a70b
 
 COCOAPODS: 1.10.1

@@ -36,6 +36,9 @@ public struct ImagePickerConfiguration {
     public var allowPreview: Bool = true
     /** 默认为false, 如果设置为false，原图按钮将隐藏，用户不能选择发送原图 */
     public var allowPickingOriginalPhoto: Bool = false
+    /** 默认为false，如果设置为false，用户将不能选择视频 */
+    public var allowPickingVideo: Bool = false
+    
     
     // MARK:- 裁剪 (单选模式，maxCount为1时才生效)
     /** 默认是false，如果设置为ture，照片列表显示选择按钮 */

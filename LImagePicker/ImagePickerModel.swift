@@ -71,12 +71,15 @@ class PhotographModel: Equatable {
     var isSelect: Bool
     /** 选中序号 */
     var selectIndex: Int
+    /** 视频时间 */
+    var timeLength: String
     
-    init(media: PHAsset, type: ImagePickerMediaType, isSelect: Bool = false, selectIndex: Int = 0) {
+    init(media: PHAsset, type: ImagePickerMediaType, isSelect: Bool = false, selectIndex: Int = 0, timeLength: String = "") {
         self.media = media
         self.type = type
         self.isSelect = isSelect
         self.selectIndex = selectIndex
+        self.timeLength = timeLength
     }
 }
 

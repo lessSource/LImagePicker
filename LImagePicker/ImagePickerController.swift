@@ -66,7 +66,6 @@ extension ImagePickerController {
         self.configuration = configuration
     }
 
-
     /** 显示大图 */
     // PreviewViewController
     public convenience init(previewModel: PreviewImageModel, delegate: ImagePreviewProtocol? = nil, offset: Int = 0) {
@@ -85,6 +84,11 @@ extension ImagePickerController {
     
     /** 视频 */
     // VideoViewController
+    public convenience init(url: String, delegate: VideoPreviewProtocol? = nil) {
+        let previewVideoVC  = VideoViewController()
+        previewVideoVC.modalPresentationStyle = .currentContext
+        self.init(rootViewController: previewVideoVC)
+    }
 }
 
 

@@ -52,3 +52,9 @@ public extension ImagePreviewProtocol {
     func imagePickerPreview(viewController: UIViewController, urlStr: String, imageView: UIImageView, completionHandler: @escaping (() -> Void)) { }
 
 }
+
+public protocol VideoPreviewProtocol: ImagePickerProtocol {
+    
+    
+    
+}

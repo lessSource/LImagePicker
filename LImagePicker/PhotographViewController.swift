@@ -104,7 +104,7 @@ extension PhotographViewController {
     // MARK:- initData
     fileprivate func initData() {
         guard let `albumModel` = albumModel else {
-            ImagePickerManager.shared.getPhotoAlbumResources(.image) { [weak self] model in
+            ImagePickerManager.shared.getPhotoAlbumResources(.video) { [weak self] model in
                 self?.albumModel = model
                 self?.initData()
             }
@@ -200,6 +200,17 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
             return cell
         case .video:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographVideoCell.l_identifire, for: indexPath) as! PhotographVideoCell
+            cell.loadingResourcesModel(dataArray[indexPath.item])
+            cell.selectSerialNumber(index: dataArray[indexPath.item].selectIndex, allowSelect: allowSelect)
+            if let imagePicker = navigationController as? ImagePickerController {
+                if imagePicker.maxCount != 1 || imagePicker.configuration.showSelectBtn {
+                    cell.selectSerialNumber(index: dataArray[indexPath.row].selectIndex, allowSelect: allowSelect)
+                    cell.didSelectClosure =  { [weak self] in
+                        guard let `self` = self else { return false }
+                        return self.collectionViewDidSelectImage(indexPath: indexPath)
+                    }
+                }
+            }
             return cell
         case .shooting:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographShootingCell.l_identifire, for: indexPath) as! PhotographShootingCell
