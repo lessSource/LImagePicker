@@ -17,7 +17,7 @@ class VideoOperationView: UIView {
     }()
     
     fileprivate lazy var bottomView: VideoBottomView = {
-        let view = VideoBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - 210, width: LConstant.screenWidth, height: 210))
+        let view = VideoBottomView(frame: CGRect(x: 0, y: LConstant.screenHeight - 90 - LConstant.barMargin, width: LConstant.screenWidth, height: 90 + LConstant.barMargin))
         return view
     }()
     
@@ -39,6 +39,7 @@ class VideoOperationView: UIView {
     // MARK:- initView
     fileprivate func initView() {
         addSubview(navView)
+        addSubview(bottomView)
     }
 
 }

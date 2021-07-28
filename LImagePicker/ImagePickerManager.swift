@@ -398,6 +398,58 @@ extension ImagePickerManager {
         return newTime
     }
     
+    /// 视频分解成帧
+    /// - Parameters:
+    ///   - fileAsset: 视频资源
+    ///   - fps: 自定义帧数，每秒内取得帧数
+    func splitVideoFileUrlFps(fileAsset: AVAsset, fps: Double) {
+        
+        // 视频总秒数
+        let durationSeconds = fileAsset.duration.seconds
+        
+        var times = [NSValue]()
+        let totalFrames: Int = Int(durationSeconds * fps)
+        
+        for i in 0...totalFrames {
+            let timeFrame = CMTimeMake(value: Int64(i), timescale: Int32(fps))
+            let value = NSValue(time: timeFrame)
+            times.append(value)
+        }
+        
+        let imgGenerator = AVAssetImageGenerator(asset: fileAsset)
+        imgGenerator.requestedTimeToleranceBefore = .zero // 防止时间出现偏差
+        imgGenerator.requestedTimeToleranceAfter = .zero
+        
+        let timesCount = times.count
+        
+        // 获取每一帧的图片
+        imgGenerator.generateCGImagesAsynchronously(forTimes: times) { requestedTime, image, actualTime, result, error in
+            print("current-----\(requestedTime.value)   timesCount == \(timesCount)")
+            print("timeScale-----\(requestedTime.timescale) requestedTime:\(requestedTime.value)")
+
+//            var isSuccess = false
+            switch result {
+            case .cancelled:
+                print("cancelled")
+            case .failed:
+                print("failed")
+            case .succeeded:
+                guard let cgImage = image else {
+                    return
+                }
+                let framImg = UIImage(cgImage: cgImage)
+                print(framImg)
+            default: break
+            
+            
+            }
+            
+        }
+        
+        
+        
+    }
+    
     
 }
 

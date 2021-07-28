@@ -87,6 +87,9 @@ class VideoAccordingView: UIView {
                 self.playerItem = AVPlayerItem(asset: avAsset)
                 self.videoPlay()
                 hud.hide()
+                
+                ImagePickerManager.shared.splitVideoFileUrlFps(fileAsset: avAsset, fps: 1)
+                
             }
         }
     }
