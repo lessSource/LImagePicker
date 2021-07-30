@@ -193,7 +193,17 @@ extension PhotographViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch dataArray[indexPath.item].type {
         case .livePhoto:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographLivePhotoCell.l_identifire, for: indexPath) as! PhotographShootingCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographLivePhotoCell.l_identifire, for: indexPath) as! PhotographLivePhotoCell
+            cell.loadingResourcesModel(dataArray[indexPath.row])
+            if let imagePicker = navigationController as? ImagePickerController {
+                if imagePicker.maxCount != 1 || imagePicker.configuration.showSelectBtn {
+                    cell.selectSerialNumber(index: dataArray[indexPath.row].selectIndex, allowSelect: allowSelect)
+                    cell.didSelectClosure =  { [weak self] in
+                        guard let `self` = self else { return false }
+                        return self.collectionViewDidSelectImage(indexPath: indexPath)
+                    }
+                }
+            }
             return cell
         case .gif:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotographGifCell.l_identifire, for: indexPath) as! PhotographGifCell
