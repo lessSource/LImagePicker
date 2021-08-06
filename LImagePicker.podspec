@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "LImagePicker"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.summary      = "A multi - selection, selection of original and video image selector, while there is a preview function."
 
   s.homepage     = "https://github.com/lessSource/LImagePicker"
